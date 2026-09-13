@@ -1,0 +1,23 @@
+@echo off
+setlocal
+cd /d %~dp0\..
+for /r js %%f in (*.js) do node --check "%%f" || exit /b 1
+node tests\smoke.test.js || exit /b 1
+node tests\content_balance.test.js || exit /b 1
+node tests\effect_coverage.test.js || exit /b 1
+node tests\boss_balance.test.js || exit /b 1
+node tests\boss_reward_integration.test.js || exit /b 1
+node tests\chapter2_systems.test.js || exit /b 1
+node tests\chapter3_systems.test.js || exit /b 1
+node tests\expansion08_systems.test.js || exit /b 1
+node tests\boss2_balance.test.js || exit /b 1
+node tests\expansion09_systems.test.js || exit /b 1
+node tests\expansion10_systems.test.js || exit /b 1
+node tests\expansion11_systems.test.js || exit /b 1
+node tests\expansion12_systems.test.js || exit /b 1
+node tests\expansion13_systems.test.js || exit /b 1
+node tests\expansion14_systems.test.js || exit /b 1
+node tests\boss3_balance.test.js || exit /b 1
+node tests\static_ui.test.js || exit /b 1
+node tests\mobile_ui.test.js || exit /b 1
+echo All checks passed.

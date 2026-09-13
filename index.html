@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BUILD LAB - ビルド実験場 v0.14</title>
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/layout.css" />
+  <link rel="stylesheet" href="styles/components.css" />
+  <link rel="stylesheet" href="styles/mobile.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">BUILD EXPERIMENT GAME / PROTOTYPE 0.14</div>
+        <h1>BUILD LAB <span>ビルド実験場</span></h1>
+      </div>
+      <div class="header-actions">
+        <button id="saveBtn" class="ghost">保存</button>
+        <button id="resetBtn" class="danger ghost">進行リセット</button>
+      </div>
+      <button id="mobileHeaderMenuBtn" class="mobile-header-menu-btn ghost" type="button" aria-expanded="false">操作</button>
+      <div id="mobileHeaderMenu" class="mobile-header-menu hidden">
+        <button type="button" data-mobile-header-action="save">保存</button>
+        <button type="button" class="danger" data-mobile-header-action="reset">進行リセット</button>
+      </div>
+    </header>
+
+    <nav class="tabs main-tabs" aria-label="main navigation">
+      <button class="tab active" data-tab="character">キャラクター</button>
+      <button class="tab" data-tab="deck">デッキ</button>
+      <button class="tab" data-tab="experiment">実験場</button>
+      <button class="tab" data-tab="unlock">アンロック</button>
+      <button class="tab" data-tab="collection">図鑑</button>
+    </nav>
+
+    <main>
+      <section id="tab-character" class="tab-panel active">
+        <div class="section-head"><div><div class="kicker">01 / CHARACTER</div><h2>キャラクター</h2></div><div class="meta" id="characterSummary"></div></div>
+        <div id="characterList" class="character-grid"></div>
+        <article class="panel mt14"><div class="panel-head"><div><h3>キャラクタースタイル</h3><p>固有能力を別スタイルへ切り替える横方向強化。いつでも原型へ戻せます。</p></div><div class="counter" id="characterStyleSummary"></div></div><div id="characterStyleList" class="character-grid"></div></article>
+      </section>
+
+      <section id="tab-deck" class="tab-panel">
+        <div class="section-head"><div><div class="kicker">02 / DECK</div><h2>デッキ管理</h2></div><div class="meta" id="buildSummary"></div></div>
+        <nav class="subtabs" data-group="deck">
+          <button class="subtab active" data-subtab="cards">デッキ構築</button>
+          <button class="subtab" data-subtab="relics">遺物選択</button>
+          <button class="subtab" data-subtab="protocols">強化プロトコル</button>
+          <button class="subtab" data-subtab="tunings">カード調律</button>
+          <button class="subtab" data-subtab="conversions">役割変換</button>
+          <button class="subtab" data-subtab="links">カード連結</button>
+          <button class="subtab" data-subtab="doctrines">構築規格</button>
+        </nav>
+
+        <div id="deck-sub-cards" class="subtab-panel active">
+          <article class="panel">
+            <div class="panel-head"><div><h3>現在のデッキ</h3><p id="deckRuleText">10枚 / 同名2枚まで。クリックで外す</p></div><div class="counter"><span id="deckCount">0</span>/<span id="deckLimit">10</span></div></div>
+            <div id="deckArea" class="deck-strip"></div>
+          </article>
+          <article class="panel mt14">
+            <div class="panel-head"><div><h3>カード一覧</h3><p>名前・説明・タグから検索できます</p></div><div class="counter" id="cardResultCount">0件</div></div>
+            <div class="filter-bar">
+              <input id="cardSearch" type="search" placeholder="カード名・効果・タグを検索" />
+              <select id="cardTagFilter"><option value="all">タグ1：指定なし</option></select>
+              <select id="cardTag2Filter"><option value="all">タグ2：指定なし</option></select>
+              <select id="cardTagMode"><option value="and">タグ AND</option><option value="or">タグ OR</option></select>
+              <select id="cardEffectFilter"><option value="all">すべての効果</option><option value="attack">攻撃</option><option value="block">防御</option><option value="multi">多段攻撃</option><option value="status">状態異常</option><option value="discard">捨て札関連</option><option value="self">自傷</option><option value="cycle">循環</option><option value="conditional">条件付き強化</option><option value="hybrid">複数タグ</option><option value="prompt">提示操作</option><option value="tuning">調律関連</option><option value="link">連結関連</option><option value="conversion">役割変換関連</option></select>
+              <select id="cardHitsFilter"><option value="0">ヒット数指定なし</option><option value="2">2ヒット以上</option><option value="3">3ヒット以上</option><option value="5">5ヒット以上</option></select>
+              <select id="cardStateFilter">
+                <option value="unlocked">解放済み</option>
+                <option value="all">すべて</option>
+                <option value="locked">未解放</option>
+                <option value="inDeck">デッキ採用中</option><option value="tuned">調律中</option><option value="converted">役割変換中</option><option value="linked">連結中</option>
+              </select>
+              <select id="cardSort">
+                <option value="name">名前順</option>
+                <option value="tag">タグ順</option>
+                <option value="unlock">解放状態順</option><option value="damage">基礎火力順</option><option value="block">基礎防御順</option><option value="hits">ヒット数順</option>
+              </select>
+            </div>
+            <div id="cardPool" class="card-grid"></div>
+          </article>
+        </div>
+
+        <div id="deck-sub-relics" class="subtab-panel">
+          <article class="panel">
+            <div class="panel-head"><div><h3>遺物</h3><p>最大3個まで。今後の追加カテゴリもこのデッキタブ内で管理</p></div><div class="counter"><span id="relicCount">0</span>/3</div></div>
+            <div class="filter-bar relic-filters">
+              <input id="relicSearch" type="search" placeholder="遺物名・効果・タグを検索" />
+              <select id="relicTagFilter"><option value="all">タグ1：指定なし</option></select>
+              <select id="relicTag2Filter"><option value="all">タグ2：指定なし</option></select>
+              <select id="relicTagMode"><option value="and">タグ AND</option><option value="or">タグ OR</option></select>
+              <select id="relicStateFilter"><option value="unlocked">解放済み</option><option value="all">すべて</option><option value="locked">未解放</option><option value="selected">選択中</option></select>
+              <select id="relicSort"><option value="name">名前順</option><option value="tag">タグ順</option><option value="unlock">解放状態順</option></select>
+            </div><div class="counter search-count" id="relicResultCount">0件</div>
+            <div id="relicPool" class="relic-grid"></div>
+          </article>
+        </div>
+
+        <div id="deck-sub-protocols" class="subtab-panel">
+          <article class="panel">
+            <div class="panel-head"><div><h3>強化プロトコル</h3><p>1つだけ装備可能。無料で付け替えられる横方向の強化要素</p></div><div class="counter">選択中：<span id="protocolSelected">なし</span></div></div>
+            <div class="filter-bar">
+              <input id="protocolSearch" type="search" placeholder="プロトコル名・効果・タグを検索" />
+              <select id="protocolTagFilter"><option value="all">タグ：指定なし</option></select>
+              <select id="protocolStateFilter"><option value="unlocked">解放済み</option><option value="all">すべて</option><option value="locked">未解放</option><option value="selected">選択中</option></select>
+            </div><div class="counter search-count" id="protocolResultCount">0件</div>
+            <div id="protocolPool" class="relic-grid"></div>
+          </article>
+        </div>
+
+        <div id="deck-sub-tunings" class="subtab-panel">
+          <article class="panel">
+            <div class="panel-head"><div><h3>カード調律</h3><p>最大2種類のカードを派生調律。無料で付け替え可能</p></div><div class="counter">調律中：<span id="tuningSelected">0/2</span></div></div>
+            <div class="filter-bar">
+              <input id="tuningSearch" type="search" placeholder="カード名・効果・タグを検索" />
+              <select id="tuningStateFilter"><option value="deck">デッキ内</option><option value="tuned">調律中</option><option value="all">解放済みすべて</option></select>
+              <select id="tuningTypeFilter"><option value="all">すべての調律</option><option value="overload">過負荷調律</option><option value="recycle">再循環調律</option><option value="residue">残滓調律</option></select>
+            </div><div class="counter search-count" id="tuningResultCount">0件</div>
+            <div id="tuningPool" class="card-grid"></div>
+          </article>
+        </div>
+
+
+        <div id="deck-sub-conversions" class="subtab-panel">
+          <article class="panel">
+            <div class="panel-head"><div><h3>カード役割変換</h3><p>最大2種類のカードの役割を変更。仮想タグも変化し、既存ビルド要素と連動</p></div><div class="counter">変換中：<span id="conversionSelected">0/2</span></div></div>
+            <div class="filter-bar">
+              <input id="conversionSearch" type="search" placeholder="カード名・効果・変換名を検索" />
+              <select id="conversionStateFilter"><option value="deck">デッキ内</option><option value="converted">変換中</option><option value="all">解放済みすべて</option></select>
+              <select id="conversionTypeFilter"><option value="all">すべての役割変換</option></select>
+            </div><div class="counter search-count" id="conversionResultCount">0件</div>
+            <div id="conversionPool" class="card-grid"></div>
+          </article>
+        </div>
+
+        <div id="deck-sub-links" class="subtab-panel">
+          <article class="panel">
+            <div class="panel-head"><div><h3>カード連結</h3><p>異なる2種類のカードを1組だけ連結。交互に使うと連結コンボ</p></div><div class="counter">設定：<span id="linkSelected">未設定</span></div></div>
+            <div class="link-mode-head"><div><strong>連結方式</strong><small>解放済み方式から1つ選択</small></div><div class="counter">方式：<span id="linkModeSelected">双方向連結</span></div></div>
+            <div id="linkModePool" class="link-mode-grid"></div>
+            <div class="filter-bar">
+              <input id="linkSearch" type="search" placeholder="デッキ内カード名・効果・タグを検索" />
+              <button id="linkClearBtn" class="ghost">連結を解除</button>
+            </div><div class="counter search-count" id="linkResultCount">0件</div>
+            <div id="linkPool" class="card-grid"></div>
+          </article>
+        </div>
+
+        <div id="deck-sub-doctrines" class="subtab-panel">
+          <article class="panel">
+            <div class="panel-head"><div><h3>構築規格</h3><p>デッキ枚数・同名上限・提示枚数など、構築ルールそのものを変更</p></div><div class="counter">選択中：<span id="doctrineSelected">標準規格</span></div></div>
+            <div class="filter-bar">
+              <input id="doctrineSearch" type="search" placeholder="規格名・効果・タグを検索" />
+              <select id="doctrineStateFilter"><option value="unlocked">解放済み</option><option value="all">すべて</option><option value="locked">未解放</option><option value="selected">選択中</option></select>
+            </div><div class="counter search-count" id="doctrineResultCount">0件</div>
+            <div id="doctrinePool" class="relic-grid"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="tab-experiment" class="tab-panel">
+        <div class="section-head"><div><div class="kicker">03 / EXPERIMENT</div><h2>実験場</h2></div><div class="meta">敵要素はカテゴリ別タブで管理</div></div>
+        <nav class="subtabs" data-group="enemy">
+          <button class="subtab active" data-subtab="stats">基本ステータス</button>
+          <button class="subtab" data-subtab="traits">特殊個体</button>
+          <button class="subtab" data-subtab="behaviors">複合挙動</button>
+          <button class="subtab" data-subtab="ready">実験準備</button>
+        </nav>
+
+        <div id="enemy-sub-stats" class="subtab-panel active">
+          <article class="panel enemy-editor-panel"><h3>敵ステータス</h3><div id="enemyEditor" class="sliders"></div><div class="enemy-preview" id="enemyPreview"></div></article>
+        </div>
+        <div id="enemy-sub-traits" class="subtab-panel">
+          <article class="panel"><div class="panel-head"><div><h3>特殊個体</h3><p>解放済み特性を自由に併用</p></div></div><div id="traitToggles" class="trait-list"></div></article>
+        </div>
+        <div id="enemy-sub-behaviors" class="subtab-panel">
+          <article class="panel"><div class="panel-head"><div><h3>複合挙動</h3><p>指定された特殊個体を同時適用すると発見。発見後は同じ組み合わせで自動発動</p></div></div><div id="behaviorList" class="trait-list"></div></article>
+        </div>
+        <div id="enemy-sub-ready" class="subtab-panel">
+          <div class="grid-2">
+            <article class="panel"><h3>現在のビルド</h3><div id="activeBuildMini" class="mini-build"></div></article>
+            <article class="panel"><h3>実験開始</h3><button id="startBattleBtn" class="primary huge">実験開始</button><button id="bossBattleBtn" class="boss huge hidden">第1ボスに挑戦</button><button id="boss2BattleBtn" class="boss huge hidden">第2ボスに挑戦</button><button id="boss3BattleBtn" class="boss huge hidden">第3ボスに挑戦</button><div id="experimentHint" class="hint-box"></div></article>
+          </div>
+        </div>
+
+        <article id="battlePanel" class="panel battle-panel hidden">
+          <div class="battle-topline">
+            <div class="combatant player-box"><div class="label">PLAYER</div><div class="name" id="battlePlayerName"></div><div class="hpbar"><div id="playerHpFill"></div></div><div class="hptext" id="playerHpText"></div><div class="statusline" id="playerStatus"></div></div>
+            <div class="turn-box"><span>TURN</span><strong id="turnNumber">1</strong></div>
+            <div class="combatant enemy-box"><div class="label">ENEMY</div><div class="name" id="battleEnemyName"></div><div class="hpbar"><div id="enemyHpFill"></div></div><div class="hptext" id="enemyHpText"></div><div class="statusline" id="enemyStatus"></div></div>
+          </div>
+          <div class="intent" id="enemyIntent"></div>
+          <div class="prompt-help" id="promptHelp">提示カード — 1枚を選択</div>
+          <div id="promptCards" class="prompt-cards"></div>
+          <div id="mobileBattlePager" class="mobile-battle-pager" aria-live="polite"></div>
+          <div class="battle-actions"><button id="retireBattleBtn" class="ghost danger">実験を中止</button></div>
+          <div id="battleInvariant" class="debug-line"></div>
+          <div id="battleLog" class="battle-log"></div>
+        </article>
+      </section>
+
+      <section id="tab-unlock" class="tab-panel">
+        <div class="section-head"><div><div class="kicker">04 / UNLOCK</div><h2>アンロック目標</h2></div><div class="meta">条件も報酬も最初から全部見える</div></div>
+        <div id="unlockProgress" class="progress-box"></div>
+        <div class="filter-bar unlock-filters">
+          <input id="unlockSearch" type="search" placeholder="条件・報酬・タイトルを検索" />
+          <select id="unlockStateFilter"><option value="all">すべて</option><option value="locked">未達成</option><option value="done">達成済み</option></select>
+          <select id="unlockKindFilter"><option value="all">すべての報酬種類</option><option value="card">カード</option><option value="relic">遺物</option><option value="protocol">強化プロトコル</option><option value="character">キャラクター</option><option value="style">キャラスタイル</option><option value="conversion">役割変換</option><option value="linkmode">連結方式</option><option value="mixed">複合報酬</option><option value="trait">特殊個体</option><option value="behavior">複合挙動</option><option value="boss">ボス</option><option value="system">システム</option><option value="doctrine">構築規格</option></select>
+          <select id="unlockAxisFilter"><option value="all">すべてのビルド軸</option></select>
+          <select id="unlockChapterFilter"><option value="all">すべての章</option><option value="1">第1章</option><option value="2">第2章</option><option value="3">第3章</option><option value="4">第4章</option></select>
+          <select id="unlockConditionFilter"><option value="all">すべての条件</option><option value="stat">ステータス条件</option><option value="trait">特殊個体条件</option><option value="combo">複合条件</option><option value="boss">ボス・システム</option><option value="build">ビルド条件</option><option value="other">その他</option></select>
+          <select id="unlockSort"><option value="status">未達成を先に</option><option value="title">タイトル順</option><option value="reward">報酬名順</option></select>
+        </div><div class="counter search-count" id="unlockResultCount">0件</div>
+        <div id="unlockList" class="unlock-grid"></div>
+      </section>
+
+      <section id="tab-collection" class="tab-panel">
+        <div class="section-head"><div><div class="kicker">05 / COLLECTION</div><h2>図鑑</h2></div><div class="meta">発見・解放済み要素を確認</div></div>
+        <div id="collectionStats" class="collection-stats"></div>
+        <div class="collection-columns"><article class="panel"><h3>キャラクター</h3><div id="collectionChars"></div></article><article class="panel"><h3>特殊個体</h3><div id="collectionTraits"></div></article><article class="panel"><h3>複合挙動</h3><div id="collectionBehaviors"></div></article><article class="panel"><h3>システム</h3><div id="collectionSystems"></div></article></div>
+      </section>
+    </main>
+
+    <div id="mobileExperimentDock" class="mobile-experiment-dock" aria-label="mobile experiment actions">
+      <div class="mobile-dock-summary" id="mobileExperimentSummary">実験準備</div>
+      <button type="button" class="primary" data-mobile-battle="normal">実験開始</button>
+      <button type="button" class="boss hidden" data-mobile-battle="boss1">B1</button>
+      <button type="button" class="boss hidden" data-mobile-battle="boss2">B2</button>
+      <button type="button" class="boss hidden" data-mobile-battle="boss3">B3</button>
+    </div>
+
+    <nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="mobile navigation">
+      <button class="mobile-nav-btn active" data-mobile-tab="character"><span>CHAR</span><strong>キャラ</strong></button>
+      <button class="mobile-nav-btn" data-mobile-tab="deck"><span>DECK</span><strong>デッキ</strong></button>
+      <button class="mobile-nav-btn" data-mobile-tab="experiment"><span>LAB</span><strong>実験場</strong></button>
+      <button class="mobile-nav-btn" data-mobile-tab="unlock"><span>GOAL</span><strong>解放</strong></button>
+      <button class="mobile-nav-btn" data-mobile-tab="collection"><span>BOOK</span><strong>図鑑</strong></button>
+    </nav>
+
+    <div id="toast" class="toast"></div>
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true"><div class="modal-card"><div id="modalBody"></div><button id="modalClose" class="primary">閉じる</button></div></div>
+  </div>
+
+  <script src="js/data/gameData.js"></script>
+  <script src="js/data/protocols.js"></script>
+  <script src="js/data/tunings.js"></script>
+  <script src="js/data/conversions.js"></script>
+  <script src="js/data/chapter3.js"></script>
+  <script src="js/data/expansion08.js"></script>
+  <script src="js/data/expansion09.js"></script>
+  <script src="js/data/doctrines.js"></script>
+  <script src="js/data/characterStyles.js"></script>
+  <script src="js/data/expansion10.js"></script>
+  <script src="js/data/expansion11.js"></script>
+  <script src="js/data/expansion12.js"></script>
+  <script src="js/data/enemyBehaviors.js"></script>
+  <script src="js/data/expansion13.js"></script>
+  <script src="js/data/expansion14.js"></script>
+  <script src="js/core/utils.js"></script>
+  <script src="js/core/unlock.js"></script>
+  <script src="js/data/unlocks.js"></script>
+  <script src="js/data/unlocks07.js"></script>
+  <script src="js/data/unlocks08.js"></script>
+  <script src="js/data/unlocks09.js"></script>
+  <script src="js/data/unlocks10.js"></script>
+  <script src="js/data/unlocks11.js"></script>
+  <script src="js/data/unlocks12.js"></script>
+  <script src="js/data/unlocks13.js"></script>
+  <script src="js/data/unlocks14.js"></script>
+  <script src="js/core/state.js"></script>
+  <script src="js/core/enemy.js"></script>
+  <script src="js/core/battle.js"></script>
+  <script src="js/ui/tabs.js"></script>
+  <script src="js/ui/deckView.js"></script>
+  <script src="js/ui/styleView.js"></script>
+  <script src="js/ui/tuningView.js"></script>
+  <script src="js/ui/conversionView.js"></script>
+  <script src="js/ui/linkView.js"></script>
+  <script src="js/ui/doctrineView.js"></script>
+  <script src="js/ui/experimentView.js"></script>
+  <script src="js/ui/battleView.js"></script>
+  <script src="js/ui/metaView.js"></script>
+  <script src="js/ui/mobile.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

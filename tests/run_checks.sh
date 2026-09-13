@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+find "$ROOT/js" -name '*.js' -print0 | xargs -0 -n1 node --check
+node "$ROOT/tests/smoke.test.js"
+node "$ROOT/tests/content_balance.test.js"
+node "$ROOT/tests/effect_coverage.test.js"
+node "$ROOT/tests/boss_balance.test.js"
+node "$ROOT/tests/boss_reward_integration.test.js"
+node "$ROOT/tests/chapter2_systems.test.js"
+node "$ROOT/tests/chapter3_systems.test.js"
+node "$ROOT/tests/expansion08_systems.test.js"
+node "$ROOT/tests/boss2_balance.test.js"
+node "$ROOT/tests/expansion09_systems.test.js"
+node "$ROOT/tests/expansion10_systems.test.js"
+node "$ROOT/tests/expansion11_systems.test.js"
+node "$ROOT/tests/expansion12_systems.test.js"
+node "$ROOT/tests/expansion13_systems.test.js"
+node "$ROOT/tests/expansion14_systems.test.js"
+node "$ROOT/tests/boss3_balance.test.js"
+node "$ROOT/tests/static_ui.test.js"
+node "$ROOT/tests/mobile_ui.test.js"
+echo "All checks passed."

@@ -1,0 +1,36 @@
+'use strict';
+(function(){
+  const BL=window.BuildLab; BL.UI=BL.UI||{};
+  const mq=()=>window.matchMedia('(max-width: 760px)');
+  function isMobile(){return mq().matches;}
+  function activeFilterCount(bar){let n=0;bar.querySelectorAll('input[type="search"],select').forEach(el=>{if(el.type==='search'){if(el.value.trim())n++;}else if(el.selectedIndex>0)n++;});return n;}
+  function refreshFilterMeta(bar){const btn=bar.querySelector('.mobile-filter-toggle'),meta=bar.querySelector('.mobile-filter-meta');if(!btn)return;const n=activeFilterCount(bar);btn.querySelector('span').textContent=n?`詳細フィルター（${n}）`:'詳細フィルター';if(meta)meta.textContent=n?`${n}条件適用中`:'条件なし';}
+  function clearFilterBar(bar){const controls=[...bar.querySelectorAll('input[type="search"],select')];controls.forEach(el=>{if(el.type==='search')el.value='';else el.selectedIndex=0;});controls.forEach(el=>el.dispatchEvent(new Event(el.type==='search'?'input':'change',{bubbles:true})));setTimeout(()=>refreshFilterMeta(bar),0);}
+  function enhanceFilters(){
+    document.querySelectorAll('.filter-bar').forEach(bar=>{
+      if(bar.dataset.mobileEnhanced){refreshFilterMeta(bar);return;}bar.dataset.mobileEnhanced='1';
+      const search=bar.querySelector('input[type="search"]'),controls=[...bar.children].filter(x=>x!==search);if(!controls.length)return;
+      const btn=document.createElement('button');btn.type='button';btn.className='mobile-filter-toggle ghost';btn.innerHTML='<span>詳細フィルター</span><b>＋</b>';
+      const meta=document.createElement('small');meta.className='mobile-filter-meta';meta.textContent='条件なし';
+      const clear=document.createElement('button');clear.type='button';clear.className='mobile-filter-clear ghost';clear.textContent='条件クリア';
+      btn.onclick=()=>{bar.classList.toggle('mobile-open');btn.classList.toggle('active');btn.querySelector('b').textContent=bar.classList.contains('mobile-open')?'−':'＋';};
+      clear.onclick=()=>clearFilterBar(bar);bar.insertBefore(btn,search?search.nextSibling:bar.firstChild);bar.insertBefore(meta,btn.nextSibling);bar.insertBefore(clear,meta.nextSibling);
+      bar.addEventListener('input',()=>refreshFilterMeta(bar));bar.addEventListener('change',()=>refreshFilterMeta(bar));refreshFilterMeta(bar);
+    });
+  }
+  function setupHeaderMenu(){const btn=document.getElementById('mobileHeaderMenuBtn'),menu=document.getElementById('mobileHeaderMenu');if(!btn||!menu||btn.dataset.bound)return;btn.dataset.bound='1';const close=()=>{menu.classList.add('hidden');btn.setAttribute('aria-expanded','false');};btn.onclick=e=>{e.stopPropagation();const open=menu.classList.toggle('hidden')===false;btn.setAttribute('aria-expanded',String(open));};menu.querySelector('[data-mobile-header-action="save"]')?.addEventListener('click',()=>{document.getElementById('saveBtn')?.click();close();});menu.querySelector('[data-mobile-header-action="reset"]')?.addEventListener('click',()=>{document.getElementById('resetBtn')?.click();close();});document.addEventListener('click',e=>{if(!menu.contains(e.target)&&e.target!==btn)close();});document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});}
+  function updateNavBadges(){const s=BL.Store?.state;if(!s)return;const rules=BL.Data.getDeckRules?BL.Data.getDeckRules(s):{deckSize:10};const deck=document.querySelector('[data-mobile-tab="deck"]'),goal=document.querySelector('[data-mobile-tab="unlock"]'),lab=document.querySelector('[data-mobile-tab="experiment"]');
+    const set=(el,text)=>{if(!el)return;let b=el.querySelector('.mobile-nav-badge');if(!b){b=document.createElement('em');b.className='mobile-nav-badge';el.appendChild(b);}b.textContent=text;b.classList.toggle('hidden',!text);};
+    set(deck,`${s.deck.length}/${rules.deckSize}`);const remaining=(BL.Data.UNLOCKS||[]).filter(u=>!s.claimedUnlocks?.[u.id]).length;set(goal,remaining?String(remaining):'✓');set(lab,BL.Battle?.current?'LIVE':'');
+  }
+  function setupSubtabAutoScroll(){document.querySelectorAll('.subtabs .subtab').forEach(btn=>{if(btn.dataset.mobileScrollBound)return;btn.dataset.mobileScrollBound='1';btn.addEventListener('click',()=>{if(isMobile())btn.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});});});}
+  function updateExperimentDock(){const dock=document.getElementById('mobileExperimentDock');if(!dock)return;const experimentActive=document.getElementById('tab-experiment')?.classList.contains('active'),battle=BL.Battle?.current;const show=isMobile()&&experimentActive&&!battle;dock.classList.toggle('show',show);document.body.classList.toggle('mobile-dock-open',show);if(!show)return;const s=BL.Store.state,rules=BL.Data.getDeckRules?BL.Data.getDeckRules(s):{deckSize:10};const char=BL.Data.CHARACTERS[s.character];document.getElementById('mobileExperimentSummary').textContent=`${char?.name||''}・デッキ ${s.deck.length}/${rules.deckSize}・遺物 ${s.relics.length}/3`;
+    [['boss1','bossBattleBtn'],['boss2','boss2BattleBtn'],['boss3','boss3BattleBtn']].forEach(([mode,id])=>{const src=document.getElementById(id),dst=dock.querySelector(`[data-mobile-battle="${mode}"]`);if(dst&&src){dst.classList.toggle('hidden',src.classList.contains('hidden'));dst.textContent=mode==='boss1'?'B1':mode==='boss2'?'B2':'B3';}});
+  }
+  function bindExperimentDock(){const dock=document.getElementById('mobileExperimentDock');if(!dock||dock.dataset.bound)return;dock.dataset.bound='1';dock.querySelector('[data-mobile-battle="normal"]')?.addEventListener('click',()=>document.getElementById('startBattleBtn')?.click());dock.querySelector('[data-mobile-battle="boss1"]')?.addEventListener('click',()=>document.getElementById('bossBattleBtn')?.click());dock.querySelector('[data-mobile-battle="boss2"]')?.addEventListener('click',()=>document.getElementById('boss2BattleBtn')?.click());dock.querySelector('[data-mobile-battle="boss3"]')?.addEventListener('click',()=>document.getElementById('boss3BattleBtn')?.click());}
+  function updateBody(){document.body.classList.toggle('mobile-ui',isMobile());updateExperimentDock();updateNavBadges();}
+  function wrapRenderers(){if(BL.UI._mobileWrapped)return;BL.UI._mobileWrapped=true;for(const name of ['renderExperiment','renderBattle','renderDeck','renderRelics','renderUnlocks']){const original=BL.UI[name];if(typeof original!=='function')continue;BL.UI[name]=function(...args){const out=original.apply(this,args);enhanceFilters();updateExperimentDock();updateNavBadges();return out;};}}
+  function init(){updateBody();enhanceFilters();setupHeaderMenu();setupSubtabAutoScroll();bindExperimentDock();wrapRenderers();document.querySelectorAll('.mobile-nav-btn,.main-tabs .tab').forEach(x=>x.addEventListener('click',()=>setTimeout(()=>{updateExperimentDock();updateNavBadges();},0)));window.addEventListener('resize',()=>{updateBody();enhanceFilters();},{passive:true});window.addEventListener('orientationchange',()=>setTimeout(updateBody,100),{passive:true});}
+  document.addEventListener('DOMContentLoaded',init);
+  BL.UI.enhanceMobile=enhanceFilters;BL.UI.updateMobileChrome=()=>{updateExperimentDock();updateNavBadges();};
+})();
