@@ -3,17 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BUILD LAB - ビルド実験場 v0.15</title>
-  <link rel="stylesheet" href="styles/base.css" />
-  <link rel="stylesheet" href="styles/layout.css" />
-  <link rel="stylesheet" href="styles/components.css" />
-  <link rel="stylesheet" href="styles/mobile.css" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>BUILD LAB - ビルド実験場 v0.16</title>
+  <link rel="stylesheet" href="styles/base.css?v=0.16.0" />
+  <link rel="stylesheet" href="styles/layout.css?v=0.16.0" />
+  <link rel="stylesheet" href="styles/components.css?v=0.16.0" />
+  <link rel="stylesheet" href="styles/mobile.css?v=0.16.0" />
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
       <div>
-        <div class="eyebrow">BUILD EXPERIMENT GAME / PROTOTYPE 0.15</div>
+        <div class="eyebrow">BUILD EXPERIMENT GAME / PROTOTYPE 0.16</div>
         <h1>BUILD LAB <span>ビルド実験場</span></h1>
       </div>
       <div class="header-actions">
@@ -227,7 +230,7 @@
       <section id="tab-guide" class="tab-panel">
         <div class="section-head"><div><div class="kicker">06 / SYSTEM GUIDE</div><h2>システム解説</h2></div><div class="meta">ゲーム内の仕組みをここに集約</div></div>
         <article class="panel guide-intro">
-          <div class="panel-head"><div><h3>BUILD LAB 操作・システムガイド</h3><p>各システムの概要、設定場所、制限、他要素との組み合わせ、具体例を一か所で確認できます。</p></div><div class="counter" id="guideResultCount">0件</div></div>
+          <div class="panel-head"><div><h3>BUILD LAB 操作・システムガイド</h3><p>各システムの概要・設定場所・制限・組み合わせ・具体例に加え、調律や役割変換などの個別効果一覧も一か所で確認できます。</p></div><div class="counter" id="guideResultCount">0件</div></div>
           <div class="filter-bar guide-filters">
             <input id="guideSearch" type="search" placeholder="例：カード調律、連結、特殊個体、捨て札…" />
             <select id="guideCategoryFilter"><option value="all">すべてのカテゴリ</option></select>
@@ -259,48 +262,48 @@
     <div id="modal" class="modal hidden" role="dialog" aria-modal="true"><div class="modal-card"><div id="modalBody"></div><button id="modalClose" class="primary">閉じる</button></div></div>
   </div>
 
-  <script src="js/data/gameData.js"></script>
-  <script src="js/data/protocols.js"></script>
-  <script src="js/data/tunings.js"></script>
-  <script src="js/data/conversions.js"></script>
-  <script src="js/data/chapter3.js"></script>
-  <script src="js/data/expansion08.js"></script>
-  <script src="js/data/expansion09.js"></script>
-  <script src="js/data/doctrines.js"></script>
-  <script src="js/data/characterStyles.js"></script>
-  <script src="js/data/expansion10.js"></script>
-  <script src="js/data/expansion11.js"></script>
-  <script src="js/data/expansion12.js"></script>
-  <script src="js/data/enemyBehaviors.js"></script>
-  <script src="js/data/expansion13.js"></script>
-  <script src="js/data/expansion14.js"></script>
-  <script src="js/data/guides.js"></script>
-  <script src="js/core/utils.js"></script>
-  <script src="js/core/unlock.js"></script>
-  <script src="js/data/unlocks.js"></script>
-  <script src="js/data/unlocks07.js"></script>
-  <script src="js/data/unlocks08.js"></script>
-  <script src="js/data/unlocks09.js"></script>
-  <script src="js/data/unlocks10.js"></script>
-  <script src="js/data/unlocks11.js"></script>
-  <script src="js/data/unlocks12.js"></script>
-  <script src="js/data/unlocks13.js"></script>
-  <script src="js/data/unlocks14.js"></script>
-  <script src="js/core/state.js"></script>
-  <script src="js/core/enemy.js"></script>
-  <script src="js/core/battle.js"></script>
-  <script src="js/ui/tabs.js"></script>
-  <script src="js/ui/deckView.js"></script>
-  <script src="js/ui/styleView.js"></script>
-  <script src="js/ui/tuningView.js"></script>
-  <script src="js/ui/conversionView.js"></script>
-  <script src="js/ui/linkView.js"></script>
-  <script src="js/ui/doctrineView.js"></script>
-  <script src="js/ui/experimentView.js"></script>
-  <script src="js/ui/battleView.js"></script>
-  <script src="js/ui/metaView.js"></script>
-  <script src="js/ui/guideView.js"></script>
-  <script src="js/ui/mobile.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/data/gameData.js?v=0.16.0"></script>
+  <script src="js/data/protocols.js?v=0.16.0"></script>
+  <script src="js/data/tunings.js?v=0.16.0"></script>
+  <script src="js/data/conversions.js?v=0.16.0"></script>
+  <script src="js/data/chapter3.js?v=0.16.0"></script>
+  <script src="js/data/expansion08.js?v=0.16.0"></script>
+  <script src="js/data/expansion09.js?v=0.16.0"></script>
+  <script src="js/data/doctrines.js?v=0.16.0"></script>
+  <script src="js/data/characterStyles.js?v=0.16.0"></script>
+  <script src="js/data/expansion10.js?v=0.16.0"></script>
+  <script src="js/data/expansion11.js?v=0.16.0"></script>
+  <script src="js/data/expansion12.js?v=0.16.0"></script>
+  <script src="js/data/enemyBehaviors.js?v=0.16.0"></script>
+  <script src="js/data/expansion13.js?v=0.16.0"></script>
+  <script src="js/data/expansion14.js?v=0.16.0"></script>
+  <script src="js/data/guides.js?v=0.16.0"></script>
+  <script src="js/core/utils.js?v=0.16.0"></script>
+  <script src="js/core/unlock.js?v=0.16.0"></script>
+  <script src="js/data/unlocks.js?v=0.16.0"></script>
+  <script src="js/data/unlocks07.js?v=0.16.0"></script>
+  <script src="js/data/unlocks08.js?v=0.16.0"></script>
+  <script src="js/data/unlocks09.js?v=0.16.0"></script>
+  <script src="js/data/unlocks10.js?v=0.16.0"></script>
+  <script src="js/data/unlocks11.js?v=0.16.0"></script>
+  <script src="js/data/unlocks12.js?v=0.16.0"></script>
+  <script src="js/data/unlocks13.js?v=0.16.0"></script>
+  <script src="js/data/unlocks14.js?v=0.16.0"></script>
+  <script src="js/core/state.js?v=0.16.0"></script>
+  <script src="js/core/enemy.js?v=0.16.0"></script>
+  <script src="js/core/battle.js?v=0.16.0"></script>
+  <script src="js/ui/tabs.js?v=0.16.0"></script>
+  <script src="js/ui/deckView.js?v=0.16.0"></script>
+  <script src="js/ui/styleView.js?v=0.16.0"></script>
+  <script src="js/ui/tuningView.js?v=0.16.0"></script>
+  <script src="js/ui/conversionView.js?v=0.16.0"></script>
+  <script src="js/ui/linkView.js?v=0.16.0"></script>
+  <script src="js/ui/doctrineView.js?v=0.16.0"></script>
+  <script src="js/ui/experimentView.js?v=0.16.0"></script>
+  <script src="js/ui/battleView.js?v=0.16.0"></script>
+  <script src="js/ui/metaView.js?v=0.16.0"></script>
+  <script src="js/ui/guideView.js?v=0.16.0"></script>
+  <script src="js/ui/mobile.js?v=0.16.0"></script>
+  <script src="js/app.js?v=0.16.0"></script>
 </body>
 </html>

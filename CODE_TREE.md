@@ -1,7 +1,7 @@
-# BUILD LAB v0.15 CODE TREE
+# BUILD LAB v0.16 CODE TREE
 
 ```text
-build_lab_v15/
+build_lab_v16/
 ├─ index.html
 ├─ README.md
 ├─ CHANGELOG.md
@@ -29,7 +29,7 @@ build_lab_v15/
 │  │  ├─ enemyBehaviors.js
 │  │  ├─ expansion13.js
 │  │  ├─ expansion14.js       # v0.14 カード/遺物/プロトコル
-│  │  ├─ guides.js            # v0.15 システム解説データ
+│  │  ├─ guides.js            # v0.16 解説データ + 実データ由来リファレンス
 │  │  ├─ unlocks.js
 │  │  ├─ unlocks07.js
 │  │  ├─ unlocks08.js
@@ -42,7 +42,7 @@ build_lab_v15/
 │  ├─ core/
 │  │  ├─ utils.js
 │  │  ├─ unlock.js
-│  │  ├─ state.js             # v15セーブ / 旧セーブ移行 / モバイル段階表示状態
+│  │  ├─ state.js             # v16セーブ / v15以前移行 / モバイル段階表示状態
 │  │  ├─ enemy.js
 │  │  └─ battle.js            # v14遺物/プロトコル規則接続
 │  └─ ui/
@@ -56,7 +56,7 @@ build_lab_v15/
 │     ├─ experimentView.js
 │     ├─ battleView.js        # タッチ操作 / ページャー
 │     ├─ metaView.js
-│     ├─ guideView.js         # v0.15 解説検索/描画
+│     ├─ guideView.js         # v0.16 解説検索 / 詳細一覧 / WEB読込エラー案内
 │     └─ mobile.js            # v0.14モバイル操作統合
 └─ tests/
    ├─ smoke.test.js
@@ -77,7 +77,9 @@ build_lab_v15/
    ├─ expansion14_systems.test.js # v0.14追加要素/移行
    ├─ static_ui.test.js
    ├─ mobile_ui.test.js           # スマホUI検査
-   ├─ system_guide.test.js        # v0.15システム解説検査
+   ├─ system_guide.test.js        # システム解説基本検査
+   ├─ guide_detail.test.js        # 個別解説と実データ件数の整合性
+   ├─ web_deploy.test.js          # WEBキャッシュ/移行/独立描画
    ├─ run_checks.sh
    └─ run_checks.bat
 ```
@@ -106,3 +108,11 @@ build_lab_v15/
 - `js/data/guides.js` — システム解説データを一元管理
 - `js/ui/guideView.js` — 解説検索・カテゴリ・クイックリンク描画
 - `tests/system_guide.test.js` — 解説項目・UI・必須項目の回帰検査
+
+
+## v0.16 追加責務
+- `guides.js` は解説本文だけでなく、調律・役割変換・スタイル等の実データから詳細リファレンスを自動生成。
+- `guideView.js` は個別リファレンスの検索・自動展開・読込失敗時フォールバックを担当。
+- `app.js` は各画面を個別 `safeRender` し、1画面の例外で全UIが停止しないよう変更。解説を最初に描画。
+- `index.html` は全CSS/JSへバージョンクエリを付け、GitHub Pages等で旧キャッシュと新HTMLが混ざる事故を防止。
+- `state.js` はv16キーへ移行し、v15以前を順次探索。

@@ -46,3 +46,4 @@
 @media(max-width:760px){#deck-sub-cards .filter-bar input[type="search"]{top:132px}}
 
 @media(max-width:760px){.guide-list{grid-template-columns:1fr;gap:10px}.guide-quick{overflow-x:auto;flex-wrap:nowrap;padding-bottom:5px;scrollbar-width:none}.guide-quick::-webkit-scrollbar{display:none}.guide-chip{flex:0 0 auto}.guide-card-head{gap:8px}.guide-jump{min-width:52px}.guide-meta-grid{grid-template-columns:1fr}.guide-details ul{padding-left:18px}.mobile-bottom-nav{grid-template-columns:repeat(6,1fr)}.mobile-nav-btn{min-width:0;padding-left:2px;padding-right:2px}.mobile-nav-btn strong{font-size:9px}}
+@media(max-width:760px){.guide-ref-item summary{align-items:flex-start}.guide-ref-item summary small{max-width:42%;line-height:1.35}.guide-reference-head{position:sticky;top:51px;z-index:9;background:rgba(15,20,29,.96);padding:6px 0}}

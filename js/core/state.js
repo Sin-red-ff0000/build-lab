@@ -2,12 +2,12 @@
 (function(){
   const BL = window.BuildLab;
   const D = BL.Data;
-  const KEY='build_lab_proto_v15';
-  const OLD_KEYS=['build_lab_proto_v14','build_lab_proto_v13','build_lab_proto_v12','build_lab_proto_v11','build_lab_proto_v10','build_lab_proto_v09','build_lab_proto_v08','build_lab_proto_v07','build_lab_proto_v06','build_lab_proto_v05','build_lab_proto_v04','build_lab_proto_v03','build_lab_proto_v02','build_lab_proto_v01'];
+  const KEY='build_lab_proto_v16';
+  const OLD_KEYS=['build_lab_proto_v15','build_lab_proto_v14','build_lab_proto_v13','build_lab_proto_v12','build_lab_proto_v11','build_lab_proto_v10','build_lab_proto_v09','build_lab_proto_v08','build_lab_proto_v07','build_lab_proto_v06','build_lab_proto_v05','build_lab_proto_v04','build_lab_proto_v03','build_lab_proto_v02','build_lab_proto_v01'];
 
   function defaultState(){
     return {
-      version:15,
+      version:16,
       character:'standard',
       deck:[...D.DEFAULT_DECK],
       relics:[],
@@ -78,7 +78,7 @@
     if(!D.CARDS[s.cardLink.a]||!D.CARDS[s.cardLink.b]||s.cardLink.a===s.cardLink.b)s.cardLink={a:null,b:null};
     if(!D.LINK_MODES?.[s.linkMode]||!s.unlockedLinkModes?.[s.linkMode])s.linkMode='reciprocal';
     for(const [charId,styleId] of Object.entries({...s.characterStyles})){const st=D.CHARACTER_STYLES?.[styleId];if(!st||st.character!==charId||!s.unlockedCharacterStyles?.[styleId])delete s.characterStyles[charId];}
-    s.version=15;
+    s.version=16;
     return s;
   }
 
