@@ -6,17 +6,17 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BUILD LAB - ビルド実験場 v0.19</title>
-  <link rel="stylesheet" href="styles/base.css?v=0.19.0" />
-  <link rel="stylesheet" href="styles/layout.css?v=0.19.0" />
-  <link rel="stylesheet" href="styles/components.css?v=0.19.0" />
-  <link rel="stylesheet" href="styles/mobile.css?v=0.19.0" />
+  <title>BUILD LAB - ビルド実験場 v0.20</title>
+  <link rel="stylesheet" href="styles/base.css?v=0.20.0" />
+  <link rel="stylesheet" href="styles/layout.css?v=0.20.0" />
+  <link rel="stylesheet" href="styles/components.css?v=0.20.0" />
+  <link rel="stylesheet" href="styles/mobile.css?v=0.20.0" />
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
       <div>
-        <div class="eyebrow">BUILD EXPERIMENT GAME / PROTOTYPE 0.19</div>
+        <div class="eyebrow">BUILD EXPERIMENT GAME / PROTOTYPE 0.20</div>
         <h1>BUILD LAB <span>ビルド実験場</span></h1>
       </div>
       <div class="header-actions">
@@ -58,6 +58,8 @@
           <button class="subtab" data-subtab="conversions">役割変換</button>
           <button class="subtab" data-subtab="links">カード連結</button>
           <button class="subtab" data-subtab="doctrines">構築規格</button>
+          <button class="subtab" data-subtab="runes">ルーン</button>
+          <button class="subtab" data-subtab="arcana">アルカナ</button>
         </nav>
         <div class="reset-toolbar"><span>アンロック進行を残したまま、現在の構成だけ初期状態へ戻せます。</span><button id="buildResetBtn" class="ghost" type="button">構成を全リセット</button></div>
 
@@ -166,6 +168,29 @@
             <div id="doctrinePool" class="relic-grid"></div>
           </article>
         </div>
+
+        <div id="deck-sub-runes" class="subtab-panel">
+          <article class="panel">
+            <div class="panel-head"><div><h3>ルーン</h3><p>第4ボス撃破後に解放。最大3種類のカードへ刻み、カード本来の役割を残したまま条件付きで強化</p></div><div class="panel-head-actions"><div class="counter">刻印中：<span id="runeSelected">0/3</span></div><button id="runeResetBtn" class="ghost compact-reset" type="button">全解除</button></div></div>
+            <div class="filter-bar">
+              <input id="runeSearch" type="search" placeholder="カード名・効果・タグを検索" />
+              <select id="runeStateFilter"><option value="deck">デッキ内</option><option value="runed">ルーン設定中</option><option value="all">解放済みすべて</option></select>
+              <select id="runeTypeFilter"><option value="all">すべてのルーン</option></select>
+            </div><div class="counter search-count" id="runeResultCount">0件</div>
+            <div id="runePool" class="card-grid"></div>
+          </article>
+        </div>
+
+        <div id="deck-sub-arcana" class="subtab-panel">
+          <article class="panel">
+            <div class="panel-head"><div><h3>アルカナ</h3><p>第4ボス撃破後に解放。ビルド全体へ1枚だけ装備し、正位置か逆位置を自由に選択</p></div><div class="panel-head-actions"><div class="counter">選択中：<span id="arcanaSelected">なし</span></div><button id="arcanaResetBtn" class="ghost compact-reset" type="button">解除</button></div></div>
+            <div class="filter-bar">
+              <input id="arcanaSearch" type="search" placeholder="アルカナ名・効果・タグを検索" />
+              <select id="arcanaStateFilter"><option value="unlocked">解放済み</option><option value="all">すべて</option><option value="locked">未解放</option><option value="selected">選択中</option></select>
+            </div><div class="counter search-count" id="arcanaResultCount">0件</div>
+            <div id="arcanaPool" class="relic-grid"></div>
+          </article>
+        </div>
       </section>
 
       <section id="tab-experiment" class="tab-panel">
@@ -189,7 +214,7 @@
         <div id="enemy-sub-ready" class="subtab-panel">
           <div class="grid-2">
             <article class="panel"><h3>現在のビルド</h3><div id="activeBuildMini" class="mini-build"></div></article>
-            <article class="panel"><h3>実験開始</h3><button id="startBattleBtn" class="primary huge">実験開始</button><button id="bossBattleBtn" class="boss huge hidden">第1ボスに挑戦</button><button id="boss2BattleBtn" class="boss huge hidden">第2ボスに挑戦</button><button id="boss3BattleBtn" class="boss huge hidden">第3ボスに挑戦</button><div id="experimentHint" class="hint-box"></div></article>
+            <article class="panel"><h3>実験開始</h3><button id="startBattleBtn" class="primary huge">実験開始</button><button id="bossBattleBtn" class="boss huge hidden">第1ボスに挑戦</button><button id="boss2BattleBtn" class="boss huge hidden">第2ボスに挑戦</button><button id="boss3BattleBtn" class="boss huge hidden">第3ボスに挑戦</button><button id="boss4BattleBtn" class="boss huge hidden">第4ボスに挑戦</button><div id="experimentHint" class="hint-box"></div></article>
           </div>
         </div>
 
@@ -215,9 +240,9 @@
         <div class="filter-bar unlock-filters">
           <input id="unlockSearch" type="search" placeholder="条件・報酬・タイトルを検索" />
           <select id="unlockStateFilter"><option value="all">すべて</option><option value="locked">未達成</option><option value="done">達成済み</option></select>
-          <select id="unlockKindFilter"><option value="all">すべての報酬種類</option><option value="card">カード</option><option value="relic">遺物</option><option value="protocol">強化プロトコル</option><option value="character">キャラクター</option><option value="style">キャラスタイル</option><option value="conversion">役割変換</option><option value="linkmode">連結方式</option><option value="mixed">複合報酬</option><option value="trait">特殊個体</option><option value="behavior">複合挙動</option><option value="boss">ボス</option><option value="system">システム</option><option value="doctrine">構築規格</option></select>
+          <select id="unlockKindFilter"><option value="all">すべての報酬種類</option><option value="card">カード</option><option value="relic">遺物</option><option value="protocol">強化プロトコル</option><option value="character">キャラクター</option><option value="style">キャラスタイル</option><option value="conversion">役割変換</option><option value="linkmode">連結方式</option><option value="mixed">複合報酬</option><option value="trait">特殊個体</option><option value="behavior">複合挙動</option><option value="boss">ボス</option><option value="system">システム</option><option value="doctrine">構築規格</option><option value="rune">ルーン</option><option value="arcana">アルカナ</option></select>
           <select id="unlockAxisFilter"><option value="all">すべてのビルド軸</option></select>
-          <select id="unlockChapterFilter"><option value="all">すべての章</option><option value="1">第1章</option><option value="2">第2章</option><option value="3">第3章</option><option value="4">第4章</option></select>
+          <select id="unlockChapterFilter"><option value="all">すべての章</option><option value="1">第1章</option><option value="2">第2章</option><option value="3">第3章</option><option value="4">第4章</option><option value="5">第5章</option></select>
           <select id="unlockConditionFilter"><option value="all">すべての条件</option><option value="stat">ステータス条件</option><option value="trait">特殊個体条件</option><option value="combo">複合条件</option><option value="boss">ボス・システム</option><option value="build">ビルド条件</option><option value="other">その他</option></select>
           <select id="unlockSort"><option value="status">未達成を先に</option><option value="title">タイトル順</option><option value="reward">報酬名順</option></select>
         </div><div class="counter search-count" id="unlockResultCount">0件</div>
@@ -250,6 +275,7 @@
       <button type="button" class="boss hidden" data-mobile-battle="boss1">B1</button>
       <button type="button" class="boss hidden" data-mobile-battle="boss2">B2</button>
       <button type="button" class="boss hidden" data-mobile-battle="boss3">B3</button>
+      <button type="button" class="boss hidden" data-mobile-battle="boss4">B4</button>
     </div>
 
     <nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="mobile navigation">
@@ -265,54 +291,61 @@
     <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="実験結果"><div class="modal-card"><div id="modalBody" class="modal-body"></div><div class="modal-footer"><button id="modalClose" class="primary">閉じる</button></div></div></div>
   </div>
 
-  <script src="js/data/gameData.js?v=0.19.0"></script>
-  <script src="js/data/protocols.js?v=0.19.0"></script>
-  <script src="js/data/tunings.js?v=0.19.0"></script>
-  <script src="js/data/conversions.js?v=0.19.0"></script>
-  <script src="js/data/chapter3.js?v=0.19.0"></script>
-  <script src="js/data/expansion08.js?v=0.19.0"></script>
-  <script src="js/data/expansion09.js?v=0.19.0"></script>
-  <script src="js/data/doctrines.js?v=0.19.0"></script>
-  <script src="js/data/characterStyles.js?v=0.19.0"></script>
-  <script src="js/data/expansion10.js?v=0.19.0"></script>
-  <script src="js/data/expansion11.js?v=0.19.0"></script>
-  <script src="js/data/expansion12.js?v=0.19.0"></script>
-  <script src="js/data/enemyBehaviors.js?v=0.19.0"></script>
-  <script src="js/data/expansion13.js?v=0.19.0"></script>
-  <script src="js/data/expansion14.js?v=0.19.0"></script>
-  <script src="js/data/expansion17.js?v=0.19.0"></script>
-  <script src="js/data/expansion18.js?v=0.19.0"></script>
-  <script src="js/data/expansion19.js?v=0.19.0"></script>
-  <script src="js/data/guides.js?v=0.19.0"></script>
-  <script src="js/core/utils.js?v=0.19.0"></script>
-  <script src="js/core/unlock.js?v=0.19.0"></script>
-  <script src="js/data/unlocks.js?v=0.19.0"></script>
-  <script src="js/data/unlocks07.js?v=0.19.0"></script>
-  <script src="js/data/unlocks08.js?v=0.19.0"></script>
-  <script src="js/data/unlocks09.js?v=0.19.0"></script>
-  <script src="js/data/unlocks10.js?v=0.19.0"></script>
-  <script src="js/data/unlocks11.js?v=0.19.0"></script>
-  <script src="js/data/unlocks12.js?v=0.19.0"></script>
-  <script src="js/data/unlocks13.js?v=0.19.0"></script>
-  <script src="js/data/unlocks14.js?v=0.19.0"></script>
-  <script src="js/data/unlocks17.js?v=0.19.0"></script>
-  <script src="js/data/unlocks18.js?v=0.19.0"></script>
-  <script src="js/data/unlocks19.js?v=0.19.0"></script>
-  <script src="js/core/state.js?v=0.19.0"></script>
-  <script src="js/core/enemy.js?v=0.19.0"></script>
-  <script src="js/core/battle.js?v=0.19.0"></script>
-  <script src="js/ui/tabs.js?v=0.19.0"></script>
-  <script src="js/ui/deckView.js?v=0.19.0"></script>
-  <script src="js/ui/styleView.js?v=0.19.0"></script>
-  <script src="js/ui/tuningView.js?v=0.19.0"></script>
-  <script src="js/ui/conversionView.js?v=0.19.0"></script>
-  <script src="js/ui/linkView.js?v=0.19.0"></script>
-  <script src="js/ui/doctrineView.js?v=0.19.0"></script>
-  <script src="js/ui/experimentView.js?v=0.19.0"></script>
-  <script src="js/ui/battleView.js?v=0.19.0"></script>
-  <script src="js/ui/metaView.js?v=0.19.0"></script>
-  <script src="js/ui/guideView.js?v=0.19.0"></script>
-  <script src="js/ui/mobile.js?v=0.19.0"></script>
-  <script src="js/app.js?v=0.19.0"></script>
+  <script src="js/data/gameData.js?v=0.20.0"></script>
+  <script src="js/data/protocols.js?v=0.20.0"></script>
+  <script src="js/data/tunings.js?v=0.20.0"></script>
+  <script src="js/data/conversions.js?v=0.20.0"></script>
+  <script src="js/data/chapter3.js?v=0.20.0"></script>
+  <script src="js/data/expansion08.js?v=0.20.0"></script>
+  <script src="js/data/expansion09.js?v=0.20.0"></script>
+  <script src="js/data/doctrines.js?v=0.20.0"></script>
+  <script src="js/data/characterStyles.js?v=0.20.0"></script>
+  <script src="js/data/expansion10.js?v=0.20.0"></script>
+  <script src="js/data/expansion11.js?v=0.20.0"></script>
+  <script src="js/data/expansion12.js?v=0.20.0"></script>
+  <script src="js/data/enemyBehaviors.js?v=0.20.0"></script>
+  <script src="js/data/expansion13.js?v=0.20.0"></script>
+  <script src="js/data/expansion14.js?v=0.20.0"></script>
+  <script src="js/data/expansion17.js?v=0.20.0"></script>
+  <script src="js/data/expansion18.js?v=0.20.0"></script>
+  <script src="js/data/expansion19.js?v=0.20.0"></script>
+  <script src="js/data/runes.js?v=0.20.0"></script>
+  <script src="js/data/arcana.js?v=0.20.0"></script>
+  <script src="js/data/expansion20.js?v=0.20.0"></script>
+  <script src="js/data/guides.js?v=0.20.0"></script>
+  <script src="js/data/guides20.js?v=0.20.0"></script>
+  <script src="js/core/utils.js?v=0.20.0"></script>
+  <script src="js/core/unlock.js?v=0.20.0"></script>
+  <script src="js/data/unlocks.js?v=0.20.0"></script>
+  <script src="js/data/unlocks07.js?v=0.20.0"></script>
+  <script src="js/data/unlocks08.js?v=0.20.0"></script>
+  <script src="js/data/unlocks09.js?v=0.20.0"></script>
+  <script src="js/data/unlocks10.js?v=0.20.0"></script>
+  <script src="js/data/unlocks11.js?v=0.20.0"></script>
+  <script src="js/data/unlocks12.js?v=0.20.0"></script>
+  <script src="js/data/unlocks13.js?v=0.20.0"></script>
+  <script src="js/data/unlocks14.js?v=0.20.0"></script>
+  <script src="js/data/unlocks17.js?v=0.20.0"></script>
+  <script src="js/data/unlocks18.js?v=0.20.0"></script>
+  <script src="js/data/unlocks19.js?v=0.20.0"></script>
+  <script src="js/data/unlocks20.js?v=0.20.0"></script>
+  <script src="js/core/state.js?v=0.20.0"></script>
+  <script src="js/core/enemy.js?v=0.20.0"></script>
+  <script src="js/core/battle.js?v=0.20.0"></script>
+  <script src="js/ui/tabs.js?v=0.20.0"></script>
+  <script src="js/ui/deckView.js?v=0.20.0"></script>
+  <script src="js/ui/styleView.js?v=0.20.0"></script>
+  <script src="js/ui/tuningView.js?v=0.20.0"></script>
+  <script src="js/ui/conversionView.js?v=0.20.0"></script>
+  <script src="js/ui/runeView.js?v=0.20.0"></script>
+  <script src="js/ui/arcanaView.js?v=0.20.0"></script>
+  <script src="js/ui/linkView.js?v=0.20.0"></script>
+  <script src="js/ui/doctrineView.js?v=0.20.0"></script>
+  <script src="js/ui/experimentView.js?v=0.20.0"></script>
+  <script src="js/ui/battleView.js?v=0.20.0"></script>
+  <script src="js/ui/metaView.js?v=0.20.0"></script>
+  <script src="js/ui/guideView.js?v=0.20.0"></script>
+  <script src="js/ui/mobile.js?v=0.20.0"></script>
+  <script src="js/app.js?v=0.20.0"></script>
 </body>
 </html>

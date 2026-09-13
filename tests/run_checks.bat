@@ -20,8 +20,11 @@ node tests\expansion14_systems.test.js || exit /b 1
 node tests\expansion17_systems.test.js || exit /b 1
 node tests\expansion18_systems.test.js || exit /b 1
 node tests\expansion19_systems.test.js || exit /b 1
+node tests\expansion20_systems.test.js || exit /b 1
+node tests\boss4_reward_integration.test.js || exit /b 1
 node tests\reset_controls.test.js || exit /b 1
 node tests\boss3_balance.test.js || exit /b 1
+node tests\boss4_balance.test.js || exit /b 1
 node tests\static_ui.test.js || exit /b 1
 node tests\system_guide.test.js || exit /b 1
 node tests\guide_detail.test.js || exit /b 1

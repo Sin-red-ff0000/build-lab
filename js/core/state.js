@@ -2,22 +2,22 @@
 (function(){
   const BL = window.BuildLab;
   const D = BL.Data;
-  const KEY='build_lab_proto_v19';
-  const OLD_KEYS=['build_lab_proto_v18','build_lab_proto_v17','build_lab_proto_v16','build_lab_proto_v15','build_lab_proto_v14','build_lab_proto_v13','build_lab_proto_v12','build_lab_proto_v11','build_lab_proto_v10','build_lab_proto_v09','build_lab_proto_v08','build_lab_proto_v07','build_lab_proto_v06','build_lab_proto_v05','build_lab_proto_v04','build_lab_proto_v03','build_lab_proto_v02','build_lab_proto_v01'];
+  const KEY='build_lab_proto_v20';
+  const OLD_KEYS=['build_lab_proto_v19','build_lab_proto_v18','build_lab_proto_v17','build_lab_proto_v16','build_lab_proto_v15','build_lab_proto_v14','build_lab_proto_v13','build_lab_proto_v12','build_lab_proto_v11','build_lab_proto_v10','build_lab_proto_v09','build_lab_proto_v08','build_lab_proto_v07','build_lab_proto_v06','build_lab_proto_v05','build_lab_proto_v04','build_lab_proto_v03','build_lab_proto_v02','build_lab_proto_v01'];
 
   function defaultState(){
     return {
-      version:19,
+      version:20,
       character:'standard',
       deck:[...D.DEFAULT_DECK],
       relics:[],
       unlockedCharacterStyles:{}, characterStyles:{},
       unlockedCards:Object.fromEntries(D.BASE_CARD_IDS.map(id=>[id,true])),
       unlockedRelics:Object.fromEntries(D.BASE_RELIC_IDS.map(id=>[id,true])),
-      unlockedTraits:{}, unlockedBehaviors:{}, unlockedProtocols:{}, unlockedSystems:{}, unlockedCharacters:{standard:true,combo:true,tank:true}, unlockedDoctrines:{}, unlockedTunings:{}, cardTunings:{}, unlockedConversions:{}, cardConversions:{}, unlockedLinkModes:{reciprocal:true}, cardLink:{a:null,b:null}, linkMode:'reciprocal', protocol:null, doctrine:null, defeatedTraits:{}, flags:{}, claimedUnlocks:{}, bossDefeated:false,boss2Defeated:false,boss3Defeated:false,
+      unlockedTraits:{}, unlockedBehaviors:{}, unlockedProtocols:{}, unlockedSystems:{}, unlockedCharacters:{standard:true,combo:true,tank:true}, unlockedDoctrines:{}, unlockedTunings:{}, cardTunings:{}, unlockedConversions:{}, cardConversions:{}, unlockedLinkModes:{reciprocal:true}, cardLink:{a:null,b:null}, linkMode:'reciprocal', protocol:null, doctrine:null, unlockedRunes:{}, cardRunes:{}, unlockedArcana:{}, arcana:{id:null,orientation:'upright'}, defeatedTraits:{}, flags:{}, claimedUnlocks:{}, bossDefeated:false,boss2Defeated:false,boss3Defeated:false,boss4Defeated:false,
       enemy:{hp:1,atk:1,def:1,spd:1,regen:0,resist:0,traits:{}},
       stats:{wins:0,losses:0,bossWins:0},
-      ui:{cardSearch:'',cardTag:'all',cardTag2:'all',cardTagMode:'and',cardEffect:'all',cardHits:'0',cardState:'unlocked',cardSort:'name',deckSubtab:'cards',enemySubtab:'stats',unlockSearch:'',unlockState:'all',unlockKind:'all',unlockAxis:'all',unlockChapter:'all',unlockCondition:'all',unlockSort:'status',relicSearch:'',relicTag:'all',relicTag2:'all',relicTagMode:'and',relicState:'unlocked',relicSort:'name',protocolSearch:'',protocolTag:'all',protocolState:'unlocked',tuningSearch:'',tuningState:'deck',tuningType:'all',conversionSearch:'',conversionState:'deck',conversionType:'all',linkSearch:'',doctrineSearch:'',doctrineState:'unlocked',cardMobileLimit:60,relicMobileLimit:48}
+      ui:{cardSearch:'',cardTag:'all',cardTag2:'all',cardTagMode:'and',cardEffect:'all',cardHits:'0',cardState:'unlocked',cardSort:'name',deckSubtab:'cards',enemySubtab:'stats',unlockSearch:'',unlockState:'all',unlockKind:'all',unlockAxis:'all',unlockChapter:'all',unlockCondition:'all',unlockSort:'status',relicSearch:'',relicTag:'all',relicTag2:'all',relicTagMode:'and',relicState:'unlocked',relicSort:'name',protocolSearch:'',protocolTag:'all',protocolState:'unlocked',tuningSearch:'',tuningState:'deck',tuningType:'all',conversionSearch:'',conversionState:'deck',conversionType:'all',runeSearch:'',runeState:'deck',runeType:'all',arcanaSearch:'',arcanaState:'unlocked',linkSearch:'',doctrineSearch:'',doctrineState:'unlocked',cardMobileLimit:60,relicMobileLimit:48}
     };
   }
 
@@ -33,6 +33,10 @@
     s.unlockedTunings={...(raw.unlockedTunings||{})};
     s.unlockedConversions={...(raw.unlockedConversions||{})};
     s.cardConversions={...(raw.cardConversions||{})};
+    s.unlockedRunes={...(raw.unlockedRunes||{})};
+    s.cardRunes={...(raw.cardRunes||{})};
+    s.unlockedArcana={...(raw.unlockedArcana||{})};
+    s.arcana={...base.arcana,...(raw.arcana||{})};
     s.unlockedCharacters={standard:true,combo:true,tank:true,...(raw.unlockedCharacters||{})};
     s.unlockedCharacterStyles={...(raw.unlockedCharacterStyles||{})};
     s.characterStyles={...(raw.characterStyles||{})};
@@ -64,6 +68,7 @@
     if(s.bossDefeated){s.claimedUnlocks.boss_clear=true;s.unlockedSystems.prompt_control=true;}
     if(s.boss2Defeated){s.claimedUnlocks.boss2_clear=true;s.unlockedSystems.card_link=true;s.unlockedSystems.card_conversion=true;}
     if(s.boss3Defeated){s.claimedUnlocks.boss3_clear=true;s.unlockedSystems.deck_doctrine=true;}
+    if(s.boss4Defeated){s.claimedUnlocks.boss4_clear=true;s.unlockedSystems.rune=true;s.unlockedSystems.arcana=true;}
     // 達成済みアンロックの報酬を再付与し、追加報酬も取りこぼさない。
     for(const u of D.UNLOCKS||[]){if(!s.claimedUnlocks[u.id])continue;for(const id of u.reward||[])BL.Unlock.grant(s,id);}
     s.protocol=(requestedProtocol&&D.PROTOCOLS?.[requestedProtocol]&&s.unlockedProtocols[requestedProtocol])?requestedProtocol:null;
@@ -78,7 +83,10 @@
     if(!D.CARDS[s.cardLink.a]||!D.CARDS[s.cardLink.b]||s.cardLink.a===s.cardLink.b)s.cardLink={a:null,b:null};
     if(!D.LINK_MODES?.[s.linkMode]||!s.unlockedLinkModes?.[s.linkMode])s.linkMode='reciprocal';
     for(const [charId,styleId] of Object.entries({...s.characterStyles})){const st=D.CHARACTER_STYLES?.[styleId];if(!st||st.character!==charId||!s.unlockedCharacterStyles?.[styleId])delete s.characterStyles[charId];}
-    s.version=19;
+    for(const [cardId,runeId] of Object.entries({...s.cardRunes})){if(!D.CARDS[cardId]||!D.RUNES?.[runeId]||!s.unlockedRunes?.[runeId])delete s.cardRunes[cardId];}
+    Object.keys(s.cardRunes).slice(3).forEach(id=>delete s.cardRunes[id]);
+    if(!D.ARCANA?.[s.arcana?.id]||!s.unlockedArcana?.[s.arcana?.id])s.arcana={id:null,orientation:'upright'};else s.arcana.orientation=s.arcana.orientation==='reversed'?'reversed':'upright';
+    s.version=20;
     return s;
   }
 
@@ -121,6 +129,8 @@
     resetProtocol(){this.state.protocol=null;this.save();},
     resetTunings(){this.state.cardTunings={};this.save();},
     resetConversions(){this.state.cardConversions={};this.save();},
+    resetRunes(){this.state.cardRunes={};this.save();},
+    resetArcana(){this.state.arcana={id:null,orientation:'upright'};this.save();},
     resetLinks(){this.state.cardLink={a:null,b:null};this.state.linkMode='reciprocal';this.save();},
     resetDoctrine(){this.state.doctrine=null;this.state.deck=[...D.DEFAULT_DECK];this.save();},
     resetCurrentStyle(){delete this.state.characterStyles[this.state.character];this.save();},
@@ -128,7 +138,7 @@
     resetExperiment(){this.state.enemy=resetEnemyObject();this.save();},
     resetBuild(){
       const s=this.state;
-      s.character='standard';s.characterStyles={};s.doctrine=null;s.deck=[...D.DEFAULT_DECK];s.relics=[];s.protocol=null;s.cardTunings={};s.cardConversions={};s.cardLink={a:null,b:null};s.linkMode='reciprocal';s.enemy=resetEnemyObject();
+      s.character='standard';s.characterStyles={};s.doctrine=null;s.deck=[...D.DEFAULT_DECK];s.relics=[];s.protocol=null;s.cardTunings={};s.cardConversions={};s.cardRunes={};s.arcana={id:null,orientation:'upright'};s.cardLink={a:null,b:null};s.linkMode='reciprocal';s.enemy=resetEnemyObject();
       this.save();return s;
     },
     reset(){localStorage.removeItem(KEY);OLD_KEYS.forEach(k=>localStorage.removeItem(k));this.state=defaultState();this.save();return this.state;}

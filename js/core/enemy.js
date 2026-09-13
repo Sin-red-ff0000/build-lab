@@ -20,6 +20,11 @@
         let ok=false;try{ok=!!cfg.check(state.enemy);}catch(_){ok=false;}
         if(ok&&!state.unlockedTraits[id]){state.unlockedTraits[id]=true;state.enemy.traits[id]=true;found.push(D.TRAITS[id].name);}
       }
+      for(const [id,cfg] of Object.entries(D.V20_TRAIT_CONDITIONS||{})){
+        if(cfg.advanced&&!BL.Unlock.hasSystem(state,'advanced_enemy_parameters'))continue;
+        let ok=false;try{ok=!!cfg.check(state.enemy);}catch(_){ok=false;}
+        if(ok&&!state.unlockedTraits[id]){state.unlockedTraits[id]=true;state.enemy.traits[id]=true;found.push(D.TRAITS[id].name);}
+      }
       return found;
     },
     detectBehaviorDiscoveries(state){
@@ -35,6 +40,7 @@
       if(bossId==='boss1')return {name:'観測体',hp:160,maxHp:160,atk:12,def:2,spd:1,regen:0,resist:0,traits:['boss'],behaviors:[],boss:true,bossId:'boss1'};
       if(bossId==='boss2')return {name:'適応体',hp:150,maxHp:150,atk:9,def:1,spd:1,regen:1,resist:15,traits:['boss2'],behaviors:[],boss:true,bossId:'boss2'};
       if(bossId==='boss3')return {name:'構築体',hp:180,maxHp:180,atk:8,def:1,spd:1,regen:1,resist:15,traits:['boss3'],behaviors:[],boss:true,bossId:'boss3'};
+      if(bossId==='boss4')return {name:'統合体',hp:175,maxHp:175,atk:8,def:1,spd:1,regen:1,resist:15,traits:['boss4'],behaviors:[],boss:true,bossId:'boss4'};
       let hp=42*state.enemy.hp,atk=8*state.enemy.atk,def=Math.max(0,2.5*(state.enemy.def-1)),spd=state.enemy.spd,regen=Number(state.enemy.regen||0),resist=Number(state.enemy.resist||0);
       const active=Object.entries(state.enemy.traits).filter(([id,v])=>v&&state.unlockedTraits[id]).map(([id])=>id);
       active.forEach(id=>{switch(id){
@@ -81,7 +87,8 @@
         case'eternal':hp*=1.15;regen+=4;break;
       }});
       for(const id of active){const r=D.V19_TRAIT_RULES?.[id];if(!r)continue;if(r.hpMult)hp*=r.hpMult;if(r.atkMult)atk*=r.atkMult;if(r.defAdd)def+=r.defAdd;if(r.spdAdd)spd+=r.spdAdd;if(r.regenAdd)regen+=r.regenAdd;if(r.resistAdd)resist+=r.resistAdd;}
-      resist=Math.min(90,resist);
+      for(const id of active){const r=D.V20_TRAIT_RULES?.[id];if(!r)continue;if(r.hpMult)hp*=r.hpMult;if(r.atkMult)atk*=r.atkMult;if(r.defAdd)def+=r.defAdd;if(r.spdAdd)spd+=r.spdAdd;if(r.regenAdd)regen+=r.regenAdd;if(r.resistAdd)resist+=r.resistAdd;}
+      resist=Math.min(100,resist);
       const behaviors=D.getActiveEnemyBehaviors?D.getActiveEnemyBehaviors(state):[];
       return {name:active.length?active.map(id=>D.TRAITS[id].short).join('＋')+'個体':'標準試験体',hp:Math.round(hp),maxHp:Math.round(hp),atk:Math.round(atk),def:Math.round(def),spd,regen:Math.round(regen),resist:Math.round(resist),traits:active,behaviors,boss:false,bossId:null};
     }

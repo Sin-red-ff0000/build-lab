@@ -1,13 +1,13 @@
 'use strict';
 const fs=require('fs'),path=require('path');const root=path.resolve(__dirname,'..');
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8'),app=fs.readFileSync(path.join(root,'js/app.js'),'utf8'),state=fs.readFileSync(path.join(root,'js/core/state.js'),'utf8'),assert=(x,m)=>{if(!x)throw new Error(m)};
-assert(/styles\/base\.css\?v=0\.19\.0/.test(html),'CSS cache buster missing');
-assert(/js\/data\/guides\.js\?v=0\.19\.0/.test(html),'guide data cache buster missing');
-assert(/js\/ui\/guideView\.js\?v=0\.19\.0/.test(html),'guide view cache buster missing');
-assert(/js\/app\.js\?v=0\.19\.0/.test(html),'app cache buster missing');
+assert(/styles\/base\.css\?v=0\.20\.0/.test(html),'CSS cache buster missing');
+assert(/js\/data\/guides\.js\?v=0\.20\.0/.test(html),'guide data cache buster missing');
+assert(/js\/ui\/guideView\.js\?v=0\.20\.0/.test(html),'guide view cache buster missing');
+assert(/js\/app\.js\?v=0\.20\.0/.test(html),'app cache buster missing');
 assert(html.includes('Cache-Control'),'cache-control meta missing');
 assert(app.includes("safeRender('guides'"),'guide isolated render missing');
 assert(app.indexOf("safeRender('guides'")<app.indexOf("['characters'"),'guides should render before state-heavy views');
-assert(state.includes("const KEY='build_lab_proto_v19'"),'v19 save key missing');
+assert(state.includes("const KEY='build_lab_proto_v20'"),'v20 save key missing');
 assert(state.includes("'build_lab_proto_v18'"),'v18 migration key missing');
 console.log('PASS web_deploy.test.js');

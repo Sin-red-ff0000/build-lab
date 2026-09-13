@@ -1,7 +1,7 @@
-# BUILD LAB v0.19 CODE TREE
+# BUILD LAB v0.20 CODE TREE
 
 ```text
-build_lab_v19/
+build_lab_v20/
 ├─ index.html
 ├─ README.md
 ├─ CHANGELOG.md
@@ -32,6 +32,10 @@ build_lab_v19/
 │  │  ├─ expansion17.js       # v0.17 既存6軸の追加カード/遺物/プロトコル
 │  │  ├─ expansion18.js       # v0.18 研究V・橋渡しカード/遺物/プロトコル
 │  │  ├─ expansion19.js       # v0.19 キャラ/スタイル/遺物/プロトコル/調律/特殊個体/複合挙動
+│  │  ├─ runes.js             # v0.20 ルーン12種
+│  │  ├─ arcana.js            # v0.20 アルカナ12種（正位置/逆位置）
+│  │  ├─ expansion20.js       # v0.20 キャラ/スタイル/遺物/プロトコル/調律/敵側拡張
+│  │  ├─ guides20.js          # v0.20 ルーン/アルカナ解説
 │  │  ├─ guides.js            # v0.16 解説データ + 実データ由来リファレンス
 │  │  ├─ unlocks.js
 │  │  ├─ unlocks07.js
@@ -44,7 +48,8 @@ build_lab_v19/
 │  │  ├─ unlocks14.js         # v0.14追加アンロック
 │  │  ├─ unlocks17.js         # v0.17追加アンロック
 │  │  ├─ unlocks18.js         # v0.18追加アンロック
-│  │  └─ unlocks19.js         # v0.19大量追加要素のアンロック
+│  │  ├─ unlocks19.js         # v0.19大量追加要素のアンロック
+│  │  └─ unlocks20.js         # v0.20 第4ボス/ルーン/アルカナ/追加要素
 │  ├─ core/
 │  │  ├─ utils.js
 │  │  ├─ unlock.js
@@ -58,6 +63,8 @@ build_lab_v19/
 │     ├─ styleView.js
 │     ├─ tuningView.js
 │     ├─ conversionView.js
+│     ├─ runeView.js          # v0.20 ルーン管理UI
+│     ├─ arcanaView.js        # v0.20 アルカナ管理UI
 │     ├─ linkView.js
 │     ├─ doctrineView.js
 │     ├─ experimentView.js
@@ -85,6 +92,9 @@ build_lab_v19/
    ├─ expansion17_systems.test.js # v0.17追加要素/移行
    ├─ expansion18_systems.test.js # v0.18追加要素/移行
    ├─ expansion19_systems.test.js # v0.19大量追加要素/移行
+   ├─ expansion20_systems.test.js # v0.20大量追加要素/移行
+   ├─ boss4_balance.test.js       # 第4ボス複数ビルド突破率
+   ├─ boss4_reward_integration.test.js # ルーン/アルカナ報酬統合
    ├─ reset_controls.test.js      # 個別/総合/全データリセット
    ├─ modal_overflow.test.js      # 大量アンロック結果モーダル回帰
    ├─ static_ui.test.js
@@ -153,3 +163,16 @@ build_lab_v19/
 - `enemy.js` は `V19_TRAIT_CONDITIONS` / `V19_TRAIT_RULES` を参照し、追加特殊個体の発見とステータス補正を個別switchなしで処理。
 - `guides.js` は追加された24調律・38スタイル・53特殊個体・36複合挙動を実データから自動反映。
 - `expansion19_systems.test.js` は追加数、孤立アンロック、特殊個体/複合挙動発見、調律実戦接続、v18→v19移行を固定。
+
+
+## v0.20 追加責務
+- `runes.js` — ルーン12種の定義。カード種類単位の追加強化。
+- `arcana.js` — アルカナ12種と正位置 / 逆位置効果の定義。
+- `expansion20.js` — 新キャラ6体、18スタイル、30遺物、15プロトコル、8調律、8特殊個体、12複合挙動を集約。
+- `unlocks20.js` — 第4ボス、ルーン / アルカナ、新キャラ・スタイル・調律・特殊個体の第5章アンロックを定義。
+- `guides20.js` — ルーン / アルカナのシステム解説と全種類リファレンス。
+- `runeView.js` — 最大3カードへのルーン設定、検索、絞り込み。
+- `arcanaView.js` — アルカナ1枚の選択、正位置 / 逆位置切替、検索。
+- `battle.js` — 第4ボス適応ギミック、ルーン倍率、アルカナ倍率、v0.20キャラ/スタイル汎用ルールを接続。
+- `state.js` — v20セーブ、ルーン / アルカナ状態、旧セーブ移行、構成リセットを担当。
+- `boss4_balance.test.js` / `boss4_reward_integration.test.js` / `expansion20_systems.test.js` — 第4ボスと新システムの回帰を固定。

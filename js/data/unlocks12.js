@@ -17,6 +17,7 @@
   );
 
   for(const [id,b] of Object.entries(D.ENEMY_BEHAVIORS||{})){
+    if(id.startsWith('v20_'))continue;
     D.UNLOCKS.push({id:`v12_behavior_${id}`,kind:'behavior',reward:[id],title:`複合挙動：${b.name}`,condition:D.behaviorConditionText(id),check:behavior(id),chapter:4});
   }
 

@@ -10,6 +10,9 @@
   function hasRelic(id){return state().relics.includes(id);}
   function activeProtocol(id){return state().protocol===id;}
   function tuningFor(instance){return state().cardTunings?.[instance.cardId]||null;}
+  function runeFor(instance){const r=D.getCardRune?.(state(),instance.cardId);return r?.id||null;}
+  function activeArcana(){const s=state(),id=s.arcana?.id;return id&&D.ARCANA?.[id]&&s.unlockedArcana?.[id]?D.ARCANA[id]:null;}
+  function arcanaOrientation(){return state().arcana?.orientation==='reversed'?'reversed':'upright';}
   function conversionFor(instance){return state().cardConversions?.[instance.cardId]||null;}
   function cardTags(instance){return D.getCardTags?D.getCardTags(state(),instance.cardId):(card(instance)?.tags||[]);}
   function isConverted(instance){return !!conversionFor(instance);}
@@ -58,8 +61,14 @@
   function v19RuleMatch(when,ctx){
     if(!when)return true;const b=Battle.current;
     if(when.tuned!=null&&!!ctx.tune!==!!when.tuned)return false;
+    if(when.runed!=null&&!!ctx.rune!==!!when.runed)return false;
     if(when.converted!=null&&!!ctx.conv!==!!when.converted)return false;
     if(when.tunedOrConverted&&!(ctx.tune||ctx.conv))return false;
+    if(when.plainCard&&(ctx.tune||ctx.conv||ctx.rune))return false;
+    if(when.augmentationMin!=null&&[ctx.tune,ctx.conv,ctx.rune].filter(Boolean).length<when.augmentationMin)return false;
+    if(when.arcanaActive&&!activeArcana())return false;
+    if(when.arcanaUpright&&(!activeArcana()||arcanaOrientation()!=='upright'))return false;
+    if(when.arcanaReversed&&(!activeArcana()||arcanaOrientation()!=='reversed'))return false;
     if(when.minTags!=null&&ctx.tags.length<when.minTags)return false;if(when.maxTags!=null&&ctx.tags.length>when.maxTags)return false;
     if(when.tag&&!ctx.tags.includes(when.tag))return false;
     const traits=(b.enemy.traits||[]).filter(id=>D.TRAITS[id]).length,beh=enemyBehaviorCount();
@@ -68,24 +77,29 @@
     if(when.position&&ctx.pos!==when.position)return false;if(when.positionSide&&ctx.pos==='center')return false;
     if(when.positionChanged&&!(b.lastChoicePosition&&ctx.pos!==b.lastChoicePosition))return false;
     if(when.positionSame&&!(b.lastChoicePosition&&ctx.pos===b.lastChoicePosition))return false;
-    if(when.linkActive!=null&&!!ctx.linkActive!==!!when.linkActive)return false;if(when.pairCard&& !pairIncludesCurrent(ctx.instance))return false;
-    if(when.recentReshuffle&&!b.firstCardAfterReshuffle)return false;if(when.lowHp&&b.player.hp>b.player.maxHp/2)return false;
+    if(when.linkActive!=null&&!!ctx.linkActive!==!!when.linkActive)return false;if(when.pairCard&&!pairIncludesCurrent(ctx.instance))return false;if(when.notPairCard&&pairIncludesCurrent(ctx.instance))return false;
+    if(when.recentReshuffle&&!b.firstCardAfterReshuffle)return false;if(when.lowHp&&b.player.hp>b.player.maxHp/2)return false;if(when.highHp&&b.player.hp<=b.player.maxHp/2)return false;
+    if(when.enemyIsBoss&&!b.isBoss)return false;
     if(when.statusMin!=null&&statusCount()<when.statusMin)return false;if(when.discarded&&!b.discardedEver[ctx.instance.uid])return false;
     if(when.upgraded&&!ctx.instance.upgraded)return false;if(when.reserved&&!ctx.instance.wasReserved)return false;if(when.doctrine&&!doctrineActive())return false;
     if(when.blockish&&!(ctx.c.kind==='block'||ctx.c.kind==='hybrid'))return false;if(when.counterish&&!(ctx.c.counter||ctx.c.fixedCounter))return false;
-    const hits=Math.max(ctx.c.hits||0,ctx.c.conditionalHits||0,ctx.c.prevAttackHits||0,ctx.c.lowHpHits||0);if(when.hitsMin!=null&&hits<when.hitsMin)return false;
+    if(when.attackish&&!(ctx.c.kind==='damage'||ctx.c.kind==='hybrid'||ctx.c.damage!=null||ctx.c.hits))return false;
+    if(when.selfDamageOrLowHp&&!(ctx.c.selfDamage||ctx.conv==='blood_role'||b.player.hp<=b.player.maxHp/2))return false;
+    const hits=Math.max(ctx.c.hits||0,ctx.c.conditionalHits||0,ctx.c.prevAttackHits||0,ctx.c.lowHpHits||0);if(when.hitsMin!=null&&hits<when.hitsMin)return false;if(when.hitsMax!=null&&hits>when.hitsMax)return false;
     if(when.copiesMin!=null&&deckCopies(ctx.instance.cardId)<when.copiesMin)return false;if(when.copiesMax!=null&&deckCopies(ctx.instance.cardId)>when.copiesMax)return false;
     if(when.promptMin!=null&&b.lastPromptCount<when.promptMin)return false;if(when.promptMax!=null&&b.lastPromptCount>when.promptMax)return false;
     if(when.sameAsLast&&(!b.lastUsed||b.lastUsed.cardId!==ctx.instance.cardId))return false;
     if(when.differentFromLast&&(!b.lastUsed||b.lastUsed.cardId===ctx.instance.cardId))return false;
     if(when.altStyle&&!hasAltStyle())return false;if(when.cardStatus&&!v19CardStatus(ctx.c,when.cardStatus))return false;
+    if(when.arcanaMatch&&!currentArcanaMatches(ctx))return false;
     return true;
   }
+  function currentArcanaMatches(ctx){const a=activeArcana();if(!a)return false;const side=a[arcanaOrientation()];return !!side&&v19RuleMatch(side.when||{},ctx);}
   function v19ApplyClauses(m,clauses,ctx){for(const clause of clauses||[])if(v19RuleMatch(clause.when,ctx))m*=clause.mult||1;return m;}
 
   function create(mode=false){
     const s=state(),rules=deckRules();if(s.deck.length!==rules.deckSize)return {error:`現在の構築規格ではデッキを${rules.deckSize}枚にしてください`};const counts={};for(const id of s.deck){counts[id]=(counts[id]||0)+1;if(rules.id&&counts[id]>rules.copyLimit)return {error:`現在の構築規格では同名カードは${rules.copyLimit}枚までです`};}
-    const bossId=mode===true?'boss1':(['boss1','boss2','boss3'].includes(mode)?mode:null),isBoss=!!bossId;
+    const bossId=mode===true?'boss1':(['boss1','boss2','boss3','boss4'].includes(mode)?mode:null),isBoss=!!bossId;
     const discovered=isBoss?[]:BL.Enemy.detectDiscoveries(s);const behaviorDiscovered=isBoss?[]:BL.Enemy.detectBehaviorDiscoveries(s);BL.Store.save();
     const e=BL.Enemy.effective(s,bossId),c=D.CHARACTERS[s.character];
     const hpPenalty=activeProtocol('scar_exchange')?8:activeProtocol('cycle_prime')?5:0;
@@ -99,7 +113,7 @@
       discardedEver:{},lastDiscard:null,lastUsed:null,cardUsedThisTurn:null,
       reorderNext:false,redrawNext:false,relicRedrawUsed:false,
       reshuffles:0,recentReshuffle:false,firstReshuffleHealUsed:false,firstCardAfterReshuffle:false,overrotationNext:false,
-      lastWasAttack:false,lastWasMulti:false,lastWasBlock:false,discardedThisTurn:0,counter:0,fixedCounter:0,usedBlockUid:null,fastAccumulator:0,perfectWallHealedThisEnemyTurn:false,bastionMemoryHealedThisEnemyTurn:false,statusBlockGained:0,lastChoicePosition:null,previousChoicePosition:null,repeatedPosition:false,positionStreak:0,enemyHealed:false,enemyHealedLastTurn:false,behaviorHealedLastTurn:false,behaviorTriggered:{},enemyTempAtk:0,suppressRegen:false,linkComboCount:0,linkForwardCount:0,linkReverseCount:0,
+      lastWasAttack:false,lastWasMulti:false,lastWasBlock:false,discardedThisTurn:0,counter:0,fixedCounter:0,usedBlockUid:null,fastAccumulator:0,perfectWallHealedThisEnemyTurn:false,bastionMemoryHealedThisEnemyTurn:false,statusBlockGained:0,lastChoicePosition:null,previousChoicePosition:null,repeatedPosition:false,positionStreak:0,enemyHealed:false,enemyHealedLastTurn:false,behaviorHealedLastTurn:false,behaviorTriggered:{},enemyTempAtk:0,suppressRegen:false,linkComboCount:0,linkForwardCount:0,linkReverseCount:0,boss4LastLayer:null,boss4RepeatedLayer:false,
       log:[]
     };
     log(`実験開始：${e.name}`);if(discovered.length)log(`特殊個体を発見：${discovered.join(' / ')}`);if(behaviorDiscovered.length)log(`複合挙動を発見：${behaviorDiscovered.join(' / ')}`);
@@ -136,7 +150,7 @@
   }
 
   function selectedMultiplier(index,instance){
-    const b=Battle.current;const c=card(instance),tags=cardTags(instance),conv=conversionFor(instance);const center=Math.floor((b.prompt.length-1)/2),pos=index<center?'left':index===center?'center':'right',tune=tuningFor(instance);
+    const b=Battle.current;const c=card(instance),tags=cardTags(instance),conv=conversionFor(instance);const center=Math.floor((b.prompt.length-1)/2),pos=index<center?'left':index===center?'center':'right',tune=tuningFor(instance),rune=runeFor(instance);
     let m=1;
     if(hasRelic('empty_crown'))m*=1.25;
     if(b.player.nextBuff)m*=1+b.player.nextBuff;
@@ -348,12 +362,18 @@
     for(const rid of state().relics||[]){const rr=D.V14_RELIC_RULES?.[rid];if(!rr)continue;if(rr.tag&&!tags.includes(rr.tag))continue;if(rr.tags){const hitCount=rr.tags.filter(t=>tags.includes(t)).length;if(rr.requireAll&&hitCount<rr.tags.length)continue;if(!rr.requireAll&&hitCount===0)continue;}if(rr.altStyle&&!hasAltStyle())continue;if(rr.tuned&&!tune)continue;if(rr.converted&&!conv)continue;if(rr.enemyBehavior&&behaviorCount<=0)continue;if(rr.doctrine&&!doctrineActive())continue;if(rr.linkedCard&&!pairIncludesCurrent(instance))continue;m*=rr.mult||1;}
     const pr=D.V13_PROTOCOL_RULES?.[state().protocol];if(pr){const hits=(pr.tags||[]).filter(t=>tags.includes(t)).length;if(hits>=2)m*=1.28;else if(hits===1)m*=1.12;else m*=.95;}
     const pr14=D.V14_PROTOCOL_RULES?.[state().protocol];if(pr14){if(pr14.tags){const hits=pr14.tags.filter(t=>tags.includes(t)).length;if(hits>=2)m*=pr14.double||1;else if(hits===1)m*=pr14.single||1;else m*=pr14.miss||1;}else{let ok=true;if(pr14.altStyle&&!hasAltStyle())ok=false;if(pr14.tuned&&!tune)ok=false;if(pr14.converted&&!conv)ok=false;if(pr14.enemyBehavior&&behaviorCount<=0)ok=false;m*=ok?(pr14.hit||1):(pr14.miss||1);}}
-    const v19ctx={instance,c,tags,tune,conv,pos,linkActive};
+    const v19ctx={instance,c,tags,tune,conv,rune,pos,linkActive};
     const v19style=activeStyle();const v19charClauses=(v19style&&D.V19_STYLE_RULES?.[v19style.id])||D.V19_CHARACTER_RULES?.[state().character];
     if(v19charClauses)m=v19ApplyClauses(m,v19charClauses,v19ctx);
     for(const rid of state().relics||[]){const clauses=D.V19_RELIC_RULES?.[rid];if(clauses)m=v19ApplyClauses(m,clauses,v19ctx);}
     const pr19=D.V19_PROTOCOL_RULES?.[state().protocol];if(pr19)m*=v19RuleMatch(pr19.when,v19ctx)?(pr19.hit||1):(pr19.miss||1);
     const tr19=D.V19_TUNING_RULES?.[tune];if(tr19)m*=v19RuleMatch(tr19.when,v19ctx)?(tr19.hit||1):(tr19.miss||1);
+    const v20style=activeStyle();const v20charClauses=(v20style&&D.V20_STYLE_RULES?.[v20style.id])||D.V20_CHARACTER_RULES?.[state().character];if(v20charClauses)m=v19ApplyClauses(m,v20charClauses,v19ctx);
+    for(const rid of state().relics||[]){const clauses=D.V20_RELIC_RULES?.[rid];if(clauses)m=v19ApplyClauses(m,clauses,v19ctx);}
+    const pr20=D.V20_PROTOCOL_RULES?.[state().protocol];if(pr20)m*=v19RuleMatch(pr20.when,v19ctx)?(pr20.hit||1):(pr20.miss||1);
+    const tr20=D.V20_TUNING_RULES?.[tune];if(tr20)m*=v19RuleMatch(tr20.when,v19ctx)?(tr20.hit||1):(tr20.miss||1);
+    if(rune){const rr=D.RUNES?.[rune];if(rr&&v19RuleMatch(rr.when||{},v19ctx))m*=rr.hit||1;}
+    const arc=activeArcana();if(arc){const side=arc[arcanaOrientation()];if(side&&v19RuleMatch(side.when||{},v19ctx))m*=side.mult||1;}
     if(b.player.nextPenalty)m*=Math.max(0,1-b.player.nextPenalty);
     return m;
   }
@@ -361,7 +381,7 @@
   function play(index){
     const b=Battle.current;if(!b||!b.prompt[index])return;
     const selected=b.prompt[index],c=card(selected),center=Math.floor((b.prompt.length-1)/2),others=b.prompt.filter((_,i)=>i!==index),prevPos=b.lastChoicePosition,pos=index<center?'left':index===center?'center':'right',tune=tuningFor(selected),conv=conversionFor(selected),selectedWasReserved=!!selected.wasReserved;
-    const linkActive=linkedCombo(selected),mult=selectedMultiplier(index,selected),kindKey=(conv==='bulwark'||conv==='counter_role')?'hybrid':(c.kind==='hybrid'?'hybrid':(c.kind||'utility'));b.player.nextBuff=0;b.player.nextPenalty=0;b.firstCardAfterReshuffle=false;b.previousChoicePosition=prevPos;b.repeatedPosition=!!(prevPos&&prevPos===pos);b.lastChoicePosition=pos;b.positionStreak=(prevPos&&prevPos!==pos)?Math.min(2,(b.positionStreak||0)+1):0;b.boss3RepeatedKind=!!(b.bossId==='boss3'&&b.lastUsedKind&&b.lastUsedKind===kindKey);b.lastUsedKind=kindKey;
+    const linkActive=linkedCombo(selected),mult=selectedMultiplier(index,selected),kindKey=(conv==='bulwark'||conv==='counter_role')?'hybrid':(c.kind==='hybrid'?'hybrid':(c.kind||'utility')),boss4Layer=linkActive?'link':(tune&&conv?'dual':tune?'tune':conv?'conversion':(cardTags(selected).length>=2?'hybrid':'base'));b.player.nextBuff=0;b.player.nextPenalty=0;b.firstCardAfterReshuffle=false;b.previousChoicePosition=prevPos;b.repeatedPosition=!!(prevPos&&prevPos===pos);b.lastChoicePosition=pos;b.positionStreak=(prevPos&&prevPos!==pos)?Math.min(2,(b.positionStreak||0)+1):0;b.boss3RepeatedKind=!!(b.bossId==='boss3'&&b.lastUsedKind&&b.lastUsedKind===kindKey);b.lastUsedKind=kindKey;b.boss4RepeatedLayer=!!(b.bossId==='boss4'&&b.boss4LastLayer&&b.boss4LastLayer===boss4Layer);b.boss4LastLayer=boss4Layer;
     // prompt所有権を先に解消。選ばれなかったカードは捨て札/除外へ。
     b.prompt=[];b.resolving.push(selected);others.forEach(x=>discardInstance(x,true));
     const repeat=(state().character==='standard'&&!hasAltStyle()&&index===center)?2:1;if(repeat===2)log(`${D.CHARACTERS.standard.name}：中央枠を2回発動。`);
@@ -453,7 +473,8 @@
   function healPlayer(n){const b=Battle.current;if(n<=0)return;b.player.hp=Math.min(b.player.maxHp,b.player.hp+n);log(`HP ${n} 回復`);}
   function enemyAttackValue(){const b=Battle.current;let a=b.enemy.atk+(b.enemyTempAtk||0);if(b.enemy.status.weak>0)a*=.7;return Math.max(1,Math.round(a));}
   function actionCountPreview(){const b=Battle.current;return Math.max(1,Math.floor(b.enemy.spd+(b.fastAccumulator||0)));}
-  function bossIntentText(){const b=Battle.current;if(b?.bossId==='boss2')return `適応攻撃 ${enemyAttackValue()} ｜ 同じ位置を連続選択すると攻撃+3・次ターン障壁10 ｜ 再生 ${b.enemy.regen} / 耐性 ${b.enemy.resist}%`;if(b?.bossId==='boss3')return `構築攻撃 ${enemyAttackValue()} ｜ 同じカード種別を連続使用すると攻撃+2・次ターン障壁8 ｜ 再生 ${b.enemy.regen} / 耐性 ${b.enemy.resist}%`;return `観測攻撃 ${enemyAttackValue()} ｜ 左：次ターン障壁7 / 中央：この攻撃+3 / 右：次カード効果-15%`;}
+  function bossIntentText(){const b=Battle.current;if(b?.bossId==='boss2')return `適応攻撃 ${enemyAttackValue()} ｜ 同じ位置を連続選択すると攻撃+3・次ターン障壁10 ｜ 再生 ${b.enemy.regen} / 耐性 ${b.enemy.resist}%`;if(b?.bossId==='boss3')return `構築攻撃 ${enemyAttackValue()} ｜ 同じカード種別を連続使用すると攻撃+2・次ターン障壁8 ｜ 再生 ${b.enemy.regen} / 耐性 ${b.enemy.resist}%`;if(b?.bossId==='boss4')return `統合攻撃 ${enemyAttackValue()} ｜ 同じ強化系統を連続使用すると攻撃+2・次ターン障壁9 ｜ 再生 ${b.enemy.regen} / 耐性 ${b.enemy.resist}%`;return `観測攻撃 ${enemyAttackValue()} ｜ 左：次ターン障壁7 / 中央：この攻撃+3 / 右：次カード効果-15%`;}
+
 
   function enemyTurn(){
     const b=Battle.current;if(checkEnd())return;if(b.isBoss)b.enemy.block=0;
@@ -471,7 +492,7 @@
     let reflectedThisTurn=false;
     for(let i=0;i<actions;i++){
       if(b.enemy.status.poison>0){dealRawEnemy(b.enemy.status.poison,'毒');b.enemy.status.poison=Math.max(0,b.enemy.status.poison-1);if(checkEnd())return;}
-      const incoming=enemyAttackValue()+(b.bossId==='boss1'&&b.lastChoicePosition==='center'?3:0)+(b.bossId==='boss2'&&b.repeatedPosition?3:0)+(b.bossId==='boss3'&&b.boss3RepeatedKind?2:0),beforeBlock=b.player.block,blocked=Math.min(beforeBlock,incoming),dmg=Math.max(0,incoming-beforeBlock);b.player.block=Math.max(0,b.player.block-incoming);b.player.hp-=dmg;log(`敵の攻撃 ${incoming}（防御 ${blocked} / 被ダメ ${dmg}）`);
+      const incoming=enemyAttackValue()+(b.bossId==='boss1'&&b.lastChoicePosition==='center'?3:0)+(b.bossId==='boss2'&&b.repeatedPosition?3:0)+(b.bossId==='boss3'&&b.boss3RepeatedKind?2:0)+(b.bossId==='boss4'&&b.boss4RepeatedLayer?2:0),beforeBlock=b.player.block,blocked=Math.min(beforeBlock,incoming),dmg=Math.max(0,incoming-beforeBlock);b.player.block=Math.max(0,b.player.block-incoming);b.player.hp-=dmg;log(`敵の攻撃 ${incoming}（防御 ${blocked} / 被ダメ ${dmg}）`);
       if(dmg>0&&b.counter>0){let cm=1;if(activeProtocol('counter_matrix'))cm*=1.3;if(hasRelic('counter_core'))cm*=1.4;if(hasRelic('red_mirror'))cm*=1.3;if(hasRelic('breaker_anvil')&&hasAnyStatus())cm*=1.35;dealRawEnemy(Math.round(dmg*b.counter*cm),'反撃');}if(dmg>0&&b.fixedCounter>0)dealRawEnemy(Math.round(b.fixedCounter*(activeProtocol('counter_matrix')?1.3:1)),'迎撃');if(dmg>0&&hasRelic('reflect_bone')&&!reflectedThisTurn){dealRawEnemy(Math.round(dmg*.5),'反射骨');reflectedThisTurn=true;}
       if(blocked>=incoming/2&&hasRelic('pressure_plate'))applyStatus('vulnerable',1);
       if(blocked>=incoming&&incoming>0){if(hasRelic('perfect_wall')&&!b.perfectWallHealedThisEnemyTurn){healPlayer(2);b.perfectWallHealedThisEnemyTurn=true;}if(hasRelic('iron_heartbeat'))b.player.nextBuff=Math.max(b.player.nextBuff,.25);if(hasRelic('fortress_core'))b.player.nextBuff=Math.max(b.player.nextBuff,.30);if(hasRelic('bastion_memory')&&!b.bastionMemoryHealedThisEnemyTurn){healPlayer(3);b.bastionMemoryHealedThisEnemyTurn=true;}if(b.usedBlockUid){const used=allOwnedInstances().find(x=>x.uid===b.usedBlockUid);if(used&&card(used).returnIfFullBlock){const moved=moveTo(used.uid,'draw',true);if(moved)log(`受け流し：《${card(moved).name}》を山札へ戻した。`);}}}
@@ -485,6 +506,7 @@
     if(b.bossId==='boss1'){if(b.lastChoicePosition==='left'){b.enemy.block=7;log('観測体：左枠を観測し、次ターン用の障壁7を展開。');}else if(b.lastChoicePosition==='right'){b.player.nextPenalty=Math.max(b.player.nextPenalty,.15);log('観測体：右枠を観測し、次カードの効果を15%低下。');}else if(b.lastChoicePosition==='center')log('観測体：中央枠を観測し、攻撃を増幅した。');}
     if(b.bossId==='boss2'&&b.repeatedPosition){b.enemy.block=10;log('適応体：同じ位置の連続選択へ適応し、次ターン障壁10を展開。');}
     if(b.bossId==='boss3'&&b.boss3RepeatedKind){b.enemy.block=8;log('構築体：同じカード種別の連続使用を解析し、次ターン障壁8を展開。');}
+    if(b.bossId==='boss4'&&b.boss4RepeatedLayer){b.enemy.block=9;log('統合体：同じ強化系統の連続使用へ適応し、次ターン障壁9を展開。');}
     if(state().character==='tank'){if(styleIs('tank_forge')){const candidates=allOwnedInstances().filter(x=>!x.upgraded);if(candidates.length){const target=U.pick(candidates);target.upgraded=true;log(`フォート・自動鍛造型：《${card(target).name}》が強化版へ変化。`);}else{b.player.nextBuff=Math.max(b.player.nextBuff,.20);log('フォート・自動鍛造型：全カード鍛造済み。次カードを強化。');}}else if(b.cardUsedThisTurn&&!b.cardUsedThisTurn.upgraded){b.cardUsedThisTurn.upgraded=true;log(`フォート：《${card(b.cardUsedThisTurn).name}》が強化版へ変化。`);}}b.cardUsedThisTurn=null;
     b.turn++;beginTurn();
   }
@@ -492,7 +514,7 @@
   function checkEnd(){const b=Battle.current;if(!b)return true;if(b.enemy.hp<=0){finish(true,false);return true;}if(b.player.hp<=0){finish(false,false);return true;}return false;}
   function finish(win,retired){
     const b=Battle.current;if(!b)return;const s=state();let newUnlocks=[];
-    if(win){s.stats.wins++;if(b.bossId==='boss1')s.bossDefeated=true;if(b.bossId==='boss2')s.boss2Defeated=true;if(b.bossId==='boss3')s.boss3Defeated=true;if(b.isBoss)s.stats.bossWins++;newUnlocks.push(...BL.Unlock.processWinUnlocks(s,b));}else if(!retired)s.stats.losses++;
+    if(win){s.stats.wins++;if(b.bossId==='boss1')s.bossDefeated=true;if(b.bossId==='boss2')s.boss2Defeated=true;if(b.bossId==='boss3')s.boss3Defeated=true;if(b.bossId==='boss4')s.boss4Defeated=true;if(b.isBoss)s.stats.bossWins++;newUnlocks.push(...BL.Unlock.processWinUnlocks(s,b));}else if(!retired)s.stats.losses++;
     BL.Store.save();const result={win,retired,battle:b,newUnlocks:[...new Set(newUnlocks)]};Battle.current=null;if(typeof Battle.onEnd==='function')Battle.onEnd(result);emit();
   }
 

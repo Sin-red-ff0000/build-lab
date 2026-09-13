@@ -5,7 +5,7 @@ const mem={};
 global.localStorage={getItem:k=>mem[k]??null,setItem:(k,v)=>{mem[k]=String(v)},removeItem:k=>{delete mem[k]}};
 const root=path.resolve(__dirname,'..');
 for(const f of [
-  'js/data/gameData.js','js/data/protocols.js','js/data/tunings.js','js/data/conversions.js','js/data/chapter3.js','js/data/expansion08.js','js/data/expansion09.js','js/data/doctrines.js','js/data/characterStyles.js','js/data/expansion10.js','js/data/expansion11.js','js/data/expansion12.js','js/data/enemyBehaviors.js','js/data/expansion13.js','js/data/expansion14.js','js/data/expansion17.js','js/data/expansion18.js','js/data/expansion19.js','js/core/utils.js','js/core/unlock.js','js/data/unlocks.js','js/data/unlocks07.js','js/data/unlocks08.js','js/data/unlocks09.js','js/data/unlocks10.js','js/data/unlocks11.js','js/data/unlocks12.js','js/data/unlocks13.js','js/data/unlocks14.js','js/data/unlocks17.js','js/data/unlocks18.js','js/data/unlocks19.js','js/core/state.js','js/core/enemy.js','js/core/battle.js'
+  'js/data/gameData.js','js/data/protocols.js','js/data/tunings.js','js/data/conversions.js','js/data/chapter3.js','js/data/expansion08.js','js/data/expansion09.js','js/data/doctrines.js','js/data/characterStyles.js','js/data/expansion10.js','js/data/expansion11.js','js/data/expansion12.js','js/data/enemyBehaviors.js','js/data/expansion13.js','js/data/expansion14.js','js/data/expansion17.js','js/data/expansion18.js','js/data/expansion19.js','js/data/runes.js','js/data/arcana.js','js/data/expansion20.js','js/core/utils.js','js/core/unlock.js','js/data/unlocks.js','js/data/unlocks07.js','js/data/unlocks08.js','js/data/unlocks09.js','js/data/unlocks10.js','js/data/unlocks11.js','js/data/unlocks12.js','js/data/unlocks13.js','js/data/unlocks14.js','js/data/unlocks17.js','js/data/unlocks18.js','js/data/unlocks19.js','js/data/unlocks20.js','js/core/state.js','js/core/enemy.js','js/core/battle.js'
 ]) require(path.join(root,f));
 const BL=global.BuildLab,D=BL.Data;
 function assert(cond,msg){if(!cond)throw new Error(msg);}
@@ -23,7 +23,7 @@ assert(new Set(D.BASE_CARD_IDS).size===D.BASE_CARD_IDS.length,'初期カードID
 assert(new Set(D.BASE_RELIC_IDS).size===D.BASE_RELIC_IDS.length,'初期遺物IDに重複があります');
 assert(D.DEFAULT_DECK.length===10,'初期デッキが10枚ではありません');
 D.DEFAULT_DECK.forEach(id=>assert(D.CARDS[id],`初期デッキに存在しないカード: ${id}`));
-for(const u of D.UNLOCKS){assert(typeof u.check==='function',`unlock check missing: ${u.id}`);assert(Array.isArray(u.reward),`unlock reward invalid: ${u.id}`);for(const id of u.reward){if(id==='第1ボス挑戦権')continue;assert(D.CARDS[id]||D.RELICS[id]||D.TRAITS[id]||D.PROTOCOLS[id]||D.CHARACTERS[id]||D.CHARACTER_STYLES?.[id]||D.DOCTRINES?.[id]||D.TUNINGS?.[id]||D.CARD_CONVERSIONS?.[id]||D.LINK_MODES?.[id]||D.ENEMY_BEHAVIORS?.[id]||D.SYSTEMS[id],`unlock reward missing: ${u.id} -> ${id}`);}}
+for(const u of D.UNLOCKS){assert(typeof u.check==='function',`unlock check missing: ${u.id}`);assert(Array.isArray(u.reward),`unlock reward invalid: ${u.id}`);for(const id of u.reward){if(id==='第1ボス挑戦権')continue;assert(D.CARDS[id]||D.RELICS[id]||D.TRAITS[id]||D.PROTOCOLS[id]||D.CHARACTERS[id]||D.CHARACTER_STYLES?.[id]||D.DOCTRINES?.[id]||D.TUNINGS?.[id]||D.CARD_CONVERSIONS?.[id]||D.LINK_MODES?.[id]||D.ENEMY_BEHAVIORS?.[id]||D.RUNES?.[id]||D.ARCANA?.[id]||D.SYSTEMS[id],`unlock reward missing: ${u.id} -> ${id}`);}}
 
 // 旧データにv0.4初期要素が追加されること
 const migrated=BL.Store.mergeDefaults({version:2,deck:[...D.DEFAULT_DECK],unlockedCards:{double_strike:true},unlockedRelics:{selection_lens:true},flags:{hp5:true},defeatedTraits:{giant:true}});
