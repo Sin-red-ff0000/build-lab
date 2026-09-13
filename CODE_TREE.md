@@ -1,7 +1,7 @@
-# BUILD LAB v0.14 CODE TREE
+# BUILD LAB v0.15 CODE TREE
 
 ```text
-build_lab_v14/
+build_lab_v15/
 ├─ index.html
 ├─ README.md
 ├─ CHANGELOG.md
@@ -29,6 +29,7 @@ build_lab_v14/
 │  │  ├─ enemyBehaviors.js
 │  │  ├─ expansion13.js
 │  │  ├─ expansion14.js       # v0.14 カード/遺物/プロトコル
+│  │  ├─ guides.js            # v0.15 システム解説データ
 │  │  ├─ unlocks.js
 │  │  ├─ unlocks07.js
 │  │  ├─ unlocks08.js
@@ -41,7 +42,7 @@ build_lab_v14/
 │  ├─ core/
 │  │  ├─ utils.js
 │  │  ├─ unlock.js
-│  │  ├─ state.js             # v14セーブ / モバイル段階表示状態
+│  │  ├─ state.js             # v15セーブ / 旧セーブ移行 / モバイル段階表示状態
 │  │  ├─ enemy.js
 │  │  └─ battle.js            # v14遺物/プロトコル規則接続
 │  └─ ui/
@@ -55,6 +56,7 @@ build_lab_v14/
 │     ├─ experimentView.js
 │     ├─ battleView.js        # タッチ操作 / ページャー
 │     ├─ metaView.js
+│     ├─ guideView.js         # v0.15 解説検索/描画
 │     └─ mobile.js            # v0.14モバイル操作統合
 └─ tests/
    ├─ smoke.test.js
@@ -74,7 +76,8 @@ build_lab_v14/
    ├─ expansion13_systems.test.js
    ├─ expansion14_systems.test.js # v0.14追加要素/移行
    ├─ static_ui.test.js
-   ├─ mobile_ui.test.js           # v0.14スマホUI検査
+   ├─ mobile_ui.test.js           # スマホUI検査
+   ├─ system_guide.test.js        # v0.15システム解説検査
    ├─ run_checks.sh
    └─ run_checks.bat
 ```
@@ -97,3 +100,9 @@ build_lab_v14/
 - カード/遺物段階表示
 - フィルター条件数 / 一括解除
 - 横画面ルール
+
+
+## v0.15 追加
+- `js/data/guides.js` — システム解説データを一元管理
+- `js/ui/guideView.js` — 解説検索・カテゴリ・クイックリンク描画
+- `tests/system_guide.test.js` — 解説項目・UI・必須項目の回帰検査

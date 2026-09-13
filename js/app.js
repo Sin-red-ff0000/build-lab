@@ -3,7 +3,7 @@
   const BL=window.BuildLab; BL.UI=BL.UI||{};
   BL.UI.toast=function(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(()=>t.classList.remove('show'),2200);};
   BL.UI.showModal=function(html){document.getElementById('modalBody').innerHTML=html;document.getElementById('modal').classList.remove('hidden');};
-  BL.UI.renderAll=function(){BL.UI.renderCharacters();BL.UI.renderCharacterStyles();BL.UI.renderDeck();BL.UI.renderRelics();BL.UI.renderProtocols();BL.UI.renderTunings();BL.UI.renderConversions();BL.UI.renderLinks();BL.UI.renderDoctrines();BL.UI.renderExperiment();BL.UI.renderUnlocks();BL.UI.renderCollection();BL.UI.renderBattle();BL.Store.save();};
+  BL.UI.renderAll=function(){BL.UI.renderCharacters();BL.UI.renderCharacterStyles();BL.UI.renderDeck();BL.UI.renderRelics();BL.UI.renderProtocols();BL.UI.renderTunings();BL.UI.renderConversions();BL.UI.renderLinks();BL.UI.renderDoctrines();BL.UI.renderExperiment();BL.UI.renderUnlocks();BL.UI.renderCollection();BL.UI.renderGuides();BL.UI.renderBattle();BL.Store.save();};
 
   function startBattle(mode=false){const r=BL.Battle.create(mode);if(r.error)return BL.UI.toast(r.error);document.getElementById('battlePanel').classList.remove('hidden');BL.UI.renderAll();document.getElementById('battlePanel').scrollIntoView({behavior:'smooth',block:'start'});}
   function bind(){

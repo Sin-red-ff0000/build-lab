@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BUILD LAB - ビルド実験場 v0.14</title>
+  <title>BUILD LAB - ビルド実験場 v0.15</title>
   <link rel="stylesheet" href="styles/base.css" />
   <link rel="stylesheet" href="styles/layout.css" />
   <link rel="stylesheet" href="styles/components.css" />
@@ -13,7 +13,7 @@
   <div class="app-shell">
     <header class="topbar">
       <div>
-        <div class="eyebrow">BUILD EXPERIMENT GAME / PROTOTYPE 0.14</div>
+        <div class="eyebrow">BUILD EXPERIMENT GAME / PROTOTYPE 0.15</div>
         <h1>BUILD LAB <span>ビルド実験場</span></h1>
       </div>
       <div class="header-actions">
@@ -33,6 +33,7 @@
       <button class="tab" data-tab="experiment">実験場</button>
       <button class="tab" data-tab="unlock">アンロック</button>
       <button class="tab" data-tab="collection">図鑑</button>
+      <button class="tab" data-tab="guide">システム解説</button>
     </nav>
 
     <main>
@@ -222,6 +223,19 @@
         <div id="collectionStats" class="collection-stats"></div>
         <div class="collection-columns"><article class="panel"><h3>キャラクター</h3><div id="collectionChars"></div></article><article class="panel"><h3>特殊個体</h3><div id="collectionTraits"></div></article><article class="panel"><h3>複合挙動</h3><div id="collectionBehaviors"></div></article><article class="panel"><h3>システム</h3><div id="collectionSystems"></div></article></div>
       </section>
+
+      <section id="tab-guide" class="tab-panel">
+        <div class="section-head"><div><div class="kicker">06 / SYSTEM GUIDE</div><h2>システム解説</h2></div><div class="meta">ゲーム内の仕組みをここに集約</div></div>
+        <article class="panel guide-intro">
+          <div class="panel-head"><div><h3>BUILD LAB 操作・システムガイド</h3><p>各システムの概要、設定場所、制限、他要素との組み合わせ、具体例を一か所で確認できます。</p></div><div class="counter" id="guideResultCount">0件</div></div>
+          <div class="filter-bar guide-filters">
+            <input id="guideSearch" type="search" placeholder="例：カード調律、連結、特殊個体、捨て札…" />
+            <select id="guideCategoryFilter"><option value="all">すべてのカテゴリ</option></select>
+          </div>
+          <div class="guide-quick" id="guideQuickLinks"></div>
+        </article>
+        <div id="guideList" class="guide-list"></div>
+      </section>
     </main>
 
     <div id="mobileExperimentDock" class="mobile-experiment-dock" aria-label="mobile experiment actions">
@@ -238,6 +252,7 @@
       <button class="mobile-nav-btn" data-mobile-tab="experiment"><span>LAB</span><strong>実験場</strong></button>
       <button class="mobile-nav-btn" data-mobile-tab="unlock"><span>GOAL</span><strong>解放</strong></button>
       <button class="mobile-nav-btn" data-mobile-tab="collection"><span>BOOK</span><strong>図鑑</strong></button>
+      <button class="mobile-nav-btn" data-mobile-tab="guide"><span>HELP</span><strong>解説</strong></button>
     </nav>
 
     <div id="toast" class="toast"></div>
@@ -259,6 +274,7 @@
   <script src="js/data/enemyBehaviors.js"></script>
   <script src="js/data/expansion13.js"></script>
   <script src="js/data/expansion14.js"></script>
+  <script src="js/data/guides.js"></script>
   <script src="js/core/utils.js"></script>
   <script src="js/core/unlock.js"></script>
   <script src="js/data/unlocks.js"></script>
@@ -283,6 +299,7 @@
   <script src="js/ui/experimentView.js"></script>
   <script src="js/ui/battleView.js"></script>
   <script src="js/ui/metaView.js"></script>
+  <script src="js/ui/guideView.js"></script>
   <script src="js/ui/mobile.js"></script>
   <script src="js/app.js"></script>
 </body>
