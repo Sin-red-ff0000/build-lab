@@ -50,6 +50,38 @@
   function enemyBehaviorCount(){return Battle.current?.enemy?.behaviors?.length||0;}
   function hasEnemyBehavior(id){return !!Battle.current?.enemy?.behaviors?.includes(id);}
   function behaviorDefs(){return (Battle.current?.enemy?.behaviors||[]).map(id=>D.ENEMY_BEHAVIORS?.[id]).filter(Boolean);}
+  function v19CardStatus(c,type){
+    if(c?.status?.type===type||c?.perHitStatus?.type===type)return true;
+    if(Array.isArray(c?.statuses)&&c.statuses.some(x=>x?.type===type))return true;
+    return false;
+  }
+  function v19RuleMatch(when,ctx){
+    if(!when)return true;const b=Battle.current;
+    if(when.tuned!=null&&!!ctx.tune!==!!when.tuned)return false;
+    if(when.converted!=null&&!!ctx.conv!==!!when.converted)return false;
+    if(when.tunedOrConverted&&!(ctx.tune||ctx.conv))return false;
+    if(when.minTags!=null&&ctx.tags.length<when.minTags)return false;if(when.maxTags!=null&&ctx.tags.length>when.maxTags)return false;
+    if(when.tag&&!ctx.tags.includes(when.tag))return false;
+    const traits=(b.enemy.traits||[]).filter(id=>D.TRAITS[id]).length,beh=enemyBehaviorCount();
+    if(when.enemyTraitsMin!=null&&traits<when.enemyTraitsMin)return false;if(when.enemyTraitsMax!=null&&traits>when.enemyTraitsMax)return false;
+    if(when.enemyBehaviorsMin!=null&&beh<when.enemyBehaviorsMin)return false;
+    if(when.position&&ctx.pos!==when.position)return false;if(when.positionSide&&ctx.pos==='center')return false;
+    if(when.positionChanged&&!(b.lastChoicePosition&&ctx.pos!==b.lastChoicePosition))return false;
+    if(when.positionSame&&!(b.lastChoicePosition&&ctx.pos===b.lastChoicePosition))return false;
+    if(when.linkActive!=null&&!!ctx.linkActive!==!!when.linkActive)return false;if(when.pairCard&& !pairIncludesCurrent(ctx.instance))return false;
+    if(when.recentReshuffle&&!b.firstCardAfterReshuffle)return false;if(when.lowHp&&b.player.hp>b.player.maxHp/2)return false;
+    if(when.statusMin!=null&&statusCount()<when.statusMin)return false;if(when.discarded&&!b.discardedEver[ctx.instance.uid])return false;
+    if(when.upgraded&&!ctx.instance.upgraded)return false;if(when.reserved&&!ctx.instance.wasReserved)return false;if(when.doctrine&&!doctrineActive())return false;
+    if(when.blockish&&!(ctx.c.kind==='block'||ctx.c.kind==='hybrid'))return false;if(when.counterish&&!(ctx.c.counter||ctx.c.fixedCounter))return false;
+    const hits=Math.max(ctx.c.hits||0,ctx.c.conditionalHits||0,ctx.c.prevAttackHits||0,ctx.c.lowHpHits||0);if(when.hitsMin!=null&&hits<when.hitsMin)return false;
+    if(when.copiesMin!=null&&deckCopies(ctx.instance.cardId)<when.copiesMin)return false;if(when.copiesMax!=null&&deckCopies(ctx.instance.cardId)>when.copiesMax)return false;
+    if(when.promptMin!=null&&b.lastPromptCount<when.promptMin)return false;if(when.promptMax!=null&&b.lastPromptCount>when.promptMax)return false;
+    if(when.sameAsLast&&(!b.lastUsed||b.lastUsed.cardId!==ctx.instance.cardId))return false;
+    if(when.differentFromLast&&(!b.lastUsed||b.lastUsed.cardId===ctx.instance.cardId))return false;
+    if(when.altStyle&&!hasAltStyle())return false;if(when.cardStatus&&!v19CardStatus(ctx.c,when.cardStatus))return false;
+    return true;
+  }
+  function v19ApplyClauses(m,clauses,ctx){for(const clause of clauses||[])if(v19RuleMatch(clause.when,ctx))m*=clause.mult||1;return m;}
 
   function create(mode=false){
     const s=state(),rules=deckRules();if(s.deck.length!==rules.deckSize)return {error:`現在の構築規格ではデッキを${rules.deckSize}枚にしてください`};const counts={};for(const id of s.deck){counts[id]=(counts[id]||0)+1;if(rules.id&&counts[id]>rules.copyLimit)return {error:`現在の構築規格では同名カードは${rules.copyLimit}枚までです`};}
@@ -316,6 +348,12 @@
     for(const rid of state().relics||[]){const rr=D.V14_RELIC_RULES?.[rid];if(!rr)continue;if(rr.tag&&!tags.includes(rr.tag))continue;if(rr.tags){const hitCount=rr.tags.filter(t=>tags.includes(t)).length;if(rr.requireAll&&hitCount<rr.tags.length)continue;if(!rr.requireAll&&hitCount===0)continue;}if(rr.altStyle&&!hasAltStyle())continue;if(rr.tuned&&!tune)continue;if(rr.converted&&!conv)continue;if(rr.enemyBehavior&&behaviorCount<=0)continue;if(rr.doctrine&&!doctrineActive())continue;if(rr.linkedCard&&!pairIncludesCurrent(instance))continue;m*=rr.mult||1;}
     const pr=D.V13_PROTOCOL_RULES?.[state().protocol];if(pr){const hits=(pr.tags||[]).filter(t=>tags.includes(t)).length;if(hits>=2)m*=1.28;else if(hits===1)m*=1.12;else m*=.95;}
     const pr14=D.V14_PROTOCOL_RULES?.[state().protocol];if(pr14){if(pr14.tags){const hits=pr14.tags.filter(t=>tags.includes(t)).length;if(hits>=2)m*=pr14.double||1;else if(hits===1)m*=pr14.single||1;else m*=pr14.miss||1;}else{let ok=true;if(pr14.altStyle&&!hasAltStyle())ok=false;if(pr14.tuned&&!tune)ok=false;if(pr14.converted&&!conv)ok=false;if(pr14.enemyBehavior&&behaviorCount<=0)ok=false;m*=ok?(pr14.hit||1):(pr14.miss||1);}}
+    const v19ctx={instance,c,tags,tune,conv,pos,linkActive};
+    const v19style=activeStyle();const v19charClauses=(v19style&&D.V19_STYLE_RULES?.[v19style.id])||D.V19_CHARACTER_RULES?.[state().character];
+    if(v19charClauses)m=v19ApplyClauses(m,v19charClauses,v19ctx);
+    for(const rid of state().relics||[]){const clauses=D.V19_RELIC_RULES?.[rid];if(clauses)m=v19ApplyClauses(m,clauses,v19ctx);}
+    const pr19=D.V19_PROTOCOL_RULES?.[state().protocol];if(pr19)m*=v19RuleMatch(pr19.when,v19ctx)?(pr19.hit||1):(pr19.miss||1);
+    const tr19=D.V19_TUNING_RULES?.[tune];if(tr19)m*=v19RuleMatch(tr19.when,v19ctx)?(tr19.hit||1):(tr19.miss||1);
     if(b.player.nextPenalty)m*=Math.max(0,1-b.player.nextPenalty);
     return m;
   }

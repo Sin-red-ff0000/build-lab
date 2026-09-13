@@ -1,7 +1,7 @@
-# BUILD LAB v0.18 CODE TREE
+# BUILD LAB v0.19 CODE TREE
 
 ```text
-build_lab_v18/
+build_lab_v19/
 ├─ index.html
 ├─ README.md
 ├─ CHANGELOG.md
@@ -31,6 +31,7 @@ build_lab_v18/
 │  │  ├─ expansion14.js       # v0.14 カード/遺物/プロトコル
 │  │  ├─ expansion17.js       # v0.17 既存6軸の追加カード/遺物/プロトコル
 │  │  ├─ expansion18.js       # v0.18 研究V・橋渡しカード/遺物/プロトコル
+│  │  ├─ expansion19.js       # v0.19 キャラ/スタイル/遺物/プロトコル/調律/特殊個体/複合挙動
 │  │  ├─ guides.js            # v0.16 解説データ + 実データ由来リファレンス
 │  │  ├─ unlocks.js
 │  │  ├─ unlocks07.js
@@ -42,13 +43,15 @@ build_lab_v18/
 │  │  ├─ unlocks13.js
 │  │  ├─ unlocks14.js         # v0.14追加アンロック
 │  │  ├─ unlocks17.js         # v0.17追加アンロック
-│  │  └─ unlocks18.js         # v0.18追加アンロック
+│  │  ├─ unlocks18.js         # v0.18追加アンロック
+│  │  └─ unlocks19.js         # v0.19大量追加要素のアンロック
 │  ├─ core/
 │  │  ├─ utils.js
 │  │  ├─ unlock.js
-│  │  ├─ state.js             # v18セーブ / 旧版移行 / 個別・総合リセット / モバイル状態
-│  │  ├─ enemy.js
-│  │  └─ battle.js            # v14遺物/プロトコル規則接続
+│  │  ├─ state.js             # v19セーブ / 旧版移行 / 個別・総合リセット / モバイル状態
+│  │  ├─ enemy.js             # v19データ駆動特殊個体の発見/補正
+
+│  │  └─ battle.js            # 既存ルール + v19汎用条件ルール接続
 │  └─ ui/
 │     ├─ tabs.js              # スマホクローム更新フック
 │     ├─ deckView.js          # スマホ段階表示
@@ -81,6 +84,7 @@ build_lab_v18/
    ├─ expansion14_systems.test.js # v0.14追加要素/移行
    ├─ expansion17_systems.test.js # v0.17追加要素/移行
    ├─ expansion18_systems.test.js # v0.18追加要素/移行
+   ├─ expansion19_systems.test.js # v0.19大量追加要素/移行
    ├─ reset_controls.test.js      # 個別/総合/全データリセット
    ├─ modal_overflow.test.js      # 大量アンロック結果モーダル回帰
    ├─ static_ui.test.js
@@ -140,3 +144,12 @@ build_lab_v18/
 - `expansion18.js` は研究Vと既存システム橋渡し用のカード24種・遺物12種・プロトコル6種を保持。
 - `unlocks18.js` は研究V6件＋スタイル/調律/変換/連結/規格/複合挙動の応用6件を保持。
 - `reset_controls.test.js` で「構成リセットは進行を消さない」ことを固定。
+
+
+## v0.19 追加責務
+- `expansion19.js` は新キャラクター8体、スタイル24種、遺物40種、プロトコル20種、調律12種、特殊個体12種、複合挙動20種と、それらのデータ駆動ルールを保持。
+- `unlocks19.js` は新キャラ・スタイル・調律・特殊個体攻略のアンロック32件を保持。新複合挙動20種の発見目標は既存 `unlocks12.js` のデータ駆動ループから自動生成され、v0.19全体では、特殊個体発見12件を含め目標が64件増える。
+- `battle.js` のv19汎用ルール層は、調律/変換/タグ数/敵特性/敵挙動/位置/連結/循環/低HP/状態異常/捨て履歴/強化状態/提示枚数/反復などを共通条件として解釈。
+- `enemy.js` は `V19_TRAIT_CONDITIONS` / `V19_TRAIT_RULES` を参照し、追加特殊個体の発見とステータス補正を個別switchなしで処理。
+- `guides.js` は追加された24調律・38スタイル・53特殊個体・36複合挙動を実データから自動反映。
+- `expansion19_systems.test.js` は追加数、孤立アンロック、特殊個体/複合挙動発見、調律実戦接続、v18→v19移行を固定。
