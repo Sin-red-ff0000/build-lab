@@ -9,7 +9,7 @@
     if(modeSummary)modeSummary.textContent=D.LINK_MODES?.[s.linkMode||'reciprocal']?.name||'双方向連結';
     if(modes){modes.innerHTML='';Object.values(D.LINK_MODES||{}).forEach(m=>{const unlocked=!!s.unlockedLinkModes?.[m.id],btn=document.createElement('button');btn.className='link-mode-btn'+(s.linkMode===m.id?' active':'')+(unlocked?'':' locked');btn.disabled=!enabled||!unlocked;btn.innerHTML=`<strong>${m.name}</strong><small>${m.desc}</small>`;btn.onclick=()=>{s.linkMode=m.id;BL.Store.save();BL.UI.renderAll();};modes.appendChild(btn);});}
     const search=document.getElementById('linkSearch');search.value=s.ui.linkSearch||'';search.oninput=()=>{s.ui.linkSearch=search.value;BL.Store.save();renderLinks();};
-    clear.onclick=()=>{s.cardLink={a:null,b:null};BL.Store.save();BL.UI.renderAll();};clear.disabled=!enabled||(!link.a&&!link.b);
+    clear.onclick=()=>{s.cardLink={a:null,b:null};s.linkMode='reciprocal';BL.Store.save();BL.UI.renderAll();BL.UI.toast('カード連結を初期状態へ戻しました');};clear.disabled=!enabled||(!link.a&&!link.b);
     if(!enabled){area.innerHTML='<div class="hint-box">カード連結システムは未解放です。第2ボス撃破で解放されます。</div>';document.getElementById('linkResultCount').textContent='未解放';return;}
     const q=(s.ui.linkSearch||'').trim().toLowerCase();
     const ids=[...new Set(s.deck)].filter(id=>s.unlockedCards[id]).filter(id=>{const c=D.CARDS[id];return !q||`${c.name} ${c.desc} ${c.tags.join(' ')}`.toLowerCase().includes(q);});

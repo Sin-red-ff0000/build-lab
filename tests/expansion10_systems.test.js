@@ -43,5 +43,5 @@ for(const [id,enemy] of Object.entries({crusher:{hp:1,atk:9,def:6,spd:1,regen:0,
 console.log('PASS v0.10 trait discovery');
 
 // v0.9セーブ移行
-const migrated=BL.Store.mergeDefaults({version:9,bossDefeated:true,deck:[...D.DEFAULT_DECK],unlockedSystems:{},unlockedCards:{},unlockedRelics:{}});assert(migrated.version===16,'save version did not migrate to 16');assert(migrated.unlockedSystems.character_style,'boss1-cleared v0.9 save did not receive character style system');
+const migrated=BL.Store.mergeDefaults({version:9,bossDefeated:true,deck:[...D.DEFAULT_DECK],unlockedSystems:{},unlockedCards:{},unlockedRelics:{}});assert(migrated.version===18,'save version did not migrate to 18');assert(migrated.unlockedSystems.character_style,'boss1-cleared v0.9 save did not receive character style system');
 console.log('PASS v0.10 migration');

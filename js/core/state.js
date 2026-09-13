@@ -2,12 +2,12 @@
 (function(){
   const BL = window.BuildLab;
   const D = BL.Data;
-  const KEY='build_lab_proto_v16';
-  const OLD_KEYS=['build_lab_proto_v15','build_lab_proto_v14','build_lab_proto_v13','build_lab_proto_v12','build_lab_proto_v11','build_lab_proto_v10','build_lab_proto_v09','build_lab_proto_v08','build_lab_proto_v07','build_lab_proto_v06','build_lab_proto_v05','build_lab_proto_v04','build_lab_proto_v03','build_lab_proto_v02','build_lab_proto_v01'];
+  const KEY='build_lab_proto_v18';
+  const OLD_KEYS=['build_lab_proto_v17','build_lab_proto_v16','build_lab_proto_v15','build_lab_proto_v14','build_lab_proto_v13','build_lab_proto_v12','build_lab_proto_v11','build_lab_proto_v10','build_lab_proto_v09','build_lab_proto_v08','build_lab_proto_v07','build_lab_proto_v06','build_lab_proto_v05','build_lab_proto_v04','build_lab_proto_v03','build_lab_proto_v02','build_lab_proto_v01'];
 
   function defaultState(){
     return {
-      version:16,
+      version:18,
       character:'standard',
       deck:[...D.DEFAULT_DECK],
       relics:[],
@@ -78,7 +78,7 @@
     if(!D.CARDS[s.cardLink.a]||!D.CARDS[s.cardLink.b]||s.cardLink.a===s.cardLink.b)s.cardLink={a:null,b:null};
     if(!D.LINK_MODES?.[s.linkMode]||!s.unlockedLinkModes?.[s.linkMode])s.linkMode='reciprocal';
     for(const [charId,styleId] of Object.entries({...s.characterStyles})){const st=D.CHARACTER_STYLES?.[styleId];if(!st||st.character!==charId||!s.unlockedCharacterStyles?.[styleId])delete s.characterStyles[charId];}
-    s.version=16;
+    s.version=18;
     return s;
   }
 
@@ -91,10 +91,46 @@
     return defaultState();
   }
 
+  function validDefaultDeck(s){
+    const rules=D.getDeckRules?D.getDeckRules(s):{deckSize:10,copyLimit:2};
+    const pool=[...D.DEFAULT_DECK,...D.BASE_CARD_IDS].filter((id,i,a)=>D.CARDS[id]&&s.unlockedCards[id]&&a.indexOf(id)===i);
+    const out=[],counts={};
+    for(const id of pool){
+      if(out.length>=rules.deckSize)break;
+      if((counts[id]||0)>=rules.copyLimit)continue;
+      out.push(id);counts[id]=(counts[id]||0)+1;
+    }
+    // 念のため不足時は解放済みカードから補完。
+    if(out.length<rules.deckSize){
+      for(const id of Object.keys(D.CARDS)){
+        if(out.length>=rules.deckSize)break;
+        if(!s.unlockedCards[id]||(counts[id]||0)>=rules.copyLimit)continue;
+        out.push(id);counts[id]=(counts[id]||0)+1;
+      }
+    }
+    return out;
+  }
+  function resetEnemyObject(){return {hp:1,atk:1,def:1,spd:1,regen:0,resist:0,traits:{}};}
+
   BL.Store={
     KEY,defaultState,mergeDefaults,
     state:load(),
     save(){localStorage.setItem(KEY,JSON.stringify(this.state));},
+    resetDeck(){this.state.deck=validDefaultDeck(this.state);this.save();return this.state.deck;},
+    resetRelics(){this.state.relics=[];this.save();},
+    resetProtocol(){this.state.protocol=null;this.save();},
+    resetTunings(){this.state.cardTunings={};this.save();},
+    resetConversions(){this.state.cardConversions={};this.save();},
+    resetLinks(){this.state.cardLink={a:null,b:null};this.state.linkMode='reciprocal';this.save();},
+    resetDoctrine(){this.state.doctrine=null;this.state.deck=[...D.DEFAULT_DECK];this.save();},
+    resetCurrentStyle(){delete this.state.characterStyles[this.state.character];this.save();},
+    resetCharacter(){this.state.character='standard';this.save();},
+    resetExperiment(){this.state.enemy=resetEnemyObject();this.save();},
+    resetBuild(){
+      const s=this.state;
+      s.character='standard';s.characterStyles={};s.doctrine=null;s.deck=[...D.DEFAULT_DECK];s.relics=[];s.protocol=null;s.cardTunings={};s.cardConversions={};s.cardLink={a:null,b:null};s.linkMode='reciprocal';s.enemy=resetEnemyObject();
+      this.save();return s;
+    },
     reset(){localStorage.removeItem(KEY);OLD_KEYS.forEach(k=>localStorage.removeItem(k));this.state=defaultState();this.save();return this.state;}
   };
 })();

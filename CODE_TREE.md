@@ -1,7 +1,7 @@
-# BUILD LAB v0.16 CODE TREE
+# BUILD LAB v0.18 CODE TREE
 
 ```text
-build_lab_v16/
+build_lab_v18/
 ├─ index.html
 ├─ README.md
 ├─ CHANGELOG.md
@@ -29,6 +29,8 @@ build_lab_v16/
 │  │  ├─ enemyBehaviors.js
 │  │  ├─ expansion13.js
 │  │  ├─ expansion14.js       # v0.14 カード/遺物/プロトコル
+│  │  ├─ expansion17.js       # v0.17 既存6軸の追加カード/遺物/プロトコル
+│  │  ├─ expansion18.js       # v0.18 研究V・橋渡しカード/遺物/プロトコル
 │  │  ├─ guides.js            # v0.16 解説データ + 実データ由来リファレンス
 │  │  ├─ unlocks.js
 │  │  ├─ unlocks07.js
@@ -38,11 +40,13 @@ build_lab_v16/
 │  │  ├─ unlocks11.js
 │  │  ├─ unlocks12.js
 │  │  ├─ unlocks13.js
-│  │  └─ unlocks14.js         # v0.14追加アンロック
+│  │  ├─ unlocks14.js         # v0.14追加アンロック
+│  │  ├─ unlocks17.js         # v0.17追加アンロック
+│  │  └─ unlocks18.js         # v0.18追加アンロック
 │  ├─ core/
 │  │  ├─ utils.js
 │  │  ├─ unlock.js
-│  │  ├─ state.js             # v16セーブ / v15以前移行 / モバイル段階表示状態
+│  │  ├─ state.js             # v18セーブ / 旧版移行 / 個別・総合リセット / モバイル状態
 │  │  ├─ enemy.js
 │  │  └─ battle.js            # v14遺物/プロトコル規則接続
 │  └─ ui/
@@ -75,6 +79,10 @@ build_lab_v16/
    ├─ expansion12_systems.test.js
    ├─ expansion13_systems.test.js
    ├─ expansion14_systems.test.js # v0.14追加要素/移行
+   ├─ expansion17_systems.test.js # v0.17追加要素/移行
+   ├─ expansion18_systems.test.js # v0.18追加要素/移行
+   ├─ reset_controls.test.js      # 個別/総合/全データリセット
+   ├─ modal_overflow.test.js      # 大量アンロック結果モーダル回帰
    ├─ static_ui.test.js
    ├─ mobile_ui.test.js           # スマホUI検査
    ├─ system_guide.test.js        # システム解説基本検査
@@ -116,3 +124,19 @@ build_lab_v16/
 - `app.js` は各画面を個別 `safeRender` し、1画面の例外で全UIが停止しないよう変更。解説を最初に描画。
 - `index.html` は全CSS/JSへバージョンクエリを付け、GitHub Pages等で旧キャッシュと新HTMLが混ざる事故を防止。
 - `state.js` はv16キーへ移行し、v15以前を順次探索。
+
+
+## v0.17 追加責務
+- `expansion17.js` は既存6ビルド軸の追加カード24種・遺物12種・プロトコル6種を保持。
+- `unlocks17.js` は「研究 IV」6件と複合軸6件の解放条件のみを保持。
+- `components.css` / `mobile.css` はモーダルを「固定シェル + スクロール本文 + 固定フッター」に分離。
+- `app.js` はモーダル表示時のスクロール初期化・フォーカス・背景タップ/Esc終了を担当。
+- `modal_overflow.test.js` でアンロック件数に依存せず閉じられるDOM/CSS構造を固定。
+
+
+## v0.18 追加責務
+- `state.js` に進行を保持する個別リセットと `resetBuild()` を集約。全データ初期化 `reset()` と明確に分離。
+- `app.js` は静的リセットボタンの確認ダイアログ・再描画・戦闘中断を統括。
+- `expansion18.js` は研究Vと既存システム橋渡し用のカード24種・遺物12種・プロトコル6種を保持。
+- `unlocks18.js` は研究V6件＋スタイル/調律/変換/連結/規格/複合挙動の応用6件を保持。
+- `reset_controls.test.js` で「構成リセットは進行を消さない」ことを固定。

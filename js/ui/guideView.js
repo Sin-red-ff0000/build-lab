@@ -21,7 +21,7 @@
     fillCategories();
     const q=(document.getElementById('guideSearch')?.value||'').trim().toLowerCase(),cat=document.getElementById('guideCategoryFilter')?.value||'all';
     const items=(D.SYSTEM_GUIDES||[]).filter(g=>matches(g,q,cat));
-    if(!(D.SYSTEM_GUIDES||[]).length){list.innerHTML='<article class="panel guide-load-error"><h3>解説データを読み込めませんでした</h3><p>WEB版で古いファイルがキャッシュされている可能性があります。ページを再読み込みしてください。v0.16以降は更新ごとにキャッシュを自動分離します。</p><button type="button" class="primary" data-guide-reload>再読み込み</button></article>';list.querySelector('[data-guide-reload]')?.addEventListener('click',()=>location.reload());return;}
+    if(!(D.SYSTEM_GUIDES||[]).length){list.innerHTML='<article class="panel guide-load-error"><h3>解説データを読み込めませんでした</h3><p>WEB版で古いファイルがキャッシュされている可能性があります。ページを再読み込みしてください。v0.17以降は更新ごとにキャッシュを自動分離します。</p><button type="button" class="primary" data-guide-reload>再読み込み</button></article>';list.querySelector('[data-guide-reload]')?.addEventListener('click',()=>location.reload());return;}
     list.innerHTML=items.map(g=>renderCard(g,q)).join('')||'<article class="panel empty-guide">条件に一致する解説がありません。</article>';
     const count=document.getElementById('guideResultCount');if(count)count.textContent=`${items.length}項目`;
     const quick=document.getElementById('guideQuickLinks');if(quick)quick.innerHTML=items.map(g=>`<button type="button" class="guide-chip" data-guide-target="${esc(g.id)}">${esc(g.title)}</button>`).join('');

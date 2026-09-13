@@ -6,27 +6,29 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BUILD LAB - ビルド実験場 v0.16</title>
-  <link rel="stylesheet" href="styles/base.css?v=0.16.0" />
-  <link rel="stylesheet" href="styles/layout.css?v=0.16.0" />
-  <link rel="stylesheet" href="styles/components.css?v=0.16.0" />
-  <link rel="stylesheet" href="styles/mobile.css?v=0.16.0" />
+  <title>BUILD LAB - ビルド実験場 v0.18</title>
+  <link rel="stylesheet" href="styles/base.css?v=0.18.0" />
+  <link rel="stylesheet" href="styles/layout.css?v=0.18.0" />
+  <link rel="stylesheet" href="styles/components.css?v=0.18.0" />
+  <link rel="stylesheet" href="styles/mobile.css?v=0.18.0" />
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
       <div>
-        <div class="eyebrow">BUILD EXPERIMENT GAME / PROTOTYPE 0.16</div>
+        <div class="eyebrow">BUILD EXPERIMENT GAME / PROTOTYPE 0.18</div>
         <h1>BUILD LAB <span>ビルド実験場</span></h1>
       </div>
       <div class="header-actions">
         <button id="saveBtn" class="ghost">保存</button>
-        <button id="resetBtn" class="danger ghost">進行リセット</button>
+        <button id="buildResetHeaderBtn" class="ghost">構成を全リセット</button>
+        <button id="resetBtn" class="danger ghost">全データ初期化</button>
       </div>
       <button id="mobileHeaderMenuBtn" class="mobile-header-menu-btn ghost" type="button" aria-expanded="false">操作</button>
       <div id="mobileHeaderMenu" class="mobile-header-menu hidden">
         <button type="button" data-mobile-header-action="save">保存</button>
-        <button type="button" class="danger" data-mobile-header-action="reset">進行リセット</button>
+        <button type="button" data-mobile-header-action="build-reset">構成を全リセット</button>
+        <button type="button" class="danger" data-mobile-header-action="reset">全データ初期化</button>
       </div>
     </header>
 
@@ -41,9 +43,9 @@
 
     <main>
       <section id="tab-character" class="tab-panel active">
-        <div class="section-head"><div><div class="kicker">01 / CHARACTER</div><h2>キャラクター</h2></div><div class="meta" id="characterSummary"></div></div>
+        <div class="section-head"><div><div class="kicker">01 / CHARACTER</div><h2>キャラクター</h2></div><div class="section-actions"><div class="meta" id="characterSummary"></div><button id="characterResetBtn" class="ghost compact-reset" type="button">初期キャラへ</button></div></div>
         <div id="characterList" class="character-grid"></div>
-        <article class="panel mt14"><div class="panel-head"><div><h3>キャラクタースタイル</h3><p>固有能力を別スタイルへ切り替える横方向強化。いつでも原型へ戻せます。</p></div><div class="counter" id="characterStyleSummary"></div></div><div id="characterStyleList" class="character-grid"></div></article>
+        <article class="panel mt14"><div class="panel-head"><div><h3>キャラクタースタイル</h3><p>固有能力を別スタイルへ切り替える横方向強化。いつでも原型へ戻せます。</p></div><div class="panel-head-actions"><div class="counter" id="characterStyleSummary"></div><button id="styleResetBtn" class="ghost compact-reset" type="button">原型へ戻す</button></div></div><div id="characterStyleList" class="character-grid"></div></article>
       </section>
 
       <section id="tab-deck" class="tab-panel">
@@ -57,10 +59,11 @@
           <button class="subtab" data-subtab="links">カード連結</button>
           <button class="subtab" data-subtab="doctrines">構築規格</button>
         </nav>
+        <div class="reset-toolbar"><span>アンロック進行を残したまま、現在の構成だけ初期状態へ戻せます。</span><button id="buildResetBtn" class="ghost" type="button">構成を全リセット</button></div>
 
         <div id="deck-sub-cards" class="subtab-panel active">
           <article class="panel">
-            <div class="panel-head"><div><h3>現在のデッキ</h3><p id="deckRuleText">10枚 / 同名2枚まで。クリックで外す</p></div><div class="counter"><span id="deckCount">0</span>/<span id="deckLimit">10</span></div></div>
+            <div class="panel-head"><div><h3>現在のデッキ</h3><p id="deckRuleText">10枚 / 同名2枚まで。クリックで外す</p></div><div class="panel-head-actions"><div class="counter"><span id="deckCount">0</span>/<span id="deckLimit">10</span></div><button id="deckResetBtn" class="ghost compact-reset" type="button">デッキを戻す</button></div></div>
             <div id="deckArea" class="deck-strip"></div>
           </article>
           <article class="panel mt14">
@@ -90,7 +93,7 @@
 
         <div id="deck-sub-relics" class="subtab-panel">
           <article class="panel">
-            <div class="panel-head"><div><h3>遺物</h3><p>最大3個まで。今後の追加カテゴリもこのデッキタブ内で管理</p></div><div class="counter"><span id="relicCount">0</span>/3</div></div>
+            <div class="panel-head"><div><h3>遺物</h3><p>最大3個まで。今後の追加カテゴリもこのデッキタブ内で管理</p></div><div class="panel-head-actions"><div class="counter"><span id="relicCount">0</span>/3</div><button id="relicResetBtn" class="ghost compact-reset" type="button">全解除</button></div></div>
             <div class="filter-bar relic-filters">
               <input id="relicSearch" type="search" placeholder="遺物名・効果・タグを検索" />
               <select id="relicTagFilter"><option value="all">タグ1：指定なし</option></select>
@@ -105,7 +108,7 @@
 
         <div id="deck-sub-protocols" class="subtab-panel">
           <article class="panel">
-            <div class="panel-head"><div><h3>強化プロトコル</h3><p>1つだけ装備可能。無料で付け替えられる横方向の強化要素</p></div><div class="counter">選択中：<span id="protocolSelected">なし</span></div></div>
+            <div class="panel-head"><div><h3>強化プロトコル</h3><p>1つだけ装備可能。無料で付け替えられる横方向の強化要素</p></div><div class="panel-head-actions"><div class="counter">選択中：<span id="protocolSelected">なし</span></div><button id="protocolResetBtn" class="ghost compact-reset" type="button">解除</button></div></div>
             <div class="filter-bar">
               <input id="protocolSearch" type="search" placeholder="プロトコル名・効果・タグを検索" />
               <select id="protocolTagFilter"><option value="all">タグ：指定なし</option></select>
@@ -117,7 +120,7 @@
 
         <div id="deck-sub-tunings" class="subtab-panel">
           <article class="panel">
-            <div class="panel-head"><div><h3>カード調律</h3><p>最大2種類のカードを派生調律。無料で付け替え可能</p></div><div class="counter">調律中：<span id="tuningSelected">0/2</span></div></div>
+            <div class="panel-head"><div><h3>カード調律</h3><p>最大2種類のカードを派生調律。無料で付け替え可能</p></div><div class="panel-head-actions"><div class="counter">調律中：<span id="tuningSelected">0/2</span></div><button id="tuningResetBtn" class="ghost compact-reset" type="button">全解除</button></div></div>
             <div class="filter-bar">
               <input id="tuningSearch" type="search" placeholder="カード名・効果・タグを検索" />
               <select id="tuningStateFilter"><option value="deck">デッキ内</option><option value="tuned">調律中</option><option value="all">解放済みすべて</option></select>
@@ -130,7 +133,7 @@
 
         <div id="deck-sub-conversions" class="subtab-panel">
           <article class="panel">
-            <div class="panel-head"><div><h3>カード役割変換</h3><p>最大2種類のカードの役割を変更。仮想タグも変化し、既存ビルド要素と連動</p></div><div class="counter">変換中：<span id="conversionSelected">0/2</span></div></div>
+            <div class="panel-head"><div><h3>カード役割変換</h3><p>最大2種類のカードの役割を変更。仮想タグも変化し、既存ビルド要素と連動</p></div><div class="panel-head-actions"><div class="counter">変換中：<span id="conversionSelected">0/2</span></div><button id="conversionResetBtn" class="ghost compact-reset" type="button">全解除</button></div></div>
             <div class="filter-bar">
               <input id="conversionSearch" type="search" placeholder="カード名・効果・変換名を検索" />
               <select id="conversionStateFilter"><option value="deck">デッキ内</option><option value="converted">変換中</option><option value="all">解放済みすべて</option></select>
@@ -147,7 +150,7 @@
             <div id="linkModePool" class="link-mode-grid"></div>
             <div class="filter-bar">
               <input id="linkSearch" type="search" placeholder="デッキ内カード名・効果・タグを検索" />
-              <button id="linkClearBtn" class="ghost">連結を解除</button>
+              <button id="linkClearBtn" class="ghost">連結設定をリセット</button>
             </div><div class="counter search-count" id="linkResultCount">0件</div>
             <div id="linkPool" class="card-grid"></div>
           </article>
@@ -155,7 +158,7 @@
 
         <div id="deck-sub-doctrines" class="subtab-panel">
           <article class="panel">
-            <div class="panel-head"><div><h3>構築規格</h3><p>デッキ枚数・同名上限・提示枚数など、構築ルールそのものを変更</p></div><div class="counter">選択中：<span id="doctrineSelected">標準規格</span></div></div>
+            <div class="panel-head"><div><h3>構築規格</h3><p>デッキ枚数・同名上限・提示枚数など、構築ルールそのものを変更</p></div><div class="panel-head-actions"><div class="counter">選択中：<span id="doctrineSelected">標準規格</span></div><button id="doctrineResetBtn" class="ghost compact-reset" type="button">標準へ戻す</button></div></div>
             <div class="filter-bar">
               <input id="doctrineSearch" type="search" placeholder="規格名・効果・タグを検索" />
               <select id="doctrineStateFilter"><option value="unlocked">解放済み</option><option value="all">すべて</option><option value="locked">未解放</option><option value="selected">選択中</option></select>
@@ -175,7 +178,7 @@
         </nav>
 
         <div id="enemy-sub-stats" class="subtab-panel active">
-          <article class="panel enemy-editor-panel"><h3>敵ステータス</h3><div id="enemyEditor" class="sliders"></div><div class="enemy-preview" id="enemyPreview"></div></article>
+          <article class="panel enemy-editor-panel"><div class="panel-head"><div><h3>敵ステータス</h3><p>現在の敵設定だけを初期値へ戻せます。</p></div><button id="enemyResetBtn" class="ghost compact-reset" type="button">敵設定リセット</button></div><div id="enemyEditor" class="sliders"></div><div class="enemy-preview" id="enemyPreview"></div></article>
         </div>
         <div id="enemy-sub-traits" class="subtab-panel">
           <article class="panel"><div class="panel-head"><div><h3>特殊個体</h3><p>解放済み特性を自由に併用</p></div></div><div id="traitToggles" class="trait-list"></div></article>
@@ -259,51 +262,55 @@
     </nav>
 
     <div id="toast" class="toast"></div>
-    <div id="modal" class="modal hidden" role="dialog" aria-modal="true"><div class="modal-card"><div id="modalBody"></div><button id="modalClose" class="primary">閉じる</button></div></div>
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="実験結果"><div class="modal-card"><div id="modalBody" class="modal-body"></div><div class="modal-footer"><button id="modalClose" class="primary">閉じる</button></div></div></div>
   </div>
 
-  <script src="js/data/gameData.js?v=0.16.0"></script>
-  <script src="js/data/protocols.js?v=0.16.0"></script>
-  <script src="js/data/tunings.js?v=0.16.0"></script>
-  <script src="js/data/conversions.js?v=0.16.0"></script>
-  <script src="js/data/chapter3.js?v=0.16.0"></script>
-  <script src="js/data/expansion08.js?v=0.16.0"></script>
-  <script src="js/data/expansion09.js?v=0.16.0"></script>
-  <script src="js/data/doctrines.js?v=0.16.0"></script>
-  <script src="js/data/characterStyles.js?v=0.16.0"></script>
-  <script src="js/data/expansion10.js?v=0.16.0"></script>
-  <script src="js/data/expansion11.js?v=0.16.0"></script>
-  <script src="js/data/expansion12.js?v=0.16.0"></script>
-  <script src="js/data/enemyBehaviors.js?v=0.16.0"></script>
-  <script src="js/data/expansion13.js?v=0.16.0"></script>
-  <script src="js/data/expansion14.js?v=0.16.0"></script>
-  <script src="js/data/guides.js?v=0.16.0"></script>
-  <script src="js/core/utils.js?v=0.16.0"></script>
-  <script src="js/core/unlock.js?v=0.16.0"></script>
-  <script src="js/data/unlocks.js?v=0.16.0"></script>
-  <script src="js/data/unlocks07.js?v=0.16.0"></script>
-  <script src="js/data/unlocks08.js?v=0.16.0"></script>
-  <script src="js/data/unlocks09.js?v=0.16.0"></script>
-  <script src="js/data/unlocks10.js?v=0.16.0"></script>
-  <script src="js/data/unlocks11.js?v=0.16.0"></script>
-  <script src="js/data/unlocks12.js?v=0.16.0"></script>
-  <script src="js/data/unlocks13.js?v=0.16.0"></script>
-  <script src="js/data/unlocks14.js?v=0.16.0"></script>
-  <script src="js/core/state.js?v=0.16.0"></script>
-  <script src="js/core/enemy.js?v=0.16.0"></script>
-  <script src="js/core/battle.js?v=0.16.0"></script>
-  <script src="js/ui/tabs.js?v=0.16.0"></script>
-  <script src="js/ui/deckView.js?v=0.16.0"></script>
-  <script src="js/ui/styleView.js?v=0.16.0"></script>
-  <script src="js/ui/tuningView.js?v=0.16.0"></script>
-  <script src="js/ui/conversionView.js?v=0.16.0"></script>
-  <script src="js/ui/linkView.js?v=0.16.0"></script>
-  <script src="js/ui/doctrineView.js?v=0.16.0"></script>
-  <script src="js/ui/experimentView.js?v=0.16.0"></script>
-  <script src="js/ui/battleView.js?v=0.16.0"></script>
-  <script src="js/ui/metaView.js?v=0.16.0"></script>
-  <script src="js/ui/guideView.js?v=0.16.0"></script>
-  <script src="js/ui/mobile.js?v=0.16.0"></script>
-  <script src="js/app.js?v=0.16.0"></script>
+  <script src="js/data/gameData.js?v=0.18.0"></script>
+  <script src="js/data/protocols.js?v=0.18.0"></script>
+  <script src="js/data/tunings.js?v=0.18.0"></script>
+  <script src="js/data/conversions.js?v=0.18.0"></script>
+  <script src="js/data/chapter3.js?v=0.18.0"></script>
+  <script src="js/data/expansion08.js?v=0.18.0"></script>
+  <script src="js/data/expansion09.js?v=0.18.0"></script>
+  <script src="js/data/doctrines.js?v=0.18.0"></script>
+  <script src="js/data/characterStyles.js?v=0.18.0"></script>
+  <script src="js/data/expansion10.js?v=0.18.0"></script>
+  <script src="js/data/expansion11.js?v=0.18.0"></script>
+  <script src="js/data/expansion12.js?v=0.18.0"></script>
+  <script src="js/data/enemyBehaviors.js?v=0.18.0"></script>
+  <script src="js/data/expansion13.js?v=0.18.0"></script>
+  <script src="js/data/expansion14.js?v=0.18.0"></script>
+  <script src="js/data/expansion17.js?v=0.18.0"></script>
+  <script src="js/data/expansion18.js?v=0.18.0"></script>
+  <script src="js/data/guides.js?v=0.18.0"></script>
+  <script src="js/core/utils.js?v=0.18.0"></script>
+  <script src="js/core/unlock.js?v=0.18.0"></script>
+  <script src="js/data/unlocks.js?v=0.18.0"></script>
+  <script src="js/data/unlocks07.js?v=0.18.0"></script>
+  <script src="js/data/unlocks08.js?v=0.18.0"></script>
+  <script src="js/data/unlocks09.js?v=0.18.0"></script>
+  <script src="js/data/unlocks10.js?v=0.18.0"></script>
+  <script src="js/data/unlocks11.js?v=0.18.0"></script>
+  <script src="js/data/unlocks12.js?v=0.18.0"></script>
+  <script src="js/data/unlocks13.js?v=0.18.0"></script>
+  <script src="js/data/unlocks14.js?v=0.18.0"></script>
+  <script src="js/data/unlocks17.js?v=0.18.0"></script>
+  <script src="js/data/unlocks18.js?v=0.18.0"></script>
+  <script src="js/core/state.js?v=0.18.0"></script>
+  <script src="js/core/enemy.js?v=0.18.0"></script>
+  <script src="js/core/battle.js?v=0.18.0"></script>
+  <script src="js/ui/tabs.js?v=0.18.0"></script>
+  <script src="js/ui/deckView.js?v=0.18.0"></script>
+  <script src="js/ui/styleView.js?v=0.18.0"></script>
+  <script src="js/ui/tuningView.js?v=0.18.0"></script>
+  <script src="js/ui/conversionView.js?v=0.18.0"></script>
+  <script src="js/ui/linkView.js?v=0.18.0"></script>
+  <script src="js/ui/doctrineView.js?v=0.18.0"></script>
+  <script src="js/ui/experimentView.js?v=0.18.0"></script>
+  <script src="js/ui/battleView.js?v=0.18.0"></script>
+  <script src="js/ui/metaView.js?v=0.18.0"></script>
+  <script src="js/ui/guideView.js?v=0.18.0"></script>
+  <script src="js/ui/mobile.js?v=0.18.0"></script>
+  <script src="js/app.js?v=0.18.0"></script>
 </body>
 </html>

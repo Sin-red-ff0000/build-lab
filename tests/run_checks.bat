@@ -17,10 +17,14 @@ node tests\expansion11_systems.test.js || exit /b 1
 node tests\expansion12_systems.test.js || exit /b 1
 node tests\expansion13_systems.test.js || exit /b 1
 node tests\expansion14_systems.test.js || exit /b 1
+node tests\expansion17_systems.test.js || exit /b 1
+node tests\expansion18_systems.test.js || exit /b 1
+node tests\reset_controls.test.js || exit /b 1
 node tests\boss3_balance.test.js || exit /b 1
 node tests\static_ui.test.js || exit /b 1
 node tests\system_guide.test.js || exit /b 1
 node tests\guide_detail.test.js || exit /b 1
 node tests\web_deploy.test.js || exit /b 1
 node tests\mobile_ui.test.js || exit /b 1
+node tests\modal_overflow.test.js || exit /b 1
 echo All checks passed.
