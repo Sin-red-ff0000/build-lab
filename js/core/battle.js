@@ -92,6 +92,18 @@
     if(when.differentFromLast&&(!b.lastUsed||b.lastUsed.cardId===ctx.instance.cardId))return false;
     if(when.altStyle&&!hasAltStyle())return false;if(when.cardStatus&&!v19CardStatus(ctx.c,when.cardStatus))return false;
     if(when.arcanaMatch&&!currentArcanaMatches(ctx))return false;
+    const allocation=b?.alchemy?.config?.allocation||state().alchemy?.allocation||{};
+    if(when.alchemyEnabled&&!b?.alchemy?.config?.enabled)return false;
+    if(when.elementMin){for(const [id,n] of Object.entries(when.elementMin))if(Number(allocation[id]||0)<n)return false;}
+    if(when.elementMax){for(const [id,n] of Object.entries(when.elementMax))if(Number(allocation[id]||0)>n)return false;}
+    if(when.elementDominant){const ids=Object.keys(D.ELEMENT_INFO||{}),max=Math.max(0,...ids.map(id=>Number(allocation[id]||0)));if(max<=0||Number(allocation[when.elementDominant]||0)!==max)return false;}
+    if(when.elementDiversityMin!=null&&Object.keys(D.ELEMENT_INFO||{}).filter(id=>Number(allocation[id]||0)>0).length<when.elementDiversityMin)return false;
+    const cardElement=D.RUNES?.[ctx.rune]?.element||D.getCardElement?.(state(),ctx.instance.cardId)||null;
+    if(when.cardElement&&cardElement!==when.cardElement)return false;
+    if(when.materialMade&&Number(b?.alchemy?.made?.[when.materialMade]||0)<1)return false;
+    if(when.materialStock&&Number(b?.alchemy?.stock?.[when.materialStock]||0)<1)return false;
+    if(Array.isArray(when.materialAnyMade)&&!when.materialAnyMade.some(id=>Number(b?.alchemy?.made?.[id]||0)>0))return false;
+    if(when.reactionTotalMin!=null&&Object.values(b?.alchemy?.reactions||{}).reduce((a,n)=>a+Number(n||0),0)<when.reactionTotalMin)return false;
     return true;
   }
   function currentArcanaMatches(ctx){const a=activeArcana();if(!a)return false;const side=a[arcanaOrientation()];return !!side&&v19RuleMatch(side.when||{},ctx);}
@@ -378,6 +390,10 @@
     for(const rid of state().relics||[]){const clauses=D.V22_RELIC_RULES?.[rid];if(clauses)m=v19ApplyClauses(m,clauses,v19ctx);}
     const pr22=D.V22_PROTOCOL_RULES?.[state().protocol];if(pr22)m*=v19RuleMatch(pr22.when,v19ctx)?(pr22.hit||1):(pr22.miss||1);
     const tr20=D.V20_TUNING_RULES?.[tune];if(tr20)m*=v19RuleMatch(tr20.when,v19ctx)?(tr20.hit||1):(tr20.miss||1);
+    const v23style=activeStyle();const v23charClauses=(v23style&&D.V23_STYLE_RULES?.[v23style.id])||D.V23_CHARACTER_RULES?.[state().character];if(v23charClauses)m=v19ApplyClauses(m,v23charClauses,v19ctx);
+    for(const rid of state().relics||[]){const clauses=D.V23_RELIC_RULES?.[rid];if(clauses)m=v19ApplyClauses(m,clauses,v19ctx);}
+    const pr23=D.V23_PROTOCOL_RULES?.[state().protocol];if(pr23)m*=v19RuleMatch(pr23.when,v19ctx)?(pr23.hit||1):(pr23.miss||1);
+    const tr23=D.V23_TUNING_RULES?.[tune];if(tr23)m*=v19RuleMatch(tr23.when,v19ctx)?(tr23.hit||1):(tr23.miss||1);
     if(rune){const rr=D.RUNES?.[rune];if(rr&&v19RuleMatch(rr.when||{},v19ctx))m*=rr.hit||1;}
     const arc=activeArcana();if(arc){const side=arc[arcanaOrientation()];if(side&&v19RuleMatch(side.when||{},v19ctx))m*=side.mult||1;}
     if(b.player.nextPenalty)m*=Math.max(0,1-b.player.nextPenalty);
