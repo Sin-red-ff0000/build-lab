@@ -1,3 +1,11 @@
+# v0.25 変更責務
+
+- `index.html`：デッキ構築に `deckClearBtn`、特殊個体画面に `enemyTraitsClearBtn` を追加。WEBキャッシュ識別子をv0.25へ更新。
+- `js/core/state.js`：`clearDeck()` と `resetEnemyTraits()` を追加。セーブキーをv25へ更新し、v24以前から自動移行。
+- `js/app.js`：2つの全解除操作を既存の共通リセット処理へ接続。カード全解除のみ誤操作防止の確認ダイアログを表示。
+- `tests/reset_controls.test.js`：カード付随設定・進行保持、敵ステータス保持、UIボタン存在を回帰検査。
+- `tests/web_deploy.test.js`：v0.25キャッシュ識別子とv25セーブキーを検査。
+
 # v0.24 追加ファイル / 変更責務
 
 - `js/data/alchemy24.js`：上位錬成物12種、上位レシピ12種、各自動効果、錬成解説への追加。

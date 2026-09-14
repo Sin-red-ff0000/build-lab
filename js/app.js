@@ -3,7 +3,7 @@
   const BL=window.BuildLab; BL.UI=BL.UI||{};
   BL.UI.toast=function(msg){const t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(()=>t.classList.remove('show'),2200);};
   BL.UI.showModal=function(html){const body=document.getElementById('modalBody'),modal=document.getElementById('modal'),close=document.getElementById('modalClose');if(!body||!modal)return;body.innerHTML=html;body.scrollTop=0;modal.classList.remove('hidden');requestAnimationFrame(()=>close?.focus());};
-  function safeRender(name,fn){try{fn?.();return true;}catch(err){console.error(`[BUILD LAB v0.21] ${name} render failed`,err);return false;}}
+  function safeRender(name,fn){try{fn?.();return true;}catch(err){console.error(`[BUILD LAB v0.25] ${name} render failed`,err);return false;}}
   BL.UI.renderAll=function(){
     // 解説はゲーム進行データへの依存が薄いので先に描画する。
     // WEB版で旧セーブや一部画面の描画が失敗しても、説明まで巻き添えで消えないようにする。
@@ -12,7 +12,7 @@
       ['characters',BL.UI.renderCharacters],['characterStyles',BL.UI.renderCharacterStyles],['deck',BL.UI.renderDeck],['relics',BL.UI.renderRelics],['protocols',BL.UI.renderProtocols],['tunings',BL.UI.renderTunings],['conversions',BL.UI.renderConversions],['runes',BL.UI.renderRunes],['alchemy',BL.UI.renderAlchemy],['arcana',BL.UI.renderArcana],['links',BL.UI.renderLinks],['doctrines',BL.UI.renderDoctrines],['experiment',BL.UI.renderExperiment],['unlocks',BL.UI.renderUnlocks],['collection',BL.UI.renderCollection],['battle',BL.UI.renderBattle]
     ];
     let failed=0;for(const [name,fn] of jobs)if(!safeRender(name,fn))failed++;
-    try{BL.Store.save();}catch(err){console.error('[BUILD LAB v0.21] save failed',err);}
+    try{BL.Store.save();}catch(err){console.error('[BUILD LAB v0.25] save failed',err);}
     if(failed)BL.UI.toast(`一部画面の再構築に失敗しました（${failed}件）。解説・セーブは利用できます。`);
   };
 
@@ -27,6 +27,7 @@
     const bindReset=(id,ask,fn,msg)=>{const el=document.getElementById(id);if(el)el.onclick=()=>{if(!ask||confirm(ask)){fn();BL.Battle.current=null;BL.UI.renderAll();BL.UI.toast(msg);}};};
     bindReset('characterResetBtn','キャラクターを初期キャラ「センター」へ戻しますか？',()=>BL.Store.resetCharacter(),'キャラクターを初期状態へ戻しました');
     bindReset('styleResetBtn',null,()=>BL.Store.resetCurrentStyle(),'現在のキャラスタイルを原型へ戻しました');
+    bindReset('deckClearBtn','デッキ内のカードをすべて外しますか？ 調律・役割変換・ルーンなどカード種類側の設定は保持されます。',()=>BL.Store.clearDeck(),'デッキのカードをすべて外しました');
     bindReset('deckResetBtn','現在の構築規格を維持したまま、デッキを基本構成へ戻しますか？',()=>BL.Store.resetDeck(),'デッキを基本構成へ戻しました');
     bindReset('relicResetBtn',null,()=>BL.Store.resetRelics(),'遺物をすべて外しました');
     bindReset('protocolResetBtn',null,()=>BL.Store.resetProtocol(),'強化プロトコルを解除しました');
@@ -35,6 +36,7 @@
     bindReset('runeResetBtn',null,()=>BL.Store.resetRunes(),'ルーンをすべて解除しました');
     bindReset('arcanaResetBtn',null,()=>BL.Store.resetArcana(),'アルカナを解除しました');
     bindReset('doctrineResetBtn','構築規格を標準へ戻し、デッキも標準10枚へ戻しますか？',()=>BL.Store.resetDoctrine(),'構築規格とデッキを標準へ戻しました');
+    bindReset('enemyTraitsClearBtn',null,()=>BL.Store.resetEnemyTraits(),'敵の特殊個体をすべて解除しました');
     bindReset('enemyResetBtn',null,()=>BL.Store.resetExperiment(),'敵設定を初期値へ戻しました');
     if(start)start.onclick=()=>startBattle(false);if(b1)b1.onclick=()=>startBattle('boss1');if(b2)b2.onclick=()=>startBattle('boss2');if(b3)b3.onclick=()=>startBattle('boss3');if(b4)b4.onclick=()=>startBattle('boss4');if(retire)retire.onclick=()=>BL.Battle.retire();const dismissModal=()=>document.getElementById('modal')?.classList.add('hidden');if(close)close.onclick=dismissModal;const modal=document.getElementById('modal');if(modal)modal.onclick=e=>{if(e.target===modal)dismissModal();};document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.getElementById('modal')?.classList.contains('hidden'))dismissModal();});
     BL.Battle.onChange=()=>safeRender('battle',BL.UI.renderBattle);

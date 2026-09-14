@@ -11,7 +11,7 @@ assert(D.GUIDE_REFERENCE_GROUPS.runes.some(x=>x.id==='v23_rune_fire'),'element r
 
 // v0.22 save migration preserves existing build data and advances version.
 let migrated=BL.Store.mergeDefaults({version:22,boss4Defeated:true,alchemy:{enabled:true,allocation:{fire:6,air:0,water:0,earth:6,aether:0},recipes:['lava'],hold:[]},deck:[...D.DEFAULT_DECK],unlockedCards:{},unlockedRelics:{}});
-assert.equal(migrated.version,24);assert.equal(migrated.alchemy.allocation.fire,6);assert(migrated.unlockedSystems.rune&&migrated.unlockedSystems.arcana);
+assert.equal(migrated.version,25);assert.equal(migrated.alchemy.allocation.fire,6);assert(migrated.unlockedSystems.rune&&migrated.unlockedSystems.arcana);
 
 function damage(setup){BL.Store.state=BL.Store.defaultState();BL.Store.state.deck=Array(10).fill('blood_blade');BL.Store.state.enemy.atk=.1;BL.Store.state.enemy.def=1;setup?.(BL.Store.state);let result=null;BL.Battle.onEnd=r=>result=r;const start=BL.Battle.create(false);assert(!start.error);const before=BL.Battle.current.enemy.hp;BL.Battle.play(0);const b=BL.Battle.current||result.battle;const dealt=before-b.enemy.hp;if(BL.Battle.current)BL.Battle.retire();return dealt;}
 const base=damage();
