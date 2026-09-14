@@ -2,12 +2,12 @@
 (function(){
   const BL = window.BuildLab;
   const D = BL.Data;
-  const KEY='build_lab_proto_v32';
-  const OLD_KEYS=['build_lab_proto_v30','build_lab_proto_v26','build_lab_proto_v25','build_lab_proto_v24','build_lab_proto_v23','build_lab_proto_v22','build_lab_proto_v21','build_lab_proto_v20','build_lab_proto_v19','build_lab_proto_v18','build_lab_proto_v17','build_lab_proto_v16','build_lab_proto_v15','build_lab_proto_v14','build_lab_proto_v13','build_lab_proto_v12','build_lab_proto_v11','build_lab_proto_v10','build_lab_proto_v09','build_lab_proto_v08','build_lab_proto_v07','build_lab_proto_v06','build_lab_proto_v05','build_lab_proto_v04','build_lab_proto_v03','build_lab_proto_v02','build_lab_proto_v01'];
+  const KEY=BL.Version?.saveKey||'build_lab_proto_v36';
+  const OLD_KEYS=['build_lab_proto_v32','build_lab_proto_v30','build_lab_proto_v26','build_lab_proto_v25','build_lab_proto_v24','build_lab_proto_v23','build_lab_proto_v22','build_lab_proto_v21','build_lab_proto_v20','build_lab_proto_v19','build_lab_proto_v18','build_lab_proto_v17','build_lab_proto_v16','build_lab_proto_v15','build_lab_proto_v14','build_lab_proto_v13','build_lab_proto_v12','build_lab_proto_v11','build_lab_proto_v10','build_lab_proto_v09','build_lab_proto_v08','build_lab_proto_v07','build_lab_proto_v06','build_lab_proto_v05','build_lab_proto_v04','build_lab_proto_v03','build_lab_proto_v02','build_lab_proto_v01'];
 
   function defaultState(){
     return {
-      version:32,
+      version:BL.Version?.number||36,
       alchemy:D.ALCHEMY?.defaults()||{enabled:false},
       character:'standard',
       deck:[...D.DEFAULT_DECK],
@@ -72,6 +72,7 @@
     if(s.boss4Defeated){s.claimedUnlocks.boss4_clear=true;s.unlockedSystems.rune=true;s.unlockedSystems.arcana=true;}
     // 達成済みアンロックの報酬を再付与し、追加報酬も取りこぼさない。
     for(const u of D.UNLOCKS||[]){if(!s.claimedUnlocks[u.id])continue;for(const id of u.reward||[])BL.Unlock.grant(s,id);}
+    if(D.PROGRESSION36?.normalizeState)D.PROGRESSION36.normalizeState(s);
     s.protocol=(requestedProtocol&&D.PROTOCOLS?.[requestedProtocol]&&s.unlockedProtocols[requestedProtocol])?requestedProtocol:null;
     s.doctrine=(requestedDoctrine&&D.DOCTRINES?.[requestedDoctrine]&&s.unlockedDoctrines[requestedDoctrine])?requestedDoctrine:null;
     // 調律は存在するカードかつ有効な調律だけ保持。

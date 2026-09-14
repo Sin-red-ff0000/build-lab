@@ -1,6 +1,5 @@
-# CODE TREE — BUILD LAB v0.32
+# CODE TREE — BUILD LAB v0.36
 
-```
 CHANGELOG.md
 CODE_TREE.md
 NEXT_SYSTEM_IDEAS.md
@@ -13,6 +12,7 @@ UPDATE_v0.25.md
 UPDATE_v0.26.md
 UPDATE_v0.30.md
 UPDATE_v0.32.md
+UPDATE_v0.36.md
 index.html
 js/app.js
 js/core/alchemy.js
@@ -50,9 +50,13 @@ js/data/expansion29.js
 js/data/expansion30.js
 js/data/expansion31.js
 js/data/expansion32.js
+js/data/expansion34.js
+js/data/expansion35.js
 js/data/gameData.js
 js/data/guides.js
 js/data/guides20.js
+js/data/progression35.js
+js/data/progression36.js
 js/data/protocols.js
 js/data/runes.js
 js/data/tunings.js
@@ -77,6 +81,8 @@ js/data/unlocks29.js
 js/data/unlocks30.js
 js/data/unlocks31.js
 js/data/unlocks32.js
+js/data/unlocks34.js
+js/data/unlocks35.js
 js/ui/alchemyView.js
 js/ui/arcanaView.js
 js/ui/battleView.js
@@ -92,6 +98,7 @@ js/ui/runeView.js
 js/ui/styleView.js
 js/ui/tabs.js
 js/ui/tuningView.js
+js/version.js
 styles/base.css
 styles/components.css
 styles/layout.css
@@ -103,6 +110,7 @@ tests/VALIDATION_v0.24.txt
 tests/VALIDATION_v0.25.txt
 tests/VALIDATION_v0.26.txt
 tests/VALIDATION_v0.30.txt
+tests/VALIDATION_v0.32.txt
 tests/alchemy.test.js
 tests/balance22_audit.test.js
 tests/boss2_balance.test.js
@@ -113,8 +121,10 @@ tests/boss_balance.test.js
 tests/boss_reward_integration.test.js
 tests/chapter2_systems.test.js
 tests/chapter3_systems.test.js
+tests/chapter_boss_progression.test.js
 tests/content_balance.test.js
 tests/effect_coverage.test.js
+tests/endgame_all_styles.test.js
 tests/expansion08_systems.test.js
 tests/expansion09_systems.test.js
 tests/expansion10_systems.test.js
@@ -135,14 +145,18 @@ tests/expansion29_adaptive.test.js
 tests/expansion30_growth.test.js
 tests/expansion31_choice_growth.test.js
 tests/expansion32_branch_growth.test.js
+tests/expansion34_core_builds.test.js
+tests/expansion35_build_families.test.js
 tests/guide_detail.test.js
 tests/mobile_ui.test.js
 tests/modal_overflow.test.js
+tests/progression36_boss2_gate.test.js
+tests/progression36_chapters.test.js
 tests/reset_controls.test.js
 tests/run_checks.bat
 tests/run_checks.sh
 tests/smoke.test.js
 tests/static_ui.test.js
 tests/system_guide.test.js
+tests/version_consistency.test.js
 tests/web_deploy.test.js
-```

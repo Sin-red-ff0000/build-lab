@@ -38,8 +38,14 @@ node tests\boss4_balance.test.js || exit /b 1
 node tests\static_ui.test.js || exit /b 1
 node tests\system_guide.test.js || exit /b 1
 node tests\guide_detail.test.js || exit /b 1
+node tests\version_consistency.test.js || exit /b 1
 node tests\web_deploy.test.js || exit /b 1
 node tests\mobile_ui.test.js || exit /b 1
 node tests\modal_overflow.test.js || exit /b 1
 node tests\alchemy.test.js || exit /b 1
+node tests\expansion34_core_builds.test.js || exit /b 1
+node tests\expansion35_build_families.test.js || exit /b 1
+node tests\endgame_all_styles.test.js || exit /b 1
+node tests\progression36_boss2_gate.test.js || exit /b 1
+node tests\progression36_chapters.test.js || exit /b 1
 echo All checks passed.
