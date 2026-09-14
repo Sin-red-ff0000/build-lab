@@ -7,6 +7,7 @@ node tests\content_balance.test.js || exit /b 1
 node tests\effect_coverage.test.js || exit /b 1
 node tests\balance22_audit.test.js || exit /b 1
 node tests\expansion23_systems.test.js || exit /b 1
+node tests\expansion24_systems.test.js || exit /b 1
 node tests\boss_balance.test.js || exit /b 1
 node tests\boss_reward_integration.test.js || exit /b 1
 node tests\chapter2_systems.test.js || exit /b 1

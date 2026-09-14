@@ -22,7 +22,7 @@
     for(const [id,e] of Object.entries(A.effects)){const match=e.event==='card'||(hits>0&&e.event==='attack'&&!e.damage)||(hits===1&&e.event==='single');if(match&&consume(b,id,e.event)){bonus+=e.bonus||0;apply(b,id,e,api);}}
     return bonus;
   }
-  function afterCard(b,c,api){const a=b.alchemy;if(!a?.config.enabled)return;if(c.hits>0&&consume(b,'lava','attack'))apply(b,'lava',A.effects.lava,api);}
+  function afterCard(b,c,api){const a=b.alchemy;if(!a?.config.enabled||!(c.hits>0||c.damage!=null))return;for(const [id,e] of Object.entries(A.effects))if(e.event==='attack'&&e.damage&&consume(b,id,'attack'))apply(b,id,e,api);}
   function beforeHit(b,api){const a=b.alchemy;if(!a?.config.enabled)return;for(const [id,e] of Object.entries(A.effects))if(consume(b,id,'hit'))apply(b,id,e,api);}
   function summary(b){const a=b?.alchemy;if(!a?.config.enabled)return '錬成：未使用';return Object.entries(a.stock).filter(([,n])=>n>0).map(([id,n])=>A.materials[id]+' '+n).join(' / ')||'材料・錬成物なし';}
   BL.Alchemy={create,react,supply,turn,beforeCard,afterCard,beforeHit,summary};

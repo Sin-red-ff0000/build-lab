@@ -101,8 +101,17 @@
     const cardElement=D.RUNES?.[ctx.rune]?.element||D.getCardElement?.(state(),ctx.instance.cardId)||null;
     if(when.cardElement&&cardElement!==when.cardElement)return false;
     if(when.materialMade&&Number(b?.alchemy?.made?.[when.materialMade]||0)<1)return false;
+    if(when.materialUsed&&Number(b?.alchemy?.used?.[when.materialUsed]||0)<1)return false;
     if(when.materialStock&&Number(b?.alchemy?.stock?.[when.materialStock]||0)<1)return false;
     if(Array.isArray(when.materialAnyMade)&&!when.materialAnyMade.some(id=>Number(b?.alchemy?.made?.[id]||0)>0))return false;
+    if(Array.isArray(when.materialAnyUsed)&&!when.materialAnyUsed.some(id=>Number(b?.alchemy?.used?.[id]||0)>0))return false;
+    if(when.materialDiversityMadeMin!=null&&Object.values(b?.alchemy?.made||{}).filter(n=>Number(n||0)>0).length<when.materialDiversityMadeMin)return false;
+    if(when.materialDiversityUsedMin!=null&&Object.values(b?.alchemy?.used||{}).filter(n=>Number(n||0)>0).length<when.materialDiversityUsedMin)return false;
+    if(when.materialStockDiversityMin!=null&&Object.values(b?.alchemy?.stock||{}).filter(n=>Number(n||0)>0).length<when.materialStockDiversityMin)return false;
+    if(when.reactionTypesMin!=null&&Object.values(b?.alchemy?.reactions||{}).filter(n=>Number(n||0)>0).length<when.reactionTypesMin)return false;
+    const advIds=D.V24_ADVANCED_MATERIAL_IDS||[];
+    if(when.advancedMaterialMade&&!advIds.some(id=>Number(b?.alchemy?.made?.[id]||0)>0))return false;
+    if(when.advancedMaterialDiversityMin!=null&&advIds.filter(id=>Number(b?.alchemy?.made?.[id]||0)>0).length<when.advancedMaterialDiversityMin)return false;
     if(when.reactionTotalMin!=null&&Object.values(b?.alchemy?.reactions||{}).reduce((a,n)=>a+Number(n||0),0)<when.reactionTotalMin)return false;
     return true;
   }
@@ -394,6 +403,10 @@
     for(const rid of state().relics||[]){const clauses=D.V23_RELIC_RULES?.[rid];if(clauses)m=v19ApplyClauses(m,clauses,v19ctx);}
     const pr23=D.V23_PROTOCOL_RULES?.[state().protocol];if(pr23)m*=v19RuleMatch(pr23.when,v19ctx)?(pr23.hit||1):(pr23.miss||1);
     const tr23=D.V23_TUNING_RULES?.[tune];if(tr23)m*=v19RuleMatch(tr23.when,v19ctx)?(tr23.hit||1):(tr23.miss||1);
+    const v24style=activeStyle();const v24charClauses=(v24style&&D.V24_STYLE_RULES?.[v24style.id])||D.V24_CHARACTER_RULES?.[state().character];if(v24charClauses)m=v19ApplyClauses(m,v24charClauses,v19ctx);
+    for(const rid of state().relics||[]){const clauses=D.V24_RELIC_RULES?.[rid];if(clauses)m=v19ApplyClauses(m,clauses,v19ctx);}
+    const pr24=D.V24_PROTOCOL_RULES?.[state().protocol];if(pr24)m*=v19RuleMatch(pr24.when,v19ctx)?(pr24.hit||1):(pr24.miss||1);
+    const tr24=D.V24_TUNING_RULES?.[tune];if(tr24)m*=v19RuleMatch(tr24.when,v19ctx)?(tr24.hit||1):(tr24.miss||1);
     if(rune){const rr=D.RUNES?.[rune];if(rr&&v19RuleMatch(rr.when||{},v19ctx))m*=rr.hit||1;}
     const arc=activeArcana();if(arc){const side=arc[arcanaOrientation()];if(side&&v19RuleMatch(side.when||{},v19ctx))m*=side.mult||1;}
     if(b.player.nextPenalty)m*=Math.max(0,1-b.player.nextPenalty);
