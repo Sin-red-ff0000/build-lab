@@ -5,6 +5,7 @@ find "$ROOT/js" -name '*.js' -print0 | xargs -0 -n1 node --check
 node "$ROOT/tests/smoke.test.js"
 node "$ROOT/tests/content_balance.test.js"
 node "$ROOT/tests/effect_coverage.test.js"
+node "$ROOT/tests/balance22_audit.test.js"
 node "$ROOT/tests/boss_balance.test.js"
 node "$ROOT/tests/boss_reward_integration.test.js"
 node "$ROOT/tests/chapter2_systems.test.js"

@@ -5,7 +5,7 @@ const mem={};
 global.localStorage={getItem:k=>mem[k]??null,setItem:(k,v)=>{mem[k]=String(v)},removeItem:k=>{delete mem[k]}};
 const root=path.resolve(__dirname,'..');
 for(const f of [
-  'js/data/gameData.js','js/data/protocols.js','js/data/tunings.js','js/data/conversions.js','js/data/chapter3.js','js/data/expansion08.js','js/data/expansion09.js','js/data/doctrines.js','js/data/characterStyles.js','js/data/expansion10.js','js/data/expansion11.js','js/data/expansion12.js','js/data/enemyBehaviors.js','js/data/expansion13.js','js/data/expansion14.js','js/data/expansion17.js','js/data/expansion18.js','js/data/expansion19.js','js/data/runes.js','js/data/arcana.js','js/data/expansion20.js',
+  'js/data/gameData.js','js/data/protocols.js','js/data/tunings.js','js/data/conversions.js','js/data/chapter3.js','js/data/expansion08.js','js/data/expansion09.js','js/data/doctrines.js','js/data/characterStyles.js','js/data/expansion10.js','js/data/expansion11.js','js/data/expansion12.js','js/data/enemyBehaviors.js','js/data/expansion13.js','js/data/expansion14.js','js/data/expansion17.js','js/data/expansion18.js','js/data/expansion19.js','js/data/runes.js','js/data/arcana.js','js/data/expansion20.js','js/data/balance22.js',
   'js/core/utils.js','js/core/unlock.js','js/data/unlocks.js','js/data/unlocks07.js','js/data/unlocks08.js','js/data/unlocks09.js','js/data/unlocks10.js','js/data/unlocks11.js','js/data/unlocks12.js','js/data/unlocks13.js','js/data/unlocks14.js','js/data/unlocks17.js','js/data/unlocks18.js','js/data/unlocks19.js','js/data/unlocks20.js','js/core/state.js','js/core/enemy.js','js/core/battle.js'
 ]) require(path.join(root,f));
 const BL=global.BuildLab,D=BL.Data;
@@ -68,5 +68,5 @@ for(const pid of D.V19_PROTOCOL_IDS){const st=BL.Store.defaultState();st.unlocke
 for(const tid of D.V19_TUNING_IDS){const st=BL.Store.defaultState();st.unlockedTunings[tid]=true;st.cardTunings.double_strike=tid;st.enemy.hp=20;st.enemy.atk=1;BL.Store.state=st;let r=BL.Battle.create(false);assert(!r.error,`v19 tuning battle ${tid}`);BL.Battle.play(0);if(BL.Battle.current)BL.Battle.retire();}
 
 // v0.18以前のセーブはv0.19へ移行。
-const migrated=BL.Store.mergeDefaults({version:18,deck:[...D.DEFAULT_DECK],unlockedCards:{},unlockedRelics:{}});assert(migrated.version===21,'v18->v20 migration failed');
+const migrated=BL.Store.mergeDefaults({version:18,deck:[...D.DEFAULT_DECK],unlockedCards:{},unlockedRelics:{}});assert(migrated.version===22,'v18->v20 migration failed');
 console.log(`PASS expansion19_systems.test.js (+${D.V19_CHARACTER_IDS.length} chars / +${D.V19_STYLE_IDS.length} styles / +${D.V19_RELIC_IDS.length} relics / +${D.V19_PROTOCOL_IDS.length} protocols / +${D.V19_TUNING_IDS.length} tunings / +${D.V19_TRAIT_IDS.length} traits / +${D.V19_BEHAVIOR_IDS.length} behaviors)`);
