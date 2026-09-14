@@ -30,7 +30,7 @@
   function linkedCombo(instance){const b=Battle.current,pair=linkPair();if(!b||!pair||!b.lastUsed)return false;const current=instance.cardId,prev=b.lastUsed.cardId;if(!(pair.includes(current)&&pair.includes(prev)&&current!==prev))return false;const dir=prev===pair[0]&&current===pair[1]?'forward':prev===pair[1]&&current===pair[0]?'reverse':null,mode=activeLinkMode();return !mode.direction||mode.direction===dir;}
   function linkDirection(instance){const b=Battle.current,pair=linkPair();if(!b||!pair||!b.lastUsed)return null;const current=instance.cardId,prev=b.lastUsed.cardId;if(prev===pair[0]&&current===pair[1])return'forward';if(prev===pair[1]&&current===pair[0])return'reverse';return null;}
   function inst(cardId){return {uid:`c${++seq}`,cardId,upgraded:false,wasReserved:false};}
-  function card(x){return D.CARDS[x.cardId];}
+  function card(x){const base=D.CARDS[x.cardId];return D.resolveDualFaceCard?D.resolveDualFaceCard(x,Battle.current,state()):base;}
   function pileFindAndRemove(uid){
     const b=Battle.current;if(!b)return null;
     const piles=['draw','discard','excluded','reserved','prompt','resolving'];
@@ -80,8 +80,8 @@
     if(when.linkActive!=null&&!!ctx.linkActive!==!!when.linkActive)return false;if(when.pairCard&&!pairIncludesCurrent(ctx.instance))return false;if(when.notPairCard&&pairIncludesCurrent(ctx.instance))return false;
     if(when.recentReshuffle&&!b.firstCardAfterReshuffle)return false;if(when.lowHp&&b.player.hp>b.player.maxHp/2)return false;if(when.highHp&&b.player.hp<=b.player.maxHp/2)return false;
     if(when.enemyIsBoss&&!b.isBoss)return false;
-    if(when.statusMin!=null&&statusCount()<when.statusMin)return false;if(when.discarded&&!b.discardedEver[ctx.instance.uid])return false;
-    if(when.upgraded&&!ctx.instance.upgraded)return false;if(when.reserved&&!ctx.instance.wasReserved)return false;if(when.doctrine&&!doctrineActive())return false;
+    if(when.statusMin!=null&&statusCount()<when.statusMin)return false;if(when.statusMax!=null&&statusCount()>when.statusMax)return false;if(when.discarded&&!b.discardedEver[ctx.instance.uid])return false;if(when.notDiscarded&&b.discardedEver[ctx.instance.uid])return false;
+    if(when.upgraded&&!ctx.instance.upgraded)return false;if(when.reserved&&!ctx.instance.wasReserved)return false;if(when.notReserved&&ctx.instance.wasReserved)return false;if(when.doctrine&&!doctrineActive())return false;if(when.turnMin!=null&&b.turn<when.turnMin)return false;
     if(when.blockish&&!(ctx.c.kind==='block'||ctx.c.kind==='hybrid'))return false;if(when.counterish&&!(ctx.c.counter||ctx.c.fixedCounter))return false;
     if(when.attackish&&!(ctx.c.kind==='damage'||ctx.c.kind==='hybrid'||ctx.c.damage!=null||ctx.c.hits))return false;
     if(when.selfDamage&&!(ctx.c.selfDamage||ctx.conv==='blood_role'))return false;if(when.selfDamageOrLowHp&&!(ctx.c.selfDamage||ctx.conv==='blood_role'||b.player.hp<=b.player.maxHp/2))return false;
@@ -407,6 +407,10 @@
     for(const rid of state().relics||[]){const clauses=D.V24_RELIC_RULES?.[rid];if(clauses)m=v19ApplyClauses(m,clauses,v19ctx);}
     const pr24=D.V24_PROTOCOL_RULES?.[state().protocol];if(pr24)m*=v19RuleMatch(pr24.when,v19ctx)?(pr24.hit||1):(pr24.miss||1);
     const tr24=D.V24_TUNING_RULES?.[tune];if(tr24)m*=v19RuleMatch(tr24.when,v19ctx)?(tr24.hit||1):(tr24.miss||1);
+    for(const rid of state().relics||[]){const clauses=D.V26_RELIC_RULES?.[rid];if(clauses)m=v19ApplyClauses(m,clauses,v19ctx);}
+    const pr26=D.V26_PROTOCOL_RULES?.[state().protocol];if(pr26)m*=v19RuleMatch(pr26.when,v19ctx)?(pr26.hit||1):(pr26.miss||1);
+    const tr26=D.V26_TUNING_RULES?.[tune];if(tr26)m*=v19RuleMatch(tr26.when,v19ctx)?(tr26.hit||1):(tr26.miss||1);
+    const v26style=activeStyle();const v26charClauses=(v26style&&D.V26_STYLE_RULES?.[v26style.id])||D.V26_CHARACTER_RULES?.[state().character];if(v26charClauses)m=v19ApplyClauses(m,v26charClauses,v19ctx);
     if(rune){const rr=D.RUNES?.[rune];if(rr&&v19RuleMatch(rr.when||{},v19ctx))m*=rr.hit||1;}
     const arc=activeArcana();if(arc){const side=arc[arcanaOrientation()];if(side&&v19RuleMatch(side.when||{},v19ctx))m*=side.mult||1;}
     if(b.player.nextPenalty)m*=Math.max(0,1-b.player.nextPenalty);
