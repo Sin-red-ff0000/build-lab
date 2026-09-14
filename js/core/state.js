@@ -2,12 +2,13 @@
 (function(){
   const BL = window.BuildLab;
   const D = BL.Data;
-  const KEY='build_lab_proto_v20';
-  const OLD_KEYS=['build_lab_proto_v19','build_lab_proto_v18','build_lab_proto_v17','build_lab_proto_v16','build_lab_proto_v15','build_lab_proto_v14','build_lab_proto_v13','build_lab_proto_v12','build_lab_proto_v11','build_lab_proto_v10','build_lab_proto_v09','build_lab_proto_v08','build_lab_proto_v07','build_lab_proto_v06','build_lab_proto_v05','build_lab_proto_v04','build_lab_proto_v03','build_lab_proto_v02','build_lab_proto_v01'];
+  const KEY='build_lab_proto_v21';
+  const OLD_KEYS=['build_lab_proto_v20','build_lab_proto_v19','build_lab_proto_v18','build_lab_proto_v17','build_lab_proto_v16','build_lab_proto_v15','build_lab_proto_v14','build_lab_proto_v13','build_lab_proto_v12','build_lab_proto_v11','build_lab_proto_v10','build_lab_proto_v09','build_lab_proto_v08','build_lab_proto_v07','build_lab_proto_v06','build_lab_proto_v05','build_lab_proto_v04','build_lab_proto_v03','build_lab_proto_v02','build_lab_proto_v01'];
 
   function defaultState(){
     return {
-      version:20,
+      version:21,
+      alchemy:D.ALCHEMY?.defaults()||{enabled:false},
       character:'standard',
       deck:[...D.DEFAULT_DECK],
       relics:[],
@@ -86,7 +87,8 @@
     for(const [cardId,runeId] of Object.entries({...s.cardRunes})){if(!D.CARDS[cardId]||!D.RUNES?.[runeId]||!s.unlockedRunes?.[runeId])delete s.cardRunes[cardId];}
     Object.keys(s.cardRunes).slice(3).forEach(id=>delete s.cardRunes[id]);
     if(!D.ARCANA?.[s.arcana?.id]||!s.unlockedArcana?.[s.arcana?.id])s.arcana={id:null,orientation:'upright'};else s.arcana.orientation=s.arcana.orientation==='reversed'?'reversed':'upright';
-    s.version=20;
+    s.alchemy=D.ALCHEMY?.normalize(raw.alchemy)||{enabled:false};
+    s.version=21;
     return s;
   }
 
@@ -125,6 +127,7 @@
     state:load(),
     save(){localStorage.setItem(KEY,JSON.stringify(this.state));},
     resetDeck(){this.state.deck=validDefaultDeck(this.state);this.save();return this.state.deck;},
+    resetAlchemy(){this.state.alchemy=D.ALCHEMY?.defaults()||{enabled:false};this.save();},
     resetRelics(){this.state.relics=[];this.save();},
     resetProtocol(){this.state.protocol=null;this.save();},
     resetTunings(){this.state.cardTunings={};this.save();},
@@ -138,7 +141,7 @@
     resetExperiment(){this.state.enemy=resetEnemyObject();this.save();},
     resetBuild(){
       const s=this.state;
-      s.character='standard';s.characterStyles={};s.doctrine=null;s.deck=[...D.DEFAULT_DECK];s.relics=[];s.protocol=null;s.cardTunings={};s.cardConversions={};s.cardRunes={};s.arcana={id:null,orientation:'upright'};s.cardLink={a:null,b:null};s.linkMode='reciprocal';s.enemy=resetEnemyObject();
+      s.alchemy=D.ALCHEMY?.defaults()||{enabled:false};s.character='standard';s.characterStyles={};s.doctrine=null;s.deck=[...D.DEFAULT_DECK];s.relics=[];s.protocol=null;s.cardTunings={};s.cardConversions={};s.cardRunes={};s.arcana={id:null,orientation:'upright'};s.cardLink={a:null,b:null};s.linkMode='reciprocal';s.enemy=resetEnemyObject();
       this.save();return s;
     },
     reset(){localStorage.removeItem(KEY);OLD_KEYS.forEach(k=>localStorage.removeItem(k));this.state=defaultState();this.save();return this.state;}

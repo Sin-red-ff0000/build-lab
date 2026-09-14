@@ -31,4 +31,5 @@ node tests\guide_detail.test.js || exit /b 1
 node tests\web_deploy.test.js || exit /b 1
 node tests\mobile_ui.test.js || exit /b 1
 node tests\modal_overflow.test.js || exit /b 1
+node tests\alchemy.test.js || exit /b 1
 echo All checks passed.

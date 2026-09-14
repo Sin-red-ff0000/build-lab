@@ -1,3 +1,10 @@
+# v0.21 追加ファイル
+
+- js/data/alchemy.js：元素・材料・15レシピ・効果・プリセット・正規化・解説
+- js/core/alchemy.js：スタック・自動反応・優先確保・遅延・自動使用
+- js/ui/alchemyView.js：配分・工程・備蓄・実験結果
+- tests/alchemy.test.js：錬成と既存戦闘の統合検証
+
 # BUILD LAB v0.20 CODE TREE
 
 ```text

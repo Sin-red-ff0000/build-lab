@@ -97,6 +97,7 @@
   function currentArcanaMatches(ctx){const a=activeArcana();if(!a)return false;const side=a[arcanaOrientation()];return !!side&&v19RuleMatch(side.when||{},ctx);}
   function v19ApplyClauses(m,clauses,ctx){for(const clause of clauses||[])if(v19RuleMatch(clause.when,ctx))m*=clause.mult||1;return m;}
 
+  const alchemyAPI={damage:n=>dealEnemyDamage(n),heal:n=>healPlayer(n)};
   function create(mode=false){
     const s=state(),rules=deckRules();if(s.deck.length!==rules.deckSize)return {error:`現在の構築規格ではデッキを${rules.deckSize}枚にしてください`};const counts={};for(const id of s.deck){counts[id]=(counts[id]||0)+1;if(rules.id&&counts[id]>rules.copyLimit)return {error:`現在の構築規格では同名カードは${rules.copyLimit}枚までです`};}
     const bossId=mode===true?'boss1':(['boss1','boss2','boss3','boss4'].includes(mode)?mode:null),isBoss=!!bossId;
@@ -106,6 +107,7 @@
     const startHp=Math.max(1,c.hp-hpPenalty);
     const instances=s.deck.map(id=>inst(id));
     Battle.current={
+      alchemy:BL.Alchemy?.create(s.alchemy),
       isBoss,bossId,turn:1,initialDeckSize:instances.length,
       player:{hp:startHp,maxHp:startHp,block:0,nextBuff:0,nextPenalty:0},
       enemy:{...e,block:0,status:{poison:0,burn:0,vulnerable:0,weak:0}},
@@ -117,6 +119,7 @@
       log:[]
     };
     log(`実験開始：${e.name}`);if(discovered.length)log(`特殊個体を発見：${discovered.join(' / ')}`);if(behaviorDiscovered.length)log(`複合挙動を発見：${behaviorDiscovered.join(' / ')}`);
+    BL.Alchemy?.supply(Battle.current);
     beginTurn();return {battle:Battle.current,discovered,behaviorDiscovered};
   }
 
@@ -124,7 +127,7 @@
   function drawOne(){const b=Battle.current;if(!b.draw.length){if(b.discard.length||b.excluded.length)reshuffle();else return null;}return b.draw.shift();}
   function reshuffle(includeDraw=false){
     const b=Battle.current;const pool=includeDraw?[...b.draw,...b.discard,...b.excluded]:[...b.discard,...b.excluded];if(!pool.length)return;
-    b.draw=U.shuffle(pool);b.discard=[];b.excluded=[];b.reshuffles++;b.recentReshuffle=true;b.firstCardAfterReshuffle=true;log('山札を再構築。');
+    b.draw=U.shuffle(pool);b.discard=[];b.excluded=[];b.reshuffles++;b.recentReshuffle=true;b.firstCardAfterReshuffle=true;log('山札を再構築。');BL.Alchemy?.supply(b);
     if(state().character==='loop'&&!styleIs('loop_rebirth')){b.player.block+=3;log('ループ：山札再構築で防御 +3');}
     if(hasRelic('long_observation')&&!b.firstReshuffleHealUsed){healPlayer(Math.round((b.player.maxHp-b.player.hp)*.25));b.firstReshuffleHealUsed=true;}
     if(hasRelic('cycle_bearing')){b.player.block+=6;log('循環軸受：防御 +6');}
@@ -135,6 +138,7 @@
   }
   function beginTurn(){
     const b=Battle.current;if(!b)return;b.player.block=0;b.counter=0;b.fixedCounter=0;b.usedBlockUid=null;b.discardedThisTurn=0;b.perfectWallHealedThisEnemyTurn=false;b.bastionMemoryHealedThisEnemyTurn=false;b.statusBlockGained=0;
+    BL.Alchemy?.turn(b,alchemyAPI);if(checkEnd())return;
     if(b.enemy.status.burn>0){dealRawEnemy(b.enemy.status.burn,'火傷');b.enemy.status.burn=Math.max(0,b.enemy.status.burn-1);if(checkEnd())return;}
     const count=promptCount();b.prompt=[];
     const forced=b.centerReserved;b.centerReserved=null;
@@ -378,10 +382,12 @@
     return m;
   }
 
+  function resolvedHits(instance,position){const b=Battle.current,c=card(instance),conv=conversionFor(instance),linkActive=linkedCombo(instance);let hits=c.hits||((c.damage!=null||c.kind==='hybrid')?1:0);if(c.conditionalHits&&hasAnyStatus())hits=c.conditionalHits;if(c.prevAttackHits&&b.lastWasAttack)hits=c.prevAttackHits;if(c.prevMultiHits&&b.lastWasMulti)hits=c.prevMultiHits;if(c.lowHpHits&&b.player.hp<=b.player.maxHp/2)hits=c.lowHpHits;if(c.hitsIfRecentReshuffle&&b.recentReshuffle)hits=c.hitsIfRecentReshuffle;if(c.hitsIfPosition&&(position||b.lastChoicePosition)===c.hitsIfPosition.position)hits=c.hitsIfPosition.value;if(c.hitsIfTuned&&tuningFor(instance))hits=c.hitsIfTuned;if(c.hitsIfLinkedCombo&&linkActive)hits=c.hitsIfLinkedCombo;if(c.hitsIfLinkForward&&linkActive&&linkDirection(instance)==='forward')hits=c.hitsIfLinkForward;if(c.hitsIfLinkReverse&&linkActive&&linkDirection(instance)==='reverse')hits=c.hitsIfLinkReverse;if(c.hitsIfDeckSizeMax&&state().deck.length<=c.hitsIfDeckSizeMax.max)hits=c.hitsIfDeckSizeMax.value;if(c.hitsIfDeckSizeMin&&state().deck.length>=c.hitsIfDeckSizeMin.min)hits=c.hitsIfDeckSizeMin.value;if(c.hitsIfUniqueCopy&&deckCopies(instance.cardId)===1)hits=c.hitsIfUniqueCopy;if(c.hitsIfDuplicateCopy&&deckCopies(instance.cardId)>=2)hits=c.hitsIfDuplicateCopy;if(c.hitsIfDoctrine&&doctrineActive())hits=c.hitsIfDoctrine;if(c.hitsIfDeckTagMin&&distinctDeckTags()>=c.hitsIfDeckTagMin.min)hits=c.hitsIfDeckTagMin.value;if(c.hitsIfConverted&&conv)hits=c.hitsIfConverted;if(c.hitsIfEnemyBehavior&&enemyBehaviorCount()>0)hits=c.hitsIfEnemyBehavior;return hits;}
   function play(index){
     const b=Battle.current;if(!b||!b.prompt[index])return;
     const selected=b.prompt[index],c=card(selected),center=Math.floor((b.prompt.length-1)/2),others=b.prompt.filter((_,i)=>i!==index),prevPos=b.lastChoicePosition,pos=index<center?'left':index===center?'center':'right',tune=tuningFor(selected),conv=conversionFor(selected),selectedWasReserved=!!selected.wasReserved;
-    const linkActive=linkedCombo(selected),mult=selectedMultiplier(index,selected),kindKey=(conv==='bulwark'||conv==='counter_role')?'hybrid':(c.kind==='hybrid'?'hybrid':(c.kind||'utility')),boss4Layer=linkActive?'link':(tune&&conv?'dual':tune?'tune':conv?'conversion':(cardTags(selected).length>=2?'hybrid':'base'));b.player.nextBuff=0;b.player.nextPenalty=0;b.firstCardAfterReshuffle=false;b.previousChoicePosition=prevPos;b.repeatedPosition=!!(prevPos&&prevPos===pos);b.lastChoicePosition=pos;b.positionStreak=(prevPos&&prevPos!==pos)?Math.min(2,(b.positionStreak||0)+1):0;b.boss3RepeatedKind=!!(b.bossId==='boss3'&&b.lastUsedKind&&b.lastUsedKind===kindKey);b.lastUsedKind=kindKey;b.boss4RepeatedLayer=!!(b.bossId==='boss4'&&b.boss4LastLayer&&b.boss4LastLayer===boss4Layer);b.boss4LastLayer=boss4Layer;
+    const alchemyCard={...c,hits:resolvedHits(selected,pos)};if(conv==='split'&&alchemyCard.hits===1)alchemyCard.hits=3;
+    const linkActive=linkedCombo(selected),mult=selectedMultiplier(index,selected)*(1+(BL.Alchemy?.beforeCard(b,alchemyCard,alchemyAPI)||0)),kindKey=(conv==='bulwark'||conv==='counter_role')?'hybrid':(c.kind==='hybrid'?'hybrid':(c.kind||'utility')),boss4Layer=linkActive?'link':(tune&&conv?'dual':tune?'tune':conv?'conversion':(cardTags(selected).length>=2?'hybrid':'base'));b.player.nextBuff=0;b.player.nextPenalty=0;b.firstCardAfterReshuffle=false;b.previousChoicePosition=prevPos;b.repeatedPosition=!!(prevPos&&prevPos===pos);b.lastChoicePosition=pos;b.positionStreak=(prevPos&&prevPos!==pos)?Math.min(2,(b.positionStreak||0)+1):0;b.boss3RepeatedKind=!!(b.bossId==='boss3'&&b.lastUsedKind&&b.lastUsedKind===kindKey);b.lastUsedKind=kindKey;b.boss4RepeatedLayer=!!(b.bossId==='boss4'&&b.boss4LastLayer&&b.boss4LastLayer===boss4Layer);b.boss4LastLayer=boss4Layer;
     // prompt所有権を先に解消。選ばれなかったカードは捨て札/除外へ。
     b.prompt=[];b.resolving.push(selected);others.forEach(x=>discardInstance(x,true));
     const repeat=(state().character==='standard'&&!hasAltStyle()&&index===center)?2:1;if(repeat===2)log(`${D.CHARACTERS.standard.name}：中央枠を2回発動。`);
@@ -401,6 +407,7 @@
     if(hasRelic('holding_tank')&&others[0])reserveExisting(others[0],false);
     // 選択カードを必ず「移動」させる。複製しない。
     pileFindAndRemove(selected.uid);selected.wasReserved=false;if(tune==='overload'||((c.selfDamage||conv==='blood_role')&&hasRelic('blood_key')))b.excluded.push(selected);else if(tune==='recycle'||conv==='cycle_role'||(hasRelic('cycle_reserve')&&selectedWasReserved))b.draw.push(selected);else b.discard.push(selected);
+    BL.Alchemy?.afterCard(b,alchemyCard,alchemyAPI);if(checkEnd())return;
     b.recentReshuffle=false;
     enemyTurn();
   }
@@ -443,7 +450,7 @@
     if(c.effect==='adversity'){if(b.player.hp<=b.player.maxHp/2){for(let i=0;i<2;i++){const x=b.discard.pop();if(!x)break;b.draw.unshift(x);if(hasRelic('recovery_thread'))healPlayer(2);}log('捨て札から最大2枚を山札へ回収。');}return;}
     if(c.effect==='recover2Discard'){let moved=0;for(let i=0;i<2;i++){const x=b.discard.pop();if(!x)break;b.draw.unshift(x);moved++;if(hasRelic('recovery_thread'))healPlayer(2);}if(moved)log(`捨て札から${moved}枚を山札へ回収。`);return;}
 
-    let hits=c.hits||((c.damage!=null||c.kind==='hybrid')?1:0);if(c.conditionalHits&&hasAnyStatus())hits=c.conditionalHits;if(c.prevAttackHits&&b.lastWasAttack)hits=c.prevAttackHits;if(c.prevMultiHits&&b.lastWasMulti)hits=c.prevMultiHits;if(c.lowHpHits&&b.player.hp<=b.player.maxHp/2)hits=c.lowHpHits;if(c.hitsIfRecentReshuffle&&b.recentReshuffle)hits=c.hitsIfRecentReshuffle;if(c.hitsIfPosition&&b.lastChoicePosition===c.hitsIfPosition.position)hits=c.hitsIfPosition.value;if(c.hitsIfTuned&&tuningFor(instance))hits=c.hitsIfTuned;if(c.hitsIfLinkedCombo&&linkActive)hits=c.hitsIfLinkedCombo;if(c.hitsIfLinkForward&&linkActive&&linkDirection(instance)==='forward')hits=c.hitsIfLinkForward;if(c.hitsIfLinkReverse&&linkActive&&linkDirection(instance)==='reverse')hits=c.hitsIfLinkReverse;if(c.hitsIfDeckSizeMax&&state().deck.length<=c.hitsIfDeckSizeMax.max)hits=c.hitsIfDeckSizeMax.value;if(c.hitsIfDeckSizeMin&&state().deck.length>=c.hitsIfDeckSizeMin.min)hits=c.hitsIfDeckSizeMin.value;if(c.hitsIfUniqueCopy&&deckCopies(instance.cardId)===1)hits=c.hitsIfUniqueCopy;if(c.hitsIfDuplicateCopy&&deckCopies(instance.cardId)>=2)hits=c.hitsIfDuplicateCopy;if(c.hitsIfDoctrine&&doctrineActive())hits=c.hitsIfDoctrine;if(c.hitsIfDeckTagMin&&distinctDeckTags()>=c.hitsIfDeckTagMin.min)hits=c.hitsIfDeckTagMin.value;if(c.hitsIfConverted&&conv)hits=c.hitsIfConverted;if(c.hitsIfEnemyBehavior&&enemyBehaviorCount()>0)hits=c.hitsIfEnemyBehavior;
+    let hits=resolvedHits(instance);
     let dmg=c.damage||0;if(c.lowHpDamage&&b.player.hp<=b.player.maxHp/2)dmg=c.lowHpDamage;if(c.damageIfStatus&&hasAnyStatus())dmg=c.damageIfStatus;if(c.damageIfPrevMulti&&b.lastWasMulti)dmg=c.damageIfPrevMulti;if(c.damageIfRecentReshuffle&&b.recentReshuffle)dmg=c.damageIfRecentReshuffle;if(c.damageIfPromptMax&&b.lastPromptCount<=c.damageIfPromptMax.max)dmg=c.damageIfPromptMax.value;if(c.damageIfPromptMin&&b.lastPromptCount>=c.damageIfPromptMin.min)dmg=c.damageIfPromptMin.value;if(c.damageIfDrawMax&&b.draw.length<=c.damageIfDrawMax.max)dmg=c.damageIfDrawMax.value;if(c.damageIfTurnMin&&b.turn>=c.damageIfTurnMin.turn)dmg=c.damageIfTurnMin.value;if(c.damagePerReshuffle)dmg+=c.damagePerReshuffle*b.reshuffles;if(c.damagePerStatusType)dmg+=c.damagePerStatusType*statusCount();if(c.damagePerTotalStatus)dmg+=c.damagePerTotalStatus*Object.values(b.enemy.status).reduce((a,n)=>a+n,0);if(c.damagePerDiscardedThisTurn)dmg+=c.damagePerDiscardedThisTurn*b.discardedThisTurn;if(c.damagePerMissingHpPct)dmg+=Math.floor(((b.player.maxHp-b.player.hp)/b.player.maxHp)*10)*c.damagePerMissingHpPct;if(c.discardBoostValue&&b.discardedEver[instance.uid])dmg=c.discardBoostValue;if(c.discardBoost&&b.discardedEver[instance.uid])dmg=16;if(c.damageIfPosition&&b.lastChoicePosition===c.damageIfPosition.position)dmg=c.damageIfPosition.value;if(c.damageIfEnemyRegenMin&&b.enemy.regen>=c.damageIfEnemyRegenMin.min)dmg=c.damageIfEnemyRegenMin.value;if(c.damageIfEnemyResistMin&&b.enemy.resist>=c.damageIfEnemyResistMin.min)dmg=c.damageIfEnemyResistMin.value;if(c.damageIfTuned&&tuningFor(instance))dmg=c.damageIfTuned;if(c.damageIfReserved&&instance.wasReserved)dmg=c.damageIfReserved;if(c.damageIfLinkedCombo&&linkActive)dmg=c.damageIfLinkedCombo;if(c.damageIfLinkForward&&linkActive&&linkDirection(instance)==='forward')dmg=c.damageIfLinkForward;if(c.damageIfLinkReverse&&linkActive&&linkDirection(instance)==='reverse')dmg=c.damageIfLinkReverse;if(c.damageIfLinkBridge&&linkActive&&activeLinkMode().id==='bridge')dmg=c.damageIfLinkBridge;if(c.damageIfLinkedAndTuned&&linkActive&&tuningFor(instance))dmg=c.damageIfLinkedAndTuned;if(c.damageIfAdaptiveEnemy&&b.enemy.regen>0&&b.enemy.resist>=30)dmg=c.damageIfAdaptiveEnemy;if(c.damagePerTotalStatusIfLinked&&linkActive)dmg+=c.damagePerTotalStatusIfLinked*Object.values(b.enemy.status).reduce((a,n)=>a+n,0);if(c.damagePerPromptCard)dmg+=c.damagePerPromptCard*b.lastPromptCount;if(c.discardedPositionBonus&&b.discardedEver[instance.uid]&&b.lastChoicePosition!=='center')dmg+=c.discardedPositionBonus;if(c.damagePerEnemyResistStep)dmg+=Math.floor(b.enemy.resist/10)*c.damagePerEnemyResistStep;if(c.damageIfDeckSizeMax&&state().deck.length<=c.damageIfDeckSizeMax.max)dmg=c.damageIfDeckSizeMax.value;if(c.damageIfDeckSizeMin&&state().deck.length>=c.damageIfDeckSizeMin.min)dmg=c.damageIfDeckSizeMin.value;if(c.damageIfUniqueCopy&&deckCopies(instance.cardId)===1)dmg=c.damageIfUniqueCopy;if(c.damageIfDuplicateCopy&&deckCopies(instance.cardId)>=2)dmg=c.damageIfDuplicateCopy;if(c.damageIfDoctrine&&doctrineActive())dmg=c.damageIfDoctrine;if(c.damageIfDeckTagMin&&distinctDeckTags()>=c.damageIfDeckTagMin.min)dmg=c.damageIfDeckTagMin.value;if(c.damagePerDistinctDeckTag)dmg+=Math.min(c.damagePerDistinctDeckTag.max||999,distinctDeckTags()*c.damagePerDistinctDeckTag.value);if(c.damageIfConverted&&conv)dmg=c.damageIfConverted;if(c.damageIfStyle&&hasAltStyle())dmg=c.damageIfStyle;if(c.damageIfConvertedAndHybrid&&conv&&cardTags(instance).length>=2)dmg=c.damageIfConvertedAndHybrid;if(c.damageIfConvertedAndTuned&&conv&&tuningFor(instance))dmg=c.damageIfConvertedAndTuned;if(c.damageIfConvertedAndLinked&&conv&&linkActive)dmg=c.damageIfConvertedAndLinked;if(c.damageIfDiscarded&&b.discardedEver[instance.uid])dmg=c.damageIfDiscarded;if(c.damageIfDiscardedLowHp&&b.discardedEver[instance.uid]&&b.player.hp<=b.player.maxHp/2)dmg=c.damageIfDiscardedLowHp;if(c.damageIfStatusAndReshuffle&&statusCount()>=2&&b.reshuffles>0)dmg=c.damageIfStatusAndReshuffle;if(c.damageIfEnemyBehavior&&enemyBehaviorCount()>0)dmg=c.damageIfEnemyBehavior;if(c.damageIfEnemyBehaviorMin&&enemyBehaviorCount()>=c.damageIfEnemyBehaviorMin.min)dmg=c.damageIfEnemyBehaviorMin.value;if(c.damagePerEnemyBehavior){const cfg=c.damagePerEnemyBehavior;dmg+=Math.min(cfg.max||999,enemyBehaviorCount()*cfg.value);}if(c.damageIfEnemyBehaviorAndLinked&&enemyBehaviorCount()>0&&linkActive)dmg=c.damageIfEnemyBehaviorAndLinked;if(c.damageIfEnemyBehaviorAndTuned&&enemyBehaviorCount()>0&&tuningFor(instance))dmg=c.damageIfEnemyBehaviorAndTuned;if(c.damageIfEnemyBehaviorAndConverted&&enemyBehaviorCount()>0&&conv)dmg=c.damageIfEnemyBehaviorAndConverted;if(conv==='split'&&hits<=1&&dmg>0){hits=3;dmg*=.45;}if(conv==='bulwark'&&dmg>0)dmg*=.75;
     const vul=b.enemy.status.vulnerable>0?1.5:1;
     if(hits){for(let h=1;h<=hits;h++){
@@ -492,6 +499,7 @@
     let reflectedThisTurn=false;
     for(let i=0;i<actions;i++){
       if(b.enemy.status.poison>0){dealRawEnemy(b.enemy.status.poison,'毒');b.enemy.status.poison=Math.max(0,b.enemy.status.poison-1);if(checkEnd())return;}
+      BL.Alchemy?.beforeHit(b,alchemyAPI);
       const incoming=enemyAttackValue()+(b.bossId==='boss1'&&b.lastChoicePosition==='center'?3:0)+(b.bossId==='boss2'&&b.repeatedPosition?3:0)+(b.bossId==='boss3'&&b.boss3RepeatedKind?2:0)+(b.bossId==='boss4'&&b.boss4RepeatedLayer?2:0),beforeBlock=b.player.block,blocked=Math.min(beforeBlock,incoming),dmg=Math.max(0,incoming-beforeBlock);b.player.block=Math.max(0,b.player.block-incoming);b.player.hp-=dmg;log(`敵の攻撃 ${incoming}（防御 ${blocked} / 被ダメ ${dmg}）`);
       if(dmg>0&&b.counter>0){let cm=1;if(activeProtocol('counter_matrix'))cm*=1.3;if(hasRelic('counter_core'))cm*=1.4;if(hasRelic('red_mirror'))cm*=1.3;if(hasRelic('breaker_anvil')&&hasAnyStatus())cm*=1.35;dealRawEnemy(Math.round(dmg*b.counter*cm),'反撃');}if(dmg>0&&b.fixedCounter>0)dealRawEnemy(Math.round(b.fixedCounter*(activeProtocol('counter_matrix')?1.3:1)),'迎撃');if(dmg>0&&hasRelic('reflect_bone')&&!reflectedThisTurn){dealRawEnemy(Math.round(dmg*.5),'反射骨');reflectedThisTurn=true;}
       if(blocked>=incoming/2&&hasRelic('pressure_plate'))applyStatus('vulnerable',1);
