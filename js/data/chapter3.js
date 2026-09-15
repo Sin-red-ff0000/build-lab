@@ -10,9 +10,9 @@
   });
 
   Object.assign(D.TUNINGS,{
-    focus:{name:'焦点調律',tags:['提示操作','調律'],desc:'中央枠から使用する時の基本効果+30%。左右から使用する時は-10%。',effect:'focus',requiresSystem:'card_link'},
-    reserve:{name:'保留調律',tags:['提示操作','循環','調律'],desc:'前ターンから持ち越された状態で使用すると基本効果+35%。通常提示から使う時は-8%。',effect:'reserve',requiresSystem:'card_link'},
-    relay:{name:'連結調律',tags:['連結','調律'],desc:'連結コンボ成立時の基本効果+30%。連結コンボでない時は-10%。',effect:'relay',requiresSystem:'card_link'}
+    focus:{name:'焦点調律',tags:['提示操作','調律'],desc:'中央枠から使用すると基本効果+12%。中央で焦点調律を繰り返すほど、その戦闘中の焦点精度が上がり防御を最大4得る。左右では-8%。',effect:'focus',requiresSystem:'card_link'},
+    reserve:{name:'保留調律',tags:['提示操作','循環','調律'],desc:'前ターンから持ち越したカードは基本効果+12%。保留調律の成功を重ねると次のカードへ最大+8%を受け渡す。通常提示では-6%。',effect:'reserve',requiresSystem:'card_link'},
+    relay:{name:'連結調律',tags:['連結','調律'],desc:'連結コンボ成立時の基本効果+12%。連結調律の成功を重ねるほど接続時に防御を最大4得る。非連結時は-8%。',effect:'relay',requiresSystem:'card_link'}
   });
 
   Object.assign(D.PROTOCOLS,{
@@ -32,10 +32,10 @@
     adaptive_edge:{name:'適応刃',tags:['対再生','対耐性'],desc:'7ダメージ。敵に再生力があり、かつ状態異常耐性30%以上なら24ダメージ。',kind:'damage',hits:1,damage:7,damageIfAdaptiveEnemy:24},
 
     // 第3章スターター：連結
-    link_strike:{name:'連結刃',tags:['連結'],desc:'8ダメージ。連結コンボなら18ダメージ。',kind:'damage',hits:1,damage:8,damageIfLinkedCombo:18},
-    link_guard:{name:'連結防壁',tags:['連結','耐久'],desc:'防御8。連結コンボなら防御17。',kind:'block',block:8,blockIfLinkedCombo:17},
-    link_barrage:{name:'連結連射',tags:['連結','連撃'],desc:'2ダメージ×3。連結コンボなら×6。',kind:'damage',hits:3,damage:2,hitsIfLinkedCombo:6},
-    link_poison:{name:'連結毒',tags:['連結','状態異常'],desc:'毒3。連結コンボなら毒8。',kind:'utility',status:{type:'poison',amount:3},statusIfLinkedCombo:8},
+    link_strike:{name:'連結刃',tags:['連結'],desc:'8ダメージ。連結コンボなら14ダメージ。接続を重ねるほど少しずつ効率が上がる。',kind:'damage',hits:1,damage:8,damageIfLinkedCombo:14},
+    link_guard:{name:'連結防壁',tags:['連結','耐久'],desc:'防御8。連結コンボなら防御13。接続を継続する運用と相性が良い。',kind:'block',block:8,blockIfLinkedCombo:13},
+    link_barrage:{name:'連結連射',tags:['連結','連撃'],desc:'2ダメージ×3。連結コンボなら×4。方向を往復させながらhit数を稼ぐ接続札。',kind:'damage',hits:3,damage:2,hitsIfLinkedCombo:4},
+    link_poison:{name:'連結毒',tags:['連結','状態異常','毒'],desc:'毒3。連結コンボなら毒5。連結を維持しながら毒の継続投与を行う。',kind:'utility',status:{type:'poison',amount:3},statusIfLinkedCombo:5},
 
     relay_blade:{name:'継電刃',tags:['連結','提示操作'],desc:'6ダメージ。連結コンボなら20ダメージ。中央枠ならさらに基本効果が伸びやすい。',kind:'damage',hits:1,damage:6,damageIfLinkedCombo:20},
     relay_wall:{name:'継電壁',tags:['連結','耐久'],desc:'防御7。連結コンボなら防御18。',kind:'block',block:7,blockIfLinkedCombo:18},

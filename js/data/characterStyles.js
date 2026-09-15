@@ -13,7 +13,7 @@
     vector_flux:{id:'vector_flux',character:'vector',name:'流動型',tags:['提示操作'],desc:'左・中央・右の固有効果を失う代わりに、前回と異なる位置を選ぶと基本効果+30%・防御4。'},
     archive_salvage:{id:'archive_salvage',character:'archive',name:'回収型',tags:['捨て札','耐久'],desc:'一度捨てられたカードの補正を+15%へ下げる代わりに、そのカードを使用するたび防御5。'},
     relay_direction:{id:'relay_direction',character:'relay',name:'順送型',tags:['連結'],desc:'連結時の防御を失う。A→Bの順方向連結は追加+40%、B→Aは追加-10%。'},
-    risk_crisis:{id:'risk_crisis',character:'risk',name:'臨界型',tags:['自傷','瀕死'],desc:'HP半分より上では全カード-10%。半分以下では全カード+35%、自傷カードはさらに+10%。'},
+    risk_crisis:{id:'risk_crisis',character:'risk',name:'臨界型',tags:['自傷','瀕死'],desc:'HP半分以下では全カード+12%。HP半分の境界を跨いだ履歴1回につき自傷カード+5%（最大+15%）。HPを上下させながら危険域へ踏み込む型。'},
     loop_rebirth:{id:'loop_rebirth',character:'loop',name:'再起型',tags:['循環'],desc:'再構築時の防御3を失う代わりに、再構築直後の最初のカード+55%。'},
     catalyst_spectrum:{id:'catalyst_spectrum',character:'catalyst',name:'多相型',tags:['状態異常'],desc:'状態異常カード常時+15%を失う。敵の状態異常が2種類以上なら全カード+25%、3種類以上なら状態異常カードはさらに+15%。'},
     architect_specialist:{id:'architect_specialist',character:'architect',name:'専門設計型',tags:['構築規格','単独'],desc:'構築規格装備中、1タグだけのカード+30%。2タグ以上のカードは+5%。'},

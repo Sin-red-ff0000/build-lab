@@ -1,0 +1,22 @@
+'use strict';
+(function(){
+ const D=window.BuildLab.Data;if(!D?.CARDS||!D.DUAL_FACE_CARDS)return;
+ const ev=(b,type,uid)=>uid?(b?.events?.byCard?.[uid]?.counts?.[type]||0):(b?.events?.counts?.[type]||0);
+ const duals={
+  v52_dual_patience:{condition:'この実体が2回選ばれない',front:{name:'待伏せの鞘',kind:'block',block:6,tags:['二面','非選択','防御'],onNotChosen:{block:1},desc:'防御6。選ばれない時、防御1。同じ実体が2回選ばれないと「抜刀面」へ変化。'},back:{name:'抜刀面',kind:'damage',damage:12,hits:1,tags:['二面','単発'],onNotChosen:null,desc:'12ダメージ。非選択による防御を失い、即座に使う単発札へ役割が変わる。'},check:(b,i)=>ev(b,'notChosen',i.uid)>=2},
+  v52_dual_return:{condition:'この実体が消失領域から復帰',front:{name:'漂流灯',kind:'damage',damage:8,hits:1,vanishAfterUse:true,tags:['二面','消失','単発'],desc:'8ダメージ。使用後に消失。消失領域から復帰すると「帰港灯」へ変化。'},back:{name:'帰港灯',kind:'block',block:13,vanishAfterUse:false,tags:['二面','復帰','防御'],desc:'防御13。もう消失せず、帰還後は耐久札として働く。'},check:(b,i)=>ev(b,'returnedFromVanish',i.uid)>=1},
+  v52_dual_reserve:{condition:'この実体が予約から2回到着',front:{name:'待機弾',kind:'damage',damage:7,hits:1,reserveSelfAfterUse:true,tags:['二面','予約','単発'],desc:'7ダメージ。使用後、次回提示へ予約。予約から2回到着すると「装填完了」へ変化。'},back:{name:'装填完了',kind:'damage',damage:4,hits:3,reserveSelfAfterUse:false,tags:['二面','予約','連撃'],desc:'4×3ダメージ。自己予約を失い、連撃の決着札へ役割が変わる。'},check:(b,i)=>ev(b,'reservationArrived',i.uid)>=2},
+  v52_dual_center:{condition:'中央を3回連続選択',front:{name:'測距面',kind:'block',block:7,tags:['二面','提示位置','防御'],desc:'防御7。中央を3回連続で選ぶと「射線面」へ変化。'},back:{name:'射線面',kind:'damage',damage:11,hits:1,tags:['二面','提示位置','単発'],desc:'11ダメージ。中央維持の準備札から単発攻撃へ変わる。'},check:b=>(b.positionHistory?.centerChain||0)>=3},
+  v52_dual_sides:{condition:'左右交互選択を2回成立',front:{name:'振子盾',kind:'block',block:8,tags:['二面','提示位置','防御'],desc:'防御8。左右交互選択を2回成立させると「振子刃」へ変化。'},back:{name:'振子刃',kind:'damage',damage:4,hits:3,tags:['二面','提示位置','連撃'],desc:'4×3ダメージ。防御札から左右運用を締める連撃札へ変わる。'},check:b=>(b.positionHistory?.sideAlternations||0)>=2},
+  v52_dual_pulse:{condition:'HP増減方向を2回切替',front:{name:'止血面',kind:'block',block:8,tags:['二面','自傷','防御'],desc:'防御8。HPの増減方向を2回切り替えると「搏動面」へ変化。'},back:{name:'搏動面',kind:'damage',damage:10,hits:1,selfDamage:2,tags:['二面','自傷','単発'],desc:'自傷2、10ダメージ。立て直し用防御から再踏込み用攻撃へ変わる。'},check:b=>(b.hpHistory?.directionSwitches||0)>=2},
+  v52_dual_poison:{condition:'毒を3回以上付与',front:{name:'培養面',kind:'damage',damage:4,status:{type:'poison',amount:2},tags:['二面','毒','状態異常'],desc:'4ダメージ＋毒2。戦闘中に毒を3回以上付与すると「抽出面」へ変化。'},back:{name:'抽出面',kind:'hybrid',damage:8,block:6,tags:['二面','毒','複合'],desc:'8ダメージ＋防御6。毒の供給能力を失い、維持した毒を守りながら戦う札へ変わる。'},check:b=>(b.events?.recent||[]).filter(e=>e.type==='statusApplied'&&e.status==='poison').length>=3},
+  v52_dual_burn:{condition:'火傷を3回以上付与',front:{name:'種火面',kind:'damage',damage:5,status:{type:'burn',amount:2},burnRefresh:1,tags:['二面','火傷','状態異常'],desc:'5ダメージ＋火傷2。既に火傷なら再点火+1。火傷を3回以上付与すると「灰壁面」へ変化。'},back:{name:'灰壁面',kind:'block',block:12,tags:['二面','火傷','防御'],desc:'防御12。着火能力を失い、燃焼中の時間を稼ぐ防御札へ変わる。'},check:b=>(b.events?.recent||[]).filter(e=>e.type==='statusApplied'&&e.status==='burn').length>=3},
+  v52_dual_link:{condition:'連結コンボを2回成立',front:{name:'接続針',kind:'damage',damage:3,hits:3,tags:['二面','連結','連撃'],desc:'3×3ダメージ。連結コンボ2回成立で「橋梁盾」へ変化。'},back:{name:'橋梁盾',kind:'block',block:12,tags:['二面','連結','防御'],desc:'防御12。連撃札から連結を維持する防御札へ役割が反転する。'},check:b=>(b.linkComboCount||0)>=2},
+  v52_dual_cycle:{condition:'山札を2回再構築',front:{name:'播種面',kind:'damage',damage:8,hits:1,tags:['二面','循環','単発'],desc:'8ダメージ。山札を2回再構築すると「休耕面」へ変化。'},back:{name:'休耕面',kind:'block',block:11,returnBottom:true,tags:['二面','循環','防御'],desc:'防御11。使用後は山札下へ戻る。攻撃から循環を安定させる札へ変わる。'},check:b=>(b.reshuffles||0)>=2},
+  v52_dual_record:{condition:'記録を1回再演',front:{name:'白紙面',kind:'block',block:7,tags:['二面','記録','防御'],desc:'防御7。記録を1回再演すると「注釈面」へ変化。'},back:{name:'注釈面',kind:'hybrid',damage:7,block:7,tags:['二面','記録','複合'],desc:'7ダメージ＋防御7。記録準備の防御札から、記録軸を支える中継札へ変わる。'},check:b=>ev(b,'recordReplayed')>=1},
+  v52_dual_enemy:{condition:'敵が4回行動',front:{name:'観測殻',kind:'block',block:9,tags:['二面','敵行動','防御'],desc:'防御9。敵が4回行動すると「反応殻」へ変化。'},back:{name:'反応殻',kind:'damage',damage:5,hits:2,tags:['二面','敵行動','連撃'],desc:'5×2ダメージ。長く観測する防御札から敵行動を利用する反撃的な攻撃札へ変わる。'},check:b=>ev(b,'enemyAction')>=4}
+ };
+ Object.assign(D.DUAL_FACE_CARDS,duals);
+ for(const [id,df] of Object.entries(duals))D.CARDS[id]={id,name:df.front.name,tags:[...df.front.tags],desc:df.front.desc,kind:df.front.kind,...df.front,dualFace:true,requiresUnlock:true};
+ D.V52_DUAL_FACE_IDS=Object.keys(duals);D.POST_BOSS_CARD_IDS.push(...D.V52_DUAL_FACE_IDS);
+})();

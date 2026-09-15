@@ -9,68 +9,68 @@
   // 基礎6軸(v0.34)に対し、後発システム8軸にも各6カード+6遺物の選択肢を用意する。
   Object.assign(D.CARDS,{
     // --- 提示位置 ---
-    v35_p_center:C('中枢収束砲',['提示操作','単発'],'76ダメージ＋防御118。中央枠で使うと効果が大きく上がる。',{kind:'hybrid',hits:1,damage:76,block:118,armorPierce:.55}),
-    v35_p_wings:C('双翼掃射',['提示操作','連撃'],'22ダメージ×5＋防御82。左右枠で使うと効果が大きく上がる。',{kind:'hybrid',hits:5,damage:22,block:82,armorPierce:.50}),
-    v35_p_shift:C('転軸防陣',['提示操作','耐久'],'防御176。直前と異なる位置を選ぶとさらに強化。',{kind:'block',block:176}),
-    v35_p_repeat:C('定点破城槌',['提示操作','耐久'],'58ダメージ＋防御138。同じ位置を維持すると増幅。',{kind:'hybrid',hits:1,damage:58,block:138,armorPierce:.60}),
-    v35_p_wide:C('広域観測列',['提示操作','連撃'],'18ダメージ×6＋防御94。提示4枚以上で増幅。',{kind:'hybrid',hits:6,damage:18,block:94,armorPierce:.48}),
-    v35_p_narrow:C('狭域決裁',['提示操作','単発'],'112ダメージ＋防御105。提示2枚以下で増幅。',{kind:'hybrid',hits:1,damage:112,block:105,armorPierce:.68}),
+    v35_p_center:C('中枢収束砲',['提示操作','単発'],'10ダメージ＋防御8。中央枠で使うと効果が大きく上がる。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.12,damagePerCenterChain:{value:2,max:6},blockPerCenterChain:{value:2,max:6}}),
+    v35_p_wings:C('双翼掃射',['提示操作','連撃'],'4ダメージ×5＋防御9。左右枠で使うと効果が大きく上がる。',{kind:'hybrid',hits:5,damage:4,block:9,armorPierce:0.16,damagePerSideAlternation:{value:1,max:4}}),
+    v35_p_shift:C('転軸防陣',['提示操作','耐久'],'防御20。直前と異なる位置を選ぶとさらに強化。',{kind:'block',block:20,blockPerPositionChange:{value:2,max:8}}),
+    v35_p_repeat:C('定点破城槌',['提示操作','耐久'],'13ダメージ＋防御11。同じ位置を維持すると増幅。',{kind:'hybrid',hits:1,damage:13,block:11,armorPierce:0.22,damagePerSamePosition:{value:2,max:6},blockPerSamePosition:{value:1,max:3}}),
+    v35_p_wide:C('広域観測列',['提示操作','連撃'],'4ダメージ×6＋防御12。提示4枚以上で増幅。',{kind:'hybrid',hits:6,damage:4,block:12,armorPierce:0.18}),
+    v35_p_narrow:C('狭域決裁',['提示操作','単発'],'10ダメージ＋防御8。提示2枚以下で増幅。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.25}),
 
     // --- 連結 ---
-    v35_l_spear:C('継電破城槍',['連結','単発'],'82ダメージ＋防御104。連結成立時に増幅。',{kind:'hybrid',hits:1,damage:82,block:104,armorPierce:.62}),
-    v35_l_guard:C('双極城壁',['連結','耐久'],'防御180。連結成立時に増幅。',{kind:'block',block:180}),
-    v35_l_barrage:C('連鎖六連砲',['連結','連撃'],'19ダメージ×6＋防御76。連結成立時に増幅。',{kind:'hybrid',hits:6,damage:19,block:76,armorPierce:.52}),
-    v35_l_cycle:C('帰還継電器',['連結','循環'],'52ダメージ＋防御142。連結成立時に増幅し、使用後は山札下へ戻る。',{kind:'hybrid',hits:1,damage:52,block:142,returnBottom:true}),
-    v35_l_status:C('症状継電杭',['連結','状態異常'],'44ダメージ＋防御126＋毒8。連結成立時に増幅。',{kind:'hybrid',hits:1,damage:44,block:126,status:{type:'poison',amount:8},armorPierce:.45}),
-    v35_l_bridge:C('異種架橋機',['連結','万能'],'68ダメージ＋防御132。3タグ以上かつ連結成立時に大幅増幅。',{kind:'hybrid',hits:1,damage:68,block:132,armorPierce:.55}),
+    v35_l_spear:C('継電破城槍',['連結','単発'],'10ダメージ＋防御8。連結成立時に増幅。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.12}),
+    v35_l_guard:C('双極城壁',['連結','耐久'],'防御18。連結成立時に増幅。',{kind:'block',block:18}),
+    v35_l_barrage:C('連鎖六連砲',['連結','連撃'],'5ダメージ×6＋防御10。連結成立時に増幅。',{kind:'hybrid',hits:6,damage:5,block:10,armorPierce:0.2}),
+    v35_l_cycle:C('帰還継電器',['連結','循環'],'13ダメージ＋防御11。連結成立時に増幅し、使用後は山札下へ戻る。',{kind:'hybrid',hits:1,damage:13,block:11,returnBottom:true}),
+    v35_l_status:C('症状継電杭',['連結','状態異常'],'14ダメージ＋防御12＋毒3。連結成立時に増幅。',{kind:'hybrid',hits:1,damage:14,block:12,status:{type:'poison',amount:3},armorPierce:0.18}),
+    v35_l_bridge:C('異種架橋機',['連結','万能'],'10ダメージ＋防御8。3タグ以上かつ連結成立時に大幅増幅。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.25}),
 
     // --- 調律・役割変換 ---
-    v35_c_tuned:C('校正穿孔刃',['調律','単発'],'82ダメージ＋防御106。調律済みなら増幅。',{kind:'hybrid',hits:1,damage:82,block:106,armorPierce:.62}),
-    v35_c_convert:C('変成隔壁',['変換','耐久'],'防御182。役割変換済みなら増幅。',{kind:'block',block:182}),
-    v35_c_dual:C('二重校正炉',['調律','変換','万能'],'66ダメージ＋防御142。調律と役割変換を重ねると大幅増幅。',{kind:'hybrid',hits:1,damage:66,block:142,armorPierce:.55}),
-    v35_c_barrage:C('校正連装砲',['調律','連撃'],'20ダメージ×6＋防御78。調律済みなら増幅。',{kind:'hybrid',hits:6,damage:20,block:78,armorPierce:.50}),
-    v35_c_cycle:C('変成回帰殻',['変換','循環'],'48ダメージ＋防御150。役割変換済みなら増幅し、使用後は山札下へ戻る。',{kind:'hybrid',hits:1,damage:48,block:150,returnBottom:true}),
-    v35_c_matrix:C('三層校正行列',['調律','変換','万能'],'74ダメージ＋防御136。強化層2つ以上で増幅。',{kind:'hybrid',hits:1,damage:74,block:136,armorPierce:.58}),
+    v35_c_tuned:C('校正穿孔刃',['調律','単発'],'10ダメージ＋防御8。調律済みなら増幅。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.12}),
+    v35_c_convert:C('変成隔壁',['変換','耐久'],'防御18。役割変換済みなら増幅。',{kind:'block',block:18}),
+    v35_c_dual:C('二重校正炉',['調律','変換','万能'],'12ダメージ＋防御10。調律と役割変換を重ねると大幅増幅。',{kind:'hybrid',hits:1,damage:12,block:10,armorPierce:0.2}),
+    v35_c_barrage:C('校正連装砲',['調律','連撃'],'3ダメージ×6＋防御11。調律済みなら増幅。',{kind:'hybrid',hits:6,damage:3,block:11,armorPierce:0.22}),
+    v35_c_cycle:C('変成回帰殻',['変換','循環'],'14ダメージ＋防御12。役割変換済みなら増幅し、使用後は山札下へ戻る。',{kind:'hybrid',hits:1,damage:14,block:12,returnBottom:true}),
+    v35_c_matrix:C('三層校正行列',['調律','変換','万能'],'10ダメージ＋防御8。強化層2つ以上で増幅。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.25}),
 
     // --- 構築規格・重複/単独・多タグ ---
-    v35_a_single:C('孤立決裁刃',['構築規格'],'118ダメージ＋防御94。同名1枚だけなら増幅。',{kind:'hybrid',hits:1,damage:118,block:94,armorPierce:.70}),
-    v35_a_duplicate:C('複写四連機',['構築規格','重複','連撃'],'25ダメージ×4＋防御82。同名2枚以上なら増幅。',{kind:'hybrid',hits:4,damage:25,block:82,armorPierce:.52}),
-    v35_a_hybrid:C('多相設計核',['構築規格','万能','混成'],'62ダメージ＋防御148。3タグ以上なら増幅。',{kind:'hybrid',hits:1,damage:62,block:148,armorPierce:.50}),
-    v35_a_doctrine:C('規格城壁',['構築規格'],'防御188。構築規格装備中なら増幅。',{kind:'block',block:188}),
-    v35_a_variation:C('変奏処刑器',['構築規格'],'86ダメージ＋防御112。直前と異なるカードなら増幅。',{kind:'hybrid',hits:1,damage:86,block:112,armorPierce:.64}),
-    v35_a_cycle:C('設計循環環',['構築規格','循環'],'52ダメージ＋防御152。構築規格装備中なら増幅し、使用後は山札下へ戻る。',{kind:'hybrid',hits:1,damage:52,block:152,returnBottom:true}),
+    v35_a_single:C('孤立決裁刃',['構築規格'],'10ダメージ＋防御8。同名1枚だけなら増幅。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.12}),
+    v35_a_duplicate:C('複写四連機',['構築規格','重複','連撃'],'4ダメージ×4＋防御9。同名2枚以上なら増幅。',{kind:'hybrid',hits:4,damage:4,block:9,armorPierce:0.16}),
+    v35_a_hybrid:C('多相設計核',['構築規格','万能','混成'],'12ダメージ＋防御10。3タグ以上なら増幅。',{kind:'hybrid',hits:1,damage:12,block:10,armorPierce:0.2}),
+    v35_a_doctrine:C('規格城壁',['構築規格'],'防御22。構築規格装備中なら増幅。',{kind:'block',block:22}),
+    v35_a_variation:C('変奏処刑器',['構築規格'],'14ダメージ＋防御12。直前と異なるカードなら増幅。',{kind:'hybrid',hits:1,damage:14,block:12,armorPierce:0.18}),
+    v35_a_cycle:C('設計循環環',['構築規格','循環'],'10ダメージ＋防御8。構築規格装備中なら増幅し、使用後は山札下へ戻る。',{kind:'hybrid',hits:1,damage:10,block:8,returnBottom:true}),
 
     // --- 特殊個体・複合挙動解析 ---
-    v35_x_trait:C('形質破断砲',['特殊個体','解析'],'108ダメージ＋防御92。特殊個体3種以上で増幅。',{kind:'hybrid',hits:1,damage:108,block:92,armorPierce:.72}),
-    v35_x_behavior:C('挙動封鎖壁',['複合挙動','解析','耐久'],'防御186。複合挙動2種以上で増幅。',{kind:'block',block:186}),
-    v35_x_apex:C('頂点観測槍',['特殊個体','複合挙動','解析'],'78ダメージ＋防御130。特殊個体5種以上で大幅増幅。',{kind:'hybrid',hits:1,damage:78,block:130,armorPierce:.65}),
-    v35_x_barrage:C('挙動解体連射',['複合挙動','解析','連撃'],'18ダメージ×7＋防御72。複合挙動があると増幅。',{kind:'hybrid',hits:7,damage:18,block:72,armorPierce:.55}),
-    v35_x_clean:C('無垢試験器',['特殊個体','解析'],'104ダメージ＋防御120。特殊個体なしの標準試験で増幅。',{kind:'hybrid',hits:1,damage:104,block:120,armorPierce:.62}),
-    v35_x_total:C('全相解析行列',['特殊個体','複合挙動','解析'],'64ダメージ＋防御150。特殊個体3種＋複合挙動1種以上で増幅。',{kind:'hybrid',hits:1,damage:64,block:150,armorPierce:.58}),
+    v35_x_trait:C('形質破断砲',['特殊個体','解析'],'10ダメージ＋防御8。特殊個体3種以上で増幅。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.12}),
+    v35_x_behavior:C('挙動封鎖壁',['複合挙動','解析','耐久'],'防御18。複合挙動2種以上で増幅。',{kind:'block',block:18}),
+    v35_x_apex:C('頂点観測槍',['特殊個体','複合挙動','解析'],'12ダメージ＋防御10。特殊個体5種以上で大幅増幅。',{kind:'hybrid',hits:1,damage:12,block:10,armorPierce:0.2}),
+    v35_x_barrage:C('挙動解体連射',['複合挙動','解析','連撃'],'3ダメージ×7＋防御11。複合挙動があると増幅。',{kind:'hybrid',hits:7,damage:3,block:11,armorPierce:0.22}),
+    v35_x_clean:C('無垢試験器',['特殊個体','解析'],'14ダメージ＋防御12。特殊個体なしの標準試験で増幅。',{kind:'hybrid',hits:1,damage:14,block:12,armorPierce:0.18}),
+    v35_x_total:C('全相解析行列',['特殊個体','複合挙動','解析'],'10ダメージ＋防御8。特殊個体3種＋複合挙動1種以上で増幅。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.25}),
 
     // --- ルーン・アルカナ ---
-    v35_m_rune:C('刻印破城刃',['ルーン','単発'],'96ダメージ＋防御102。ルーン付与時に増幅。',{kind:'hybrid',hits:1,damage:96,block:102,armorPierce:.66}),
-    v35_m_arcana:C('秘儀城壁',['アルカナ','耐久'],'防御184。アルカナ装備中に増幅。',{kind:'block',block:184}),
-    v35_m_match:C('象意共鳴砲',['アルカナ','万能'],'84ダメージ＋防御120。現在のアルカナ条件と一致すると増幅。',{kind:'hybrid',hits:1,damage:84,block:120,armorPierce:.60}),
-    v35_m_barrage:C('刻印星群',['ルーン','連撃'],'20ダメージ×6＋防御78。ルーン付与時に増幅。',{kind:'hybrid',hits:6,damage:20,block:78,armorPierce:.52}),
-    v35_m_plain:C('白紙大秘儀',['アルカナ','単独'],'110ダメージ＋防御96。未強化カードかつアルカナ一致で大幅増幅。',{kind:'hybrid',hits:1,damage:110,block:96,armorPierce:.68}),
-    v35_m_layered:C('重層秘儀機',['ルーン','アルカナ','万能'],'68ダメージ＋防御142。強化層2つ以上＋アルカナ一致で大幅増幅。',{kind:'hybrid',hits:1,damage:68,block:142,armorPierce:.58}),
+    v35_m_rune:C('刻印破城刃',['ルーン','単発'],'10ダメージ＋防御8。ルーン付与時に増幅。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.12}),
+    v35_m_arcana:C('秘儀城壁',['アルカナ','耐久'],'防御18。アルカナ装備中に増幅。',{kind:'block',block:18}),
+    v35_m_match:C('象意共鳴砲',['アルカナ','万能'],'12ダメージ＋防御10。現在のアルカナ条件と一致すると増幅。',{kind:'hybrid',hits:1,damage:12,block:10,armorPierce:0.2}),
+    v35_m_barrage:C('刻印星群',['ルーン','連撃'],'3ダメージ×6＋防御11。ルーン付与時に増幅。',{kind:'hybrid',hits:6,damage:3,block:11,armorPierce:0.22}),
+    v35_m_plain:C('白紙大秘儀',['アルカナ','単独'],'14ダメージ＋防御12。未強化カードかつアルカナ一致で大幅増幅。',{kind:'hybrid',hits:1,damage:14,block:12,armorPierce:0.18}),
+    v35_m_layered:C('重層秘儀機',['ルーン','アルカナ','万能'],'10ダメージ＋防御8。強化層2つ以上＋アルカナ一致で大幅増幅。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.25}),
 
     // --- 元素 ---
-    v35_e_fire:C('熾火決裁',['元素','火','単発'],'98ダメージ＋防御96。火が最大配分なら増幅。',{kind:'hybrid',hits:1,damage:98,block:96,armorPierce:.68,status:{type:'burn',amount:5}}),
-    v35_e_wind:C('暴風連装',['元素','風','連撃'],'19ダメージ×7＋防御112。風が最大配分なら増幅。',{kind:'hybrid',hits:7,damage:19,block:112,armorPierce:.52}),
-    v35_e_water:C('深水還流壁',['元素','水','循環'],'48ダメージ＋防御158＋HP8回復。水が最大配分なら増幅。',{kind:'hybrid',hits:1,damage:48,block:158,heal:8,returnBottom:true}),
-    v35_e_earth:C('大地圧城',['元素','土','耐久'],'44ダメージ＋防御188。土が最大配分なら増幅。',{kind:'hybrid',hits:1,damage:44,block:188,armorPierce:.42}),
-    v35_e_aether:C('第五相共鳴',['元素','エーテル','万能'],'76ダメージ＋防御138。エーテルが最大配分なら増幅。',{kind:'hybrid',hits:1,damage:76,block:138,armorPierce:.58}),
-    v35_e_prism:C('五相プリズム',['元素','万能'],'72ダメージ＋防御146。3元素以上へ配分すると増幅。',{kind:'hybrid',hits:1,damage:72,block:146,armorPierce:.55}),
+    v35_e_fire:C('熾火決裁',['元素','火','単発'],'10ダメージ＋防御8。火が最大配分なら増幅。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.12,status:{type:'burn',amount:3}}),
+    v35_e_wind:C('暴風連装',['元素','風','連撃'],'4ダメージ×7＋防御9。風が最大配分なら増幅。',{kind:'hybrid',hits:7,damage:4,block:9,armorPierce:0.16}),
+    v35_e_water:C('深水還流壁',['元素','水','循環'],'12ダメージ＋防御10＋HP4回復。水が最大配分なら増幅。',{kind:'hybrid',hits:1,damage:12,block:10,heal:4,returnBottom:true}),
+    v35_e_earth:C('大地圧城',['元素','土','耐久'],'13ダメージ＋防御11。土が最大配分なら増幅。',{kind:'hybrid',hits:1,damage:13,block:11,armorPierce:0.22}),
+    v35_e_aether:C('第五相共鳴',['元素','エーテル','万能'],'14ダメージ＋防御12。エーテルが最大配分なら増幅。',{kind:'hybrid',hits:1,damage:14,block:12,armorPierce:0.18}),
+    v35_e_prism:C('五相プリズム',['元素','万能'],'10ダメージ＋防御8。3元素以上へ配分すると増幅。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.25}),
 
     // --- 錬成 ---
-    v35_q_opus:C('大業破城砲',['錬成','上位錬成','単発'],'102ダメージ＋防御94。上位錬成物生成後に増幅。',{kind:'hybrid',hits:1,damage:102,block:94,armorPierce:.72}),
-    v35_q_stock:C('備蓄城塞',['錬成','耐久'],'防御190。在庫3種類以上で増幅。',{kind:'block',block:190}),
-    v35_q_react:C('反応連鎖砲',['錬成','連撃'],'20ダメージ×6＋防御82。反応3種類以上で増幅。',{kind:'hybrid',hits:6,damage:20,block:82,armorPierce:.55}),
-    v35_q_spend:C('消費転化刃',['錬成','単発'],'94ダメージ＋防御108。2種類以上の錬成物消費後に増幅。',{kind:'hybrid',hits:1,damage:94,block:108,armorPierce:.68}),
-    v35_q_shell:C('大業隔壁',['錬成','上位錬成','耐久'],'防御178。上位錬成物2種類以上生成後に増幅。',{kind:'block',block:178}),
-    v35_q_matrix:C('賢者反応行列',['錬成','万能'],'70ダメージ＋防御148。総反応4回以上で増幅。',{kind:'hybrid',hits:1,damage:70,block:148,armorPierce:.58})
+    v35_q_opus:C('大業破城砲',['錬成','上位錬成','単発'],'10ダメージ＋防御8。上位錬成物生成後に増幅。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.12}),
+    v35_q_stock:C('備蓄城塞',['錬成','耐久'],'防御18。在庫3種類以上で増幅。',{kind:'block',block:18}),
+    v35_q_react:C('反応連鎖砲',['錬成','連撃'],'5ダメージ×6＋防御10。反応3種類以上で増幅。',{kind:'hybrid',hits:6,damage:5,block:10,armorPierce:0.2}),
+    v35_q_spend:C('消費転化刃',['錬成','単発'],'13ダメージ＋防御11。2種類以上の錬成物消費後に増幅。',{kind:'hybrid',hits:1,damage:13,block:11,armorPierce:0.22}),
+    v35_q_shell:C('大業隔壁',['錬成','上位錬成','耐久'],'防御16。上位錬成物2種類以上生成後に増幅。',{kind:'block',block:16}),
+    v35_q_matrix:C('賢者反応行列',['錬成','万能'],'10ダメージ＋防御8。総反応4回以上で増幅。',{kind:'hybrid',hits:1,damage:10,block:8,armorPierce:0.25})
   });
 
   Object.assign(D.RELICS,{

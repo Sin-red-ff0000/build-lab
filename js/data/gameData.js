@@ -26,17 +26,17 @@
     counter_stance:{name:'反撃姿勢',tags:['耐久','反撃'],desc:'防御6。このターン被ダメージ時、受けたダメージの70%を返す。',kind:'block',block:6,counter:.7},
     parry:{name:'受け流し',tags:['耐久','循環'],desc:'防御5。敵攻撃を完全防御すると、このカードを山札へ戻す。',kind:'block',block:5,returnIfFullBlock:true},
     last_stand_shield:{name:'背水の盾',tags:['耐久','瀕死'],desc:'防御5。HP半分以下なら防御12。',kind:'block',block:5,lowHpBlock:12},
-    blood_blade:{name:'血刃',tags:['自傷'],desc:'HP5を失い、16ダメージ。',kind:'damage',hits:1,damage:16,selfDamage:5},
-    blood_contract:{name:'血の契約',tags:['自傷','万能'],desc:'HP4を失う。次に使うカードの効果+60%。',kind:'utility',selfDamage:4,buffNext:.6},
+    blood_blade:{name:'血刃',tags:['自傷'],desc:'HP3を失い12ダメージ。この戦闘で一度でもHPを回復していれば18ダメージ。',kind:'damage',hits:1,damage:12,damageIfRecovered:18,selfDamage:3},
+    blood_contract:{name:'血の契約',tags:['自傷','万能'],desc:'HP3を失う。次に使うカードの効果+25%。この戦闘で一度でもHPを回復していれば+35%。',kind:'utility',selfDamage:3,buffNext:.25,buffNextIfRecovered:.35},
     dying_blow:{name:'瀕死の一撃',tags:['瀕死'],desc:'7ダメージ。HP半分以下なら18ダメージ。',kind:'damage',hits:1,damage:7,lowHpDamage:18},
-    blood_chain:{name:'血の連鎖',tags:['自傷','連撃'],desc:'HP3を失い、4ダメージ×3。',kind:'damage',hits:3,damage:4,selfDamage:3},
+    blood_chain:{name:'血の連鎖',tags:['自傷','連撃'],desc:'HP2を失い3ダメージ×3。HPの増減方向を2回以上切り替えた戦闘では×4。',kind:'damage',hits:3,damage:3,selfDamage:2,hitsIfHpDirectionSwitches:{min:2,value:4}},
     rebuild:{name:'再編',tags:['循環'],desc:'捨て札を山札へ戻して再構築。次のカードの効果+35%。',kind:'utility',effect:'rebuild',buffNext:.35},
     fast_forward:{name:'早回し',tags:['循環','捨て札'],desc:'山札からランダムに2枚を捨て札へ送る。',kind:'utility',effect:'mill2'},
     recall:{name:'呼び戻し',tags:['循環'],desc:'最後に捨てられたカードを次ターンの提示へ予約。',kind:'utility',effect:'recall'},
     adversity_recovery:{name:'逆境回収',tags:['循環','瀕死'],desc:'HP半分以下なら、捨て札2枚を山札へ戻す。',kind:'utility',effect:'adversity'},
 
     // v0.2: 初期カード追加（+12）
-    scarlet_bulwark:{name:'鮮血防壁',tags:['自傷','耐久'],desc:'HP2を失い、防御10。',kind:'block',block:10,selfDamage:2},
+    scarlet_bulwark:{name:'鮮血防壁',tags:['自傷','耐久'],desc:'HP2を失い、防御8。この戦闘で一度でもHPを回復していれば防御12。',kind:'block',block:8,blockIfRecovered:12,selfDamage:2},
     toxic_barrage:{name:'毒散弾',tags:['連撃','状態異常'],desc:'2ダメージ×3＋毒2。',kind:'damage',hits:3,damage:2,status:{type:'poison',amount:2}},
     searing_flurry:{name:'焦熱乱舞',tags:['連撃','状態異常'],desc:'2ダメージ×4＋火傷2。',kind:'damage',hits:4,damage:2,status:{type:'burn',amount:2}},
     cycle_edge:{name:'循環刃',tags:['循環'],desc:'6ダメージ。直前ターンに山札を再構築していたなら14ダメージ。',kind:'damage',hits:1,damage:6,damageIfRecentReshuffle:14},
@@ -76,15 +76,15 @@
     iron_echo:{name:'鉄響',tags:['耐久'],desc:'防御7。直前も防御カードなら防御13。',kind:'block',block:7,blockIfPrevBlock:13},
     counter_cut:{name:'返し刃',tags:['耐久','反撃'],desc:'4ダメージ＋防御4。このターン被ダメージ時、受けたダメージの50%を返す。',kind:'hybrid',damage:4,block:4,counter:.5},
     patient_guard:{name:'待ち構え',tags:['耐久','反撃'],desc:'防御8。4ターン目以降なら防御15。このターン被ダメージ時、受けたダメージの30%を返す。',kind:'block',block:8,blockIfTurnMin:{turn:4,value:15},counter:.3},
-    blood_armor:{name:'血鎧',tags:['自傷','耐久','反撃'],desc:'HP2を失い、防御13。このターン被ダメージ時、敵に6ダメージ。',kind:'block',block:13,selfDamage:2,fixedCounter:6},
-    recovery_guard:{name:'生還姿勢',tags:['耐久','瀕死'],desc:'防御6。HP半分以下ならHP4回復。',kind:'block',block:6,healIfLowHp:4},
+    blood_armor:{name:'血鎧',tags:['自傷','耐久','反撃'],desc:'HP2を失い、防御9。このターン被ダメージ時、敵に4ダメージ。危険域から一度復帰していれば防御12・迎撃6。',kind:'block',block:9,blockIfHpRecovery:12,selfDamage:2,fixedCounter:4,fixedCounterIfHpRecovery:6},
+    recovery_guard:{name:'生還姿勢',tags:['耐久','瀕死','自傷'],desc:'防御6。HP半分以下ならHP4回復。自傷を経験してから回復した場合、次の自傷カードの効果+12%。',kind:'block',block:6,healIfLowHp:4,buffNextSelfDamageAfterHeal:.12},
 
     sacrificial_combo:{name:'供犠連撃',tags:['自傷','連撃'],desc:'HP4を失い、5ダメージ×3。',kind:'damage',hits:3,damage:5,selfDamage:4},
     crimson_focus:{name:'紅の集中',tags:['自傷','万能'],desc:'HP3を失う。次に使うカードの効果+80%。',kind:'utility',selfDamage:3,buffNext:.8},
     brink_blast:{name:'臨界撃',tags:['自傷','瀕死'],desc:'HP2を失い10ダメージ。HP半分以下なら26ダメージ。',kind:'damage',hits:1,damage:10,lowHpDamage:26,selfDamage:2},
-    pain_reflex:{name:'痛覚反射',tags:['自傷','耐久'],desc:'HP2を失い、防御8。次に使うカードの効果+25%。',kind:'block',block:8,selfDamage:2,buffNext:.25},
+    pain_reflex:{name:'痛覚反射',tags:['自傷','耐久'],desc:'HP2を失い、防御7。直前にHPを回復していれば防御11。次の自傷カードの効果+18%。',kind:'block',block:7,blockIfLastHpDirectionUp:11,selfDamage:2,buffNextSelfDamage:.18},
     blood_poison:{name:'血毒',tags:['自傷','状態異常'],desc:'HP3を失い、毒6。',kind:'utility',selfDamage:3,status:{type:'poison',amount:6}},
-    red_cycle:{name:'赤い循環',tags:['自傷','循環'],desc:'HP2を失う。捨て札から最大2枚を山札の上へ戻す。',kind:'utility',selfDamage:2,effect:'recover2Discard'},
+    red_cycle:{name:'赤い循環',tags:['自傷','循環'],desc:'HP2を失う。捨て札から1枚を山札の上へ戻す。HPの増減方向を2回以上切り替えた戦闘では最大2枚を戻す。',kind:'utility',selfDamage:2,effect:'recoverBloodDiscard'},
 
     wheel_cut:{name:'輪転斬',tags:['循環'],desc:'6ダメージ。山札再構築1回につき+5ダメージ。',kind:'damage',hits:1,damage:6,damagePerReshuffle:5},
     cycle_guard:{name:'循環防壁',tags:['循環','耐久'],desc:'防御7。山札再構築1回につき防御+4。',kind:'block',block:7,blockPerReshuffle:4},
@@ -132,14 +132,36 @@
     center_lock:{name:'中央固定',tags:['提示操作'],desc:'6ダメージ。選ばなかったカード1枚を次ターン中央に予約。',kind:'damage',hits:1,damage:6,effect:'centerReserve'},
     hold:{name:'保留',tags:['提示操作','耐久'],desc:'防御7。選ばなかったカード1枚を次ターンへ持ち越す。',kind:'block',block:7,effect:'holdOne'},
     reorder:{name:'再配列',tags:['提示操作'],desc:'5ダメージ。次ターン、カード選択前に中央へ1枚移動できる。',kind:'damage',hits:1,damage:5,effect:'reorderNext'},
-    redraw:{name:'再提示',tags:['提示操作','状態異常'],desc:'敵に弱体1。次ターン、提示1枠を一度引き直せる。',kind:'utility',status:{type:'weak',amount:1},effect:'redrawNext'}
+    redraw:{name:'再提示',tags:['提示操作','状態異常'],desc:'敵に弱体1。次ターン、提示1枠を一度引き直せる。',kind:'utility',status:{type:'weak',amount:1},effect:'redrawNext'},
+
+    // v0.50 / roadmap 2/10: 消失・非選択・提示中
+    vanishing_edge:{name:'消失刃',tags:['消失','単発'],desc:'13ダメージ。使用後、この戦闘では山札へ戻らず消失する。',kind:'damage',hits:1,damage:13,vanishAfterUse:true},
+    vanishing_wall:{name:'消失障壁',tags:['消失','耐久'],desc:'防御18。使用後、この戦闘では山札へ戻らず消失する。',kind:'block',block:18,vanishAfterUse:true},
+    return_from_void:{name:'空隙回帰',tags:['消失','循環'],desc:'消失領域のカード1枚を山札の下へ復帰させる。このカード自身は消失する。',kind:'utility',effect:'recoverVanished',vanishAfterUse:true},
+    v50_patient_edge:{name:'伏せた刃',tags:['非選択','単発'],desc:'5ダメージ。このカード実体が選ばれなかった回数1回につき+3ダメージ（最大+9）。',kind:'damage',hits:1,damage:5,damagePerNotChosen:{value:3,max:9}},
+    abandoned_aegis:{name:'見送る盾',tags:['非選択','耐久'],desc:'防御6。提示されたターンに選ばれなかった時、防御2を得る。',kind:'block',block:6,onNotChosen:{block:2}},
+    dormant_ember:{name:'眠り火',tags:['非選択','火傷'],desc:'3ダメージ＋火傷1。2回以上選ばれなかった実体なら火傷3。',kind:'damage',hits:1,damage:3,status:{type:'burn',amount:1},statusIfNotChosen:{min:2,type:'burn',amount:3}},
+    watchful_plate:{name:'監視板',tags:['提示中','耐久'],desc:'提示されているターン、選択前に防御2を得る。',kind:'block',block:5,presentedBlock:2},
+    sighting_lens:{name:'照準待機',tags:['提示中','単発'],desc:'提示されているターン、次に選ぶ1hit攻撃を+6%する。自身を選ぶと7ダメージ。',kind:'damage',hits:1,damage:7,presentedSingleHitBuff:.06},
+    toxic_observer:{name:'毒見の標',tags:['提示中','毒'],desc:'提示されているターン、敵に毒があれば防御1。自身を選ぶと毒2を付与。',kind:'utility',status:{type:'poison',amount:2},presentedBlockIfStatus:'poison'},
+
+    // v0.51 / roadmap 3/10: 記録・予約・変質・復帰
+    role_recorder:{name:'役割記録器',tags:['記録','循環'],desc:'直前に使ったカードの役割・hit構成・状態異常種を記録する。',kind:'utility',effect:'recordPrevious'},
+    record_replay:{name:'記録再演',tags:['記録'],desc:'最後に記録したカードの役割を小さな効果として再演する。攻撃は8（多段なら6）、防御は8、状態異常は同種2。',kind:'utility',effect:'replayRecord'},
+    route_marker:{name:'航路標',tags:['予約','循環'],desc:'防御5。直前に捨て札へ送られたカード1枚を次回提示へ予約する。',kind:'block',block:5,effect:'reserveLastDiscard'},
+    returning_probe:{name:'帰投探針',tags:['予約','単発'],desc:'6ダメージ。使用後、捨て札へ行かず次回提示へ1度予約される。',kind:'damage',hits:1,damage:6,reserveSelfAfterUse:true},
+    rough_edge:{name:'粗削りの刃',tags:['変質','非選択','単発'],desc:'6ダメージ。同じ実体が2回選ばれなかった時、《研磨された刃》へ変質する。',kind:'damage',hits:1,damage:6,transformAfterEvent:{type:'notChosen',count:2,into:'polished_edge'}},
+    polished_edge:{name:'研磨された刃',tags:['変質','単発'],desc:'10ダメージ。変質後は非選択による成長を失い、安定した単発札になる。',kind:'damage',hits:1,damage:10},
+    void_cocoon:{name:'空隙の繭',tags:['消失','変質'],desc:'防御7。使用後に消失する。消失領域から復帰した時、《孵化殻》へ変質する。',kind:'block',block:7,vanishAfterUse:true,transformOnReturn:'hatched_shell'},
+    hatched_shell:{name:'孵化殻',tags:['復帰','耐久'],desc:'防御11。消失から帰還した後だけ利用できる安定防御札。',kind:'block',block:11},
+    recall_beacon:{name:'帰還標識',tags:['復帰','消失'],desc:'消失領域で最も古いカード1枚を山札の上へ復帰させる。自身は消失する。',kind:'utility',effect:'recoverVanishedOldest',vanishAfterUse:true}
   };
 
   D.BASE_CARD_IDS = [
     'discard_blade','parting_gift','embers','selection','double_strike','needle_rain','follow_up','accelerated_slash','poison_needle','brand','break','weakening_mist','wall','counter_stance','parry','last_stand_shield','blood_blade','blood_contract','dying_blow','blood_chain','rebuild','fast_forward','recall','adversity_recovery','scarlet_bulwark','toxic_barrage','searing_flurry','cycle_edge','discarded_shell','fading_venom','adversity_wall','venom_burst','ember_burst','narrow_shot','spread_shot','afterguard','shard_shot','emergency_cache','volatile_ash','toxin_residue','scavenger_cut','abandoned_guard','triple_cut','echo_barrage','puncture_chain','toxic_needles','ember_needles','combo_guard','contamination','plague_blade','toxic_guard','burning_guard','weakening_brand','status_detonator','fortress_strike','iron_echo','counter_cut','patient_guard','blood_armor','recovery_guard','sacrificial_combo','crimson_focus','brink_blast','pain_reflex','blood_poison','red_cycle','wheel_cut','cycle_guard','bottom_feed','recycle_guard','rapid_rebuild','echo_return'
   ];
   D.UNLOCK_CARD_IDS = ['long_battle','aged_poison','intercept','blood_return','drill_flurry','corrosion','gale_thrust','recovery_run','blood_wall','bore_chain','long_drive','shatter_return','deep_guard','enduring_venom','revenge_edge','crimson_peak','acid_saw','melt_brand','flash_chain','recycle_dash','grit_blood','death_drive','bastion_poison','recycle_wall','frenzy_chain','hot_blood','drill_cycle','toxic_turn','endurance_cut','revenge_guard','piercing_poison','tempo_break'];
-  D.POST_BOSS_CARD_IDS = ['center_lock','hold','reorder','redraw'];
+  D.POST_BOSS_CARD_IDS = ['center_lock','hold','reorder','redraw','vanishing_edge','vanishing_wall','return_from_void','v50_patient_edge','abandoned_aegis','dormant_ember','watchful_plate','sighting_lens','toxic_observer','role_recorder','record_replay','route_marker','returning_probe','rough_edge','void_cocoon','recall_beacon'];
 
   D.RELICS = {
     selection_lens:{name:'選別のレンズ',tags:['提示'],desc:'毎ターン提示枚数+1。選ばれなかったカードは次の山札再構築まで候補から外れる。'},

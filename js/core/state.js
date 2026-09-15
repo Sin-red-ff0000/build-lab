@@ -2,12 +2,12 @@
 (function(){
   const BL = window.BuildLab;
   const D = BL.Data;
-  const KEY=BL.Version?.saveKey||'build_lab_proto_v36';
-  const OLD_KEYS=['build_lab_proto_v32','build_lab_proto_v30','build_lab_proto_v26','build_lab_proto_v25','build_lab_proto_v24','build_lab_proto_v23','build_lab_proto_v22','build_lab_proto_v21','build_lab_proto_v20','build_lab_proto_v19','build_lab_proto_v18','build_lab_proto_v17','build_lab_proto_v16','build_lab_proto_v15','build_lab_proto_v14','build_lab_proto_v13','build_lab_proto_v12','build_lab_proto_v11','build_lab_proto_v10','build_lab_proto_v09','build_lab_proto_v08','build_lab_proto_v07','build_lab_proto_v06','build_lab_proto_v05','build_lab_proto_v04','build_lab_proto_v03','build_lab_proto_v02','build_lab_proto_v01'];
+  const KEY=BL.Version?.saveKey||'build_lab_proto_v75';
+  const OLD_KEYS=['build_lab_proto_v36','build_lab_proto_v32','build_lab_proto_v30','build_lab_proto_v26','build_lab_proto_v25','build_lab_proto_v24','build_lab_proto_v23','build_lab_proto_v22','build_lab_proto_v21','build_lab_proto_v20','build_lab_proto_v19','build_lab_proto_v18','build_lab_proto_v17','build_lab_proto_v16','build_lab_proto_v15','build_lab_proto_v14','build_lab_proto_v13','build_lab_proto_v12','build_lab_proto_v11','build_lab_proto_v10','build_lab_proto_v09','build_lab_proto_v08','build_lab_proto_v07','build_lab_proto_v06','build_lab_proto_v05','build_lab_proto_v04','build_lab_proto_v03','build_lab_proto_v02','build_lab_proto_v01'];
 
   function defaultState(){
     return {
-      version:BL.Version?.number||36,
+      version:BL.Version?.number||75,
       alchemy:D.ALCHEMY?.defaults()||{enabled:false},
       character:'standard',
       deck:[...D.DEFAULT_DECK],

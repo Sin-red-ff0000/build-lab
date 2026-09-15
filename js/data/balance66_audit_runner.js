@@ -1,0 +1,1 @@
+(function(){'use strict';const D=window.BuildLab.Data;D.V66_AUDIT_RUNNER={version:'0.66',resumable:true,perVariantCheckpoint:true,totalVariants:177,trials:8,seeds:3,deckModes:['hybrid','concept','trial'],finalPassRequiresComplete177:true,partialResultsMustNotTriggerBalanceChanges:true};if(D.ENDGAME58)D.ENDGAME58.version='0.66';})();

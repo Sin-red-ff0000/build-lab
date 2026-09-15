@@ -9,52 +9,52 @@
   // 6枚すべてを同時採用する前提ではなく、役割の違う候補を増やして選択肢を作る。
   Object.assign(D.CARDS,{
     // --- 捨て札 ---
-    v34_d_scrap_lance:C('残骸投槍',['捨て札','単発'],'18ダメージ＋防御95。一度捨てられた実体なら58ダメージ＋防御70%無視。',{kind:'hybrid',hits:1,damage:18,block:120,damageIfDiscarded:58,armorPierceIfDiscarded:.70}),
-    v34_d_refuse_wall:C('廃材防塁',['捨て札','耐久'],'防御24。このターン捨てられたカード1枚につき防御+30。',{kind:'block',block:24,blockPerDiscardedThisTurn:70}),
-    v34_d_shrapnel:C('散開破片',['捨て札','状態異常'],'10ダメージ＋防御95＋火傷4。選ばれず捨てられた時、敵に22ダメージ。',{kind:'hybrid',hits:1,damage:10,block:120,status:{type:'burn',amount:4},onDiscard:{damage:22}}),
-    v34_d_salvage_guard:C('回収装甲',['捨て札','耐久','循環'],'16ダメージ＋防御28。一度捨てられていれば防御96。最後の捨て札を山札上へ戻す。',{kind:'hybrid',hits:1,damage:16,block:115,discardBlockBoost:180,effect:'recoverLastDiscard'}),
-    v34_d_landfill:C('堆積砲',['捨て札','単発'],'12ダメージ＋防御95。このターン捨てられたカード1枚につき+34ダメージ。',{kind:'hybrid',hits:1,damage:12,block:120,damagePerDiscardedThisTurn:34,armorPierce:.45}),
-    v34_d_afterimage:C('残滓残像',['捨て札','循環'],'防御18。一度捨てられていれば防御62。使用後は山札下へ戻る。',{kind:'block',block:165,discardBlockBoost:190,returnBottom:true}),
+    v34_d_scrap_lance:C('残骸投槍',['捨て札','単発'],'18ダメージ＋防御95。一度捨てられた実体なら58ダメージ＋防御70%無視。',{kind:'hybrid',hits:1,damage:14,block:10,damageIfDiscarded:30,armorPierceIfDiscarded:.35}),
+    v34_d_refuse_wall:C('廃材防塁',['捨て札','耐久'],'防御24。このターン捨てられたカード1枚につき防御+30。',{kind:'block',block:20,blockPerDiscardedThisTurn:70}),
+    v34_d_shrapnel:C('散開破片',['捨て札','状態異常'],'10ダメージ＋防御95＋火傷4。選ばれず捨てられた時、敵に22ダメージ。',{kind:'hybrid',hits:1,damage:14,block:10,status:{type:'burn',amount:4},onDiscard:{damage:14}}),
+    v34_d_salvage_guard:C('回収装甲',['捨て札','耐久','循環'],'16ダメージ＋防御28。一度捨てられていれば防御96。最後の捨て札を山札上へ戻す。',{kind:'hybrid',hits:1,damage:14,block:10,discardBlockBoost:14,effect:'recoverLastDiscard'}),
+    v34_d_landfill:C('堆積砲',['捨て札','単発'],'12ダメージ＋防御95。このターン捨てられたカード1枚につき+34ダメージ。',{kind:'hybrid',hits:1,damage:14,block:10,damagePerDiscardedThisTurn:6,armorPierce:.25}),
+    v34_d_afterimage:C('残滓残像',['捨て札','循環'],'防御18。一度捨てられていれば防御62。使用後は山札下へ戻る。',{kind:'block',block:20,discardBlockBoost:14,returnBottom:true}),
 
     // --- 連撃 ---
-    v34_m_drill:C('八連穿孔',['連撃'],'18ダメージ×8。防御85%無視。',{kind:'damage',hits:8,damage:18,armorPierce:.85}),
-    v34_m_guardstorm:C('迎撃弾幕',['連撃','耐久'],'10ダメージ×6＋防御52。',{kind:'hybrid',hits:6,damage:10,block:52,armorPierce:.55}),
-    v34_m_accel:C('加速十二連',['連撃'],'9ダメージ×7。直前も多段攻撃なら×12。',{kind:'damage',hits:7,damage:9,prevMultiHits:12,armorPierce:.65}),
-    v34_m_needlefort:C('針城',['連撃','耐久'],'5ダメージ×8＋防御70。',{kind:'hybrid',hits:8,damage:5,block:70,armorPierce:.45}),
-    v34_m_statusburst:C('毒火連環',['連撃','状態異常'],'7ダメージ×7。各ヒットで毒1。火傷中なら防御80%無視。',{kind:'damage',hits:7,damage:7,perHitStatus:{type:'poison',amount:1},armorPierceIfStatus:.80}),
-    v34_m_final:C('終端連星',['連撃','単発'],'26ダメージ×5。直前も多段攻撃なら1発34ダメージ。',{kind:'damage',hits:5,damage:26,damageIfPrevMulti:34,armorPierce:.75}),
+    v34_m_drill:C('八連穿孔',['連撃'],'18ダメージ×8。防御85%無視。',{kind:'damage',hits:8,damage:4,armorPierce:.25}),
+    v34_m_guardstorm:C('迎撃弾幕',['連撃','耐久'],'10ダメージ×6＋防御52。',{kind:'hybrid',hits:6,damage:4,block:10,armorPierce:.25}),
+    v34_m_accel:C('加速十二連',['連撃'],'9ダメージ×7。直前も多段攻撃なら×12。',{kind:'damage',hits:7,damage:4,prevMultiHits:12,armorPierce:.25}),
+    v34_m_needlefort:C('針城',['連撃','耐久'],'5ダメージ×8＋防御70。',{kind:'hybrid',hits:8,damage:4,block:10,armorPierce:.25}),
+    v34_m_statusburst:C('毒火連環',['連撃','状態異常'],'7ダメージ×7。各ヒットで毒1。火傷中なら防御80%無視。',{kind:'damage',hits:7,damage:4,perHitStatus:{type:'poison',amount:1},armorPierceIfStatus:.35}),
+    v34_m_final:C('終端連星',['連撃','単発'],'26ダメージ×5。直前も多段攻撃なら1発34ダメージ。',{kind:'damage',hits:5,damage:4,damageIfPrevMulti:34,armorPierce:.25}),
 
     // --- 状態異常 ---
-    v34_s_plague:C('深層汚染',['状態異常','耐久'],'防御95＋毒18＋火傷12＋弱体4。',{kind:'block',block:95,statuses:[{type:'poison',amount:18},{type:'burn',amount:12},{type:'weak',amount:4}]}),
-    v34_s_quarantine:C('隔離障壁',['状態異常','耐久'],'防御90＋弱体4。',{kind:'block',block:90,status:{type:'weak',amount:4}}),
-    v34_s_corrode:C('腐食穿孔',['状態異常','単発'],'24ダメージ＋脆弱3。状態異常中なら防御を完全無視。',{kind:'hybrid',hits:1,damage:24,block:90,status:{type:'vulnerable',amount:3},armorPierceIfStatus:1}),
-    v34_s_fever:C('症状熱暴走',['状態異常'],'14ダメージ。敵の状態異常合計値1につき+4ダメージ。',{kind:'hybrid',hits:1,damage:14,block:95,damagePerTotalStatus:4,armorPierceIfStatus:.60}),
-    v34_s_detonate:C('全症状起爆',['状態異常'],'20ダメージ。毒と火傷をすべて消費し、合計値×7の追加ダメージ。',{kind:'hybrid',hits:1,damage:20,block:90,consumeStatuses:{types:['poison','burn'],ratio:7}}),
-    v34_s_pestwall:C('疫障壁',['状態異常','耐久'],'防御38。敵の状態異常1種類につき防御+32。',{kind:'block',block:60,blockPerStatusType:38}),
+    v34_s_plague:C('深層汚染',['状態異常','耐久'],'防御95＋毒18＋火傷12＋弱体4。',{kind:'block',block:20,statuses:[{type:'poison',amount:18},{type:'burn',amount:12},{type:'weak',amount:4}]}),
+    v34_s_quarantine:C('隔離障壁',['状態異常','耐久'],'防御90＋弱体4。',{kind:'block',block:20,status:{type:'weak',amount:4}}),
+    v34_s_corrode:C('腐食穿孔',['状態異常','単発'],'24ダメージ＋脆弱3。状態異常中なら防御を完全無視。',{kind:'hybrid',hits:1,damage:14,block:10,status:{type:'vulnerable',amount:3},armorPierceIfStatus:.35}),
+    v34_s_fever:C('症状熱暴走',['状態異常'],'14ダメージ。敵の状態異常合計値1につき+4ダメージ。',{kind:'hybrid',hits:1,damage:14,block:10,damagePerTotalStatus:1,armorPierceIfStatus:.35}),
+    v34_s_detonate:C('全症状起爆',['状態異常'],'20ダメージ。毒と火傷をすべて消費し、合計値×7の追加ダメージ。',{kind:'hybrid',hits:1,damage:14,block:10,consumeStatuses:{types:['poison','burn'],ratio:2}}),
+    v34_s_pestwall:C('疫障壁',['状態異常','耐久'],'防御38。敵の状態異常1種類につき防御+32。',{kind:'block',block:20,blockPerStatusType:6}),
 
     // --- 耐久 ---
-    v34_g_citadel:C('極圧城塞',['耐久'],'防御118。敵攻撃力60以上なら防御188。',{kind:'block',block:118,blockIfEnemyAtkMin:{min:60,value:188},damagePlusBlockRatio:.22}),
-    v34_g_retaliate:C('圧壊反照',['耐久','反撃'],'防御108。敵攻撃力60以上なら防御170。このターン被ダメージ時、受けたダメージの180%を返す。',{kind:'block',block:108,blockIfEnemyAtkMin:{min:60,value:170},counter:1.8,damagePlusBlockRatio:.28}),
-    v34_g_intercept:C('要塞迎撃',['耐久','反撃'],'防御145。敵攻撃力60以上なら、このターン被ダメージ時に敵へ160ダメージ。',{kind:'block',block:145,fixedCounter:28,fixedCounterIfEnemyAtkMin:{min:60,value:160},damagePlusBlockRatio:.22}),
-    v34_g_ram:C('城塞破城槌',['耐久','単発'],'18ダメージ＋防御92。現在の防御の55%を追加ダメージに変換。',{kind:'hybrid',hits:1,damage:18,block:92,damagePlusBlockRatio:.55,armorPierce:.55}),
-    v34_g_recovery:C('不落再生壁',['耐久','循環'],'防御105＋HP12回復。4ターン目以降は防御155。',{kind:'block',block:105,heal:12,blockIfTurnMin:{turn:4,value:155},damagePlusBlockRatio:.20}),
-    v34_g_perfect:C('完全防衛線',['耐久','反撃'],'防御132。このターン被ダメージ時、受けたダメージの100%を返す。',{kind:'block',block:132,counter:1.0,damagePlusBlockRatio:.22}),
+    v34_g_citadel:C('極圧城塞',['耐久'],'防御118。敵攻撃力60以上なら防御188。',{kind:'block',block:20,blockIfEnemyAtkMin:{min:60,value:32},damagePlusBlockRatio:.22}),
+    v34_g_retaliate:C('圧壊反照',['耐久','反撃'],'防御108。敵攻撃力60以上なら防御170。このターン被ダメージ時、受けたダメージの180%を返す。',{kind:'block',block:20,blockIfEnemyAtkMin:{min:60,value:32},counter:.9,damagePlusBlockRatio:.28}),
+    v34_g_intercept:C('要塞迎撃',['耐久','反撃'],'防御145。敵攻撃力60以上なら、このターン被ダメージ時に敵へ160ダメージ。',{kind:'block',block:20,fixedCounter:10,fixedCounterIfEnemyAtkMin:{min:60,value:24},damagePlusBlockRatio:.22}),
+    v34_g_ram:C('城塞破城槌',['耐久','単発'],'18ダメージ＋防御92。現在の防御の55%を追加ダメージに変換。',{kind:'hybrid',hits:1,damage:14,block:10,damagePlusBlockRatio:.55,armorPierce:.25}),
+    v34_g_recovery:C('不落再生壁',['耐久','循環'],'防御105＋HP12回復。4ターン目以降は防御155。',{kind:'block',block:20,heal:12,blockIfTurnMin:{turn:4,value:30},damagePlusBlockRatio:.20}),
+    v34_g_perfect:C('完全防衛線',['耐久','反撃'],'防御132。このターン被ダメージ時、受けたダメージの100%を返す。',{kind:'block',block:20,counter:1.0,damagePlusBlockRatio:.22}),
 
     // --- 自傷 ---
-    v34_b_crimson:C('大瀉血刃',['自傷','単発'],'HP14を失い、92ダメージ。HP半分以下なら188ダメージ。',{kind:'damage',hits:1,damage:92,lowHpDamage:188,selfDamage:14,armorPierce:.70}),
-    v34_b_pressure:C('血圧防壁',['自傷','耐久'],'HP10を失い、防御112。HP半分以下なら防御190。',{kind:'block',block:112,lowHpBlock:190,selfDamage:10}),
-    v34_b_scarstorm:C('瘢痕連射',['自傷','連撃'],'HP12を失い、24ダメージ×5。HP半分以下なら×7。',{kind:'damage',hits:5,damage:24,lowHpHits:7,selfDamage:12,armorPierce:.72}),
+    v34_b_crimson:C('大瀉血刃',['自傷','単発'],'HP14を失い、92ダメージ。HP半分以下なら188ダメージ。',{kind:'damage',hits:1,damage:20,lowHpDamage:36,selfDamage:14,armorPierce:.25}),
+    v34_b_pressure:C('血圧防壁',['自傷','耐久'],'HP10を失い、防御112。HP半分以下なら防御190。',{kind:'block',block:20,lowHpBlock:30,selfDamage:10}),
+    v34_b_scarstorm:C('瘢痕連射',['自傷','連撃'],'HP12を失い、24ダメージ×5。HP半分以下なら×7。',{kind:'damage',hits:5,damage:4,lowHpHits:7,selfDamage:12,armorPierce:.25}),
     v34_b_contract:C('深紅契約',['自傷','万能'],'HP16を失う。次に使うカードの効果+170%。',{kind:'utility',selfDamage:16,buffNext:1.70}),
-    v34_b_revenge:C('失血反照',['自傷','耐久','反撃'],'HP8を失い、防御96。このターン被ダメージ時、受けたダメージの130%を返す。',{kind:'block',block:96,selfDamage:8,counter:1.3}),
-    v34_b_terminal:C('赤線終端',['自傷','瀕死'],'HP8を失い、70ダメージ。HP半分以下なら240ダメージ＋防御80%無視。',{kind:'damage',hits:1,damage:70,lowHpDamage:240,selfDamage:8,armorPierce:.80}),
+    v34_b_revenge:C('失血反照',['自傷','耐久','反撃'],'HP8を失い、防御96。このターン被ダメージ時、受けたダメージの130%を返す。',{kind:'block',block:20,selfDamage:8,counter:.85}),
+    v34_b_terminal:C('赤線終端',['自傷','瀕死'],'HP8を失い、70ダメージ。HP半分以下なら240ダメージ＋防御80%無視。',{kind:'damage',hits:1,damage:20,lowHpDamage:36,selfDamage:8,armorPierce:.25}),
 
     // --- 循環 ---
-    v34_c_reactor:C('輪転炉',['循環'],'20ダメージ＋防御95。山札再構築1回につき+42ダメージ。',{kind:'hybrid',hits:1,damage:20,block:150,damagePerReshuffle:42,armorPierceIfRecentReshuffle:.75}),
-    v34_c_bastion:C('輪転要塞',['循環','耐久'],'防御54。山札再構築1回につき防御+58。',{kind:'block',block:150,blockPerReshuffle:58}),
-    v34_c_reset:C('全域再編',['循環','耐久'],'防御140。捨て札と除外を再構築し、次カードの効果+90%。',{kind:'block',block:140,effect:'rebuild',buffNext:.90}),
-    v34_c_return:C('再来大砲',['循環','単発'],'24ダメージ＋防御95。再構築直後なら132ダメージ＋防御80%無視。',{kind:'hybrid',hits:1,damage:24,block:150,damageIfRecentReshuffle:132,armorPierceIfRecentReshuffle:.80}),
-    v34_c_loopguard:C('閉路防壁',['循環','耐久'],'防御48。再構築直後なら防御148。使用後は山札下へ戻る。',{kind:'block',block:100,blockIfRecentReshuffle:180,returnBottom:true}),
-    v34_c_wheel:C('輪廻連星',['循環','連撃'],'12ダメージ×4＋防御95。再構築直後なら×8。',{kind:'hybrid',hits:4,damage:12,block:150,hitsIfRecentReshuffle:8,armorPierceIfRecentReshuffle:.72})
+    v34_c_reactor:C('輪転炉',['循環'],'20ダメージ＋防御95。山札再構築1回につき+42ダメージ。',{kind:'hybrid',hits:1,damage:14,block:10,damagePerReshuffle:6,armorPierceIfRecentReshuffle:.35}),
+    v34_c_bastion:C('輪転要塞',['循環','耐久'],'防御54。山札再構築1回につき防御+58。',{kind:'block',block:20,blockPerReshuffle:8}),
+    v34_c_reset:C('全域再編',['循環','耐久'],'防御140。捨て札と除外を再構築し、次カードの効果+90%。',{kind:'block',block:20,effect:'rebuild',buffNext:.30}),
+    v34_c_return:C('再来大砲',['循環','単発'],'24ダメージ＋防御95。再構築直後なら132ダメージ＋防御80%無視。',{kind:'hybrid',hits:1,damage:14,block:10,damageIfRecentReshuffle:34,armorPierceIfRecentReshuffle:.35}),
+    v34_c_loopguard:C('閉路防壁',['循環','耐久'],'防御48。再構築直後なら防御148。使用後は山札下へ戻る。',{kind:'block',block:20,blockIfRecentReshuffle:30,returnBottom:true}),
+    v34_c_wheel:C('輪廻連星',['循環','連撃'],'12ダメージ×4＋防御95。再構築直後なら×8。',{kind:'hybrid',hits:4,damage:4,block:10,hitsIfRecentReshuffle:8,armorPierceIfRecentReshuffle:.35})
   });
 
   Object.assign(D.RELICS,{

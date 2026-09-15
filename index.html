@@ -76,7 +76,7 @@
               <select id="cardTagFilter"><option value="all">タグ1：指定なし</option></select>
               <select id="cardTag2Filter"><option value="all">タグ2：指定なし</option></select>
               <select id="cardTagMode"><option value="and">タグ AND</option><option value="or">タグ OR</option></select>
-              <select id="cardEffectFilter"><option value="all">すべての効果</option><option value="attack">攻撃</option><option value="block">防御</option><option value="multi">多段攻撃</option><option value="status">状態異常</option><option value="discard">捨て札関連</option><option value="self">自傷</option><option value="cycle">循環</option><option value="conditional">条件付き強化</option><option value="hybrid">複数タグ</option><option value="prompt">提示操作</option><option value="tuning">調律関連</option><option value="link">連結関連</option><option value="conversion">役割変換関連</option></select>
+              <select id="cardEffectFilter"><option value="all">すべての効果</option><option value="attack">攻撃</option><option value="block">防御</option><option value="multi">多段攻撃</option><option value="status">状態異常（すべて）</option><option value="poison">毒</option><option value="burn">火傷</option><option value="bleed">出血</option><option value="frost">凍傷</option><option value="discard">捨て札関連</option><option value="self">自傷</option><option value="cycle">循環</option><option value="conditional">条件付き強化</option><option value="hybrid">複数タグ</option><option value="prompt">提示操作</option><option value="tuning">調律関連</option><option value="link">連結関連</option><option value="conversion">役割変換関連</option></select>
               <select id="cardHitsFilter"><option value="0">ヒット数指定なし</option><option value="2">2ヒット以上</option><option value="3">3ヒット以上</option><option value="5">5ヒット以上</option></select>
               <select id="cardStateFilter">
                 <option value="unlocked">解放済み</option>
@@ -295,7 +295,7 @@
   </div>
 
   <script src="js/data/gameData.js?v=0.30.0"></script>
-  <script src="js/version.js?v=0.36.0"></script>
+  <script src="js/version.js?v=0.75.0"></script>
   <script src="js/data/protocols.js?v=0.30.0"></script>
   <script src="js/data/tunings.js?v=0.30.0"></script>
   <script src="js/data/conversions.js?v=0.30.0"></script>
@@ -347,6 +347,17 @@
   <script src="js/data/expansion32.js?v=0.32.0"></script>
   <script src="js/data/expansion34.js?v=0.34.0"></script>
   <script src="js/data/expansion35.js?v=0.35.0"></script>
+  <script src="js/data/expansion41.js?v=0.41.0"></script>
+  <script src="js/data/balance42_status_roles.js?v=0.42.0"></script>
+  <script src="js/data/expansion47_build_receivers.js?v=0.47.0"></script>
+  <script src="js/data/expansion53_build_ecology.js?v=0.53.0"></script>
+  <script src="js/data/balance48_unused_cards.js?v=0.48.0"></script>
+  <script src="js/data/balance54_cards_front.js?v=0.54.0"></script>
+  <script src="js/data/balance55_cards_back.js?v=0.55.0"></script>
+  <script src="js/data/balance56_system_ecology.js?v=0.56.0"></script>
+  <script src="js/data/balance59_finalfix_cards.js?v=0.59.0"></script>
+  <script src="js/data/balance60_finalfix2_cards.js?v=0.60.0"></script>
+  <script src="js/data/expansion52_dual_faces.js?v=0.52.0"></script>
   <script src="js/data/unlocks23.js?v=0.30.0"></script>
   <script src="js/data/unlocks24.js?v=0.30.0"></script>
   <script src="js/data/unlocks26.js?v=0.30.0"></script>
@@ -357,8 +368,25 @@
   <script src="js/data/unlocks32.js?v=0.32.0"></script>
   <script src="js/data/unlocks34.js?v=0.34.0"></script>
   <script src="js/data/unlocks35.js?v=0.35.0"></script>
+  <script src="js/data/unlocks41.js?v=0.41.0"></script>
+  <script src="js/data/unlocks47.js?v=0.47.0"></script>
+  <script src="js/data/unlocks53.js?v=0.53.0"></script>
+  <script src="js/data/unlocks52.js?v=0.52.0"></script>
   <script src="js/data/progression35.js?v=0.35.0"></script>
   <script src="js/data/progression36.js?v=0.36.0"></script>
+  <script src="js/data/progression57.js?v=0.57.0"></script>
+  <script src="js/data/endgame58.js?v=0.58.0"></script>
+  <script src="js/data/balance62_final_combat.js?v=0.62.0"></script>
+  <script src="js/data/balance63_convergence.js?v=0.63.0"></script>
+  <script src="js/data/balance64_audit_integrity.js?v=0.64.0"></script>
+  <script src="js/data/balance65_audit_profiles.js?v=0.65.0"></script>
+  <script src="js/data/balance66_audit_runner.js?v=0.66.0"></script>
+  <script src="js/data/balance71_final_followup.js?v=0.71.0"></script>
+  <script src="js/data/balance72_reaudit_progress.js?v=0.72.0"></script>
+  <script src="js/data/balance73_reaudit_progress.js?v=0.73.0"></script>
+  <script src="js/data/balance74_final_audit_complete.js?v=0.74.0"></script>
+  <script src="js/data/balance75_attrition_closeout.js?v=0.75.0"></script>
+  <script src="js/data/balance75_final_audit_pass.js?v=0.75.0"></script>
   <script src="js/core/alchemy.js?v=0.30.0"></script>
   <script src="js/core/state.js?v=0.30.0"></script>
   <script src="js/core/enemy.js?v=0.30.0"></script>
