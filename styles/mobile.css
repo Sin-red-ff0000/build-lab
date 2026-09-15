@@ -49,3 +49,6 @@
 @media(max-width:760px){.guide-ref-item summary{align-items:flex-start}.guide-ref-item summary small{max-width:42%;line-height:1.35}.guide-reference-head{position:sticky;top:51px;z-index:9;background:rgba(15,20,29,.96);padding:6px 0}}
 
 @media(max-width:760px){.section-actions{width:100%;justify-content:space-between}.panel-head-actions{justify-content:flex-end}.panel-head-actions .counter{order:0}.compact-reset{min-height:38px;padding:7px 9px}.reset-toolbar{align-items:stretch;flex-direction:column}.reset-toolbar button{width:100%;min-height:42px}.enemy-editor-panel .panel-head{align-items:flex-start}}
+
+/* v0.75.1 mobile experiment start hotfix */
+@media(max-width:760px){.mobile-experiment-dock{z-index:110;pointer-events:auto}.mobile-experiment-dock button{pointer-events:auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.mobile-dock-open #tab-experiment{padding-bottom:82px}}
