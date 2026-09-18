@@ -4,11 +4,11 @@
   const claimed=id=>s=>!!s.claimedUnlocks?.[id];
   const trait=id=>s=>!!s.unlockedTraits?.[id];
   const win=(id,kind,reward,title,condition,when,chapter=3)=>({id,kind,reward,title,condition,event:'win',when,check:claimed(id),chapter});
-  const hasTag=(s,tag,n)=>s.deck.filter(id=>D.CARDS[id]?.tags.includes(tag)).length>=n;
+  const hasTag=(s,tag,n)=>s.deck.filter(id=>(D.getCardTags?D.getCardTags(s,id):D.CARDS[id]?.tags||[]).includes(tag)).length>=n;
   const linked=s=>!!(s.cardLink?.a&&s.cardLink?.b&&s.cardLink.a!==s.cardLink.b);
   const doctrine=s=>s.doctrine&&s.unlockedDoctrines?.[s.doctrine];
   const uniqueCount=s=>new Set(s.deck).size;
-  const distinctTags=s=>new Set(s.deck.flatMap(id=>D.CARDS[id]?.tags||[])).size;
+  const distinctTags=s=>new Set(s.deck.flatMap(id=>(D.getCardTags?D.getCardTags(s,id):D.CARDS[id]?.tags||[]))).size;
 
   D.UNLOCKS.push(
     // 第3章：既存要素の追加拡充と第3ボスへの導線
