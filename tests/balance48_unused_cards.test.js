@@ -1,0 +1,10 @@
+'use strict';const fs=require('fs'),path=require('path'),assert=require('assert');global.window=global;const mem={};global.localStorage={getItem:k=>mem[k]??null,setItem:(k,v)=>mem[k]=String(v),removeItem:k=>delete mem[k]};const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');for(const m of html.matchAll(/<script src="([^"?]+)/g)){const f=m[1];if(f.includes('/ui/')||f.endsWith('app.js'))continue;require(path.join(root,f));}const D=BuildLab.Data;
+assert.equal(D.V48_REDESIGNED_CARD_IDS.length,12);for(const id of D.V48_REDESIGNED_CARD_IDS)assert(D.CARDS[id],id);
+assert.equal(D.CARDS.double_strike.damage,4);assert.equal(D.CARDS.double_strike.hits,2);assert.equal(D.CARDS.double_strike.primeSingleHitBuff,.12);
+assert.equal(D.CARDS.triple_cut.damage,3);assert.equal(D.CARDS.triple_cut.hits,3);assert.equal(D.CARDS.triple_cut.nextBlockFlat,3);
+assert.equal(D.CARDS.needle_rain.damage,1);assert.equal(D.CARDS.needle_rain.nextStatusFlat,2);
+assert.equal(D.CARDS.combo_guard.blockIfPrevMulti,11);
+assert.equal(D.CARDS.crimson_focus.buffNext,0);assert.equal(D.CARDS.crimson_focus.buffNextSelfDamage,.35);assert(D.CARDS.crimson_focus.buffNextSelfDamage < .5);
+assert.equal(D.CARDS.toxic_needles.poisonAnchor,true);assert.equal(D.CARDS.wall.stableGuard,true);
+assert(!/\+80%/.test(D.CARDS.crimson_focus.desc));
+console.log('PASS balance48_unused_cards.test.js');

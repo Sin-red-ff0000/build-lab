@@ -1,0 +1,304 @@
+{
+  "summary": {
+    "version": "0.65-multiseed-audit",
+    "generatedAt": "2026-09-15T16:56:08.306Z",
+    "variants": 1,
+    "trials": 8,
+    "battles": 40,
+    "wins": 2,
+    "coverage": {
+      "variantsWithAnyWin": 1,
+      "variantsWithConceptWin": 1,
+      "variantsAllTrials": 0
+    },
+    "byTrial": {
+      "opening_storm": {
+        "name": "先陣校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "late_awaken": {
+        "name": "覚醒校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "action_flood": {
+        "name": "群動校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "long_attrition": {
+        "name": "消耗校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "cleansing_field": {
+        "name": "浄化校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 0.6666666666666666
+      },
+      "adaptive_matrix": {
+        "name": "適応校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "void_archive": {
+        "name": "空隙校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "synthesis": {
+        "name": "統合校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      }
+    },
+    "statusWins": {
+      "poison": 1,
+      "burn": 1,
+      "bleed": 0,
+      "frost": 0
+    },
+    "zeroUseCards": 674,
+    "topCards": [
+      [
+        "v18_salvage_venom",
+        1
+      ],
+      [
+        "v34_s_detonate",
+        1
+      ],
+      [
+        "v34_s_plague",
+        1
+      ],
+      [
+        "conversion_salvage",
+        1
+      ],
+      [
+        "v34_d_salvage_guard",
+        1
+      ]
+    ],
+    "topRelics": [
+      [
+        "twin_needle",
+        1
+      ],
+      [
+        "link_status_core",
+        1
+      ],
+      [
+        "doctrine_status",
+        1
+      ]
+    ],
+    "topProtocols": [
+      [
+        "v13_status_link",
+        1
+      ]
+    ],
+    "failedVariants": [],
+    "weakConceptVariants": [],
+    "auditRunner": "v0.66-resumable",
+    "globalVariantIndex": 42
+  },
+  "results": [
+    {
+      "variant": "ギア・継電型",
+      "cid": "gearbox",
+      "style": "gearbox_link",
+      "trial": "opening_storm",
+      "mode": "concept",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 5,
+      "deck": [
+        "charter_recall",
+        "charter_recall",
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v26_water_cycle",
+        "v26_water_cycle",
+        "v18_salvage_venom",
+        "v18_salvage_venom",
+        "salvage_jab",
+        "salvage_jab"
+      ]
+    },
+    {
+      "variant": "ギア・継電型",
+      "cid": "gearbox",
+      "style": "gearbox_link",
+      "trial": "late_awaken",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 5,
+      "deck": [
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "charter_recall",
+        "charter_recall",
+        "v34_b_terminal",
+        "v34_b_terminal",
+        "v26_water_cycle",
+        "v26_water_cycle",
+        "v17_blood_cannon",
+        "v17_blood_cannon"
+      ]
+    },
+    {
+      "variant": "ギア・継電型",
+      "cid": "gearbox",
+      "style": "gearbox_link",
+      "trial": "action_flood",
+      "mode": "concept",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 4.666666666666667,
+      "deck": [
+        "charter_recall",
+        "charter_recall",
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v26_water_cycle",
+        "v26_water_cycle",
+        "v18_salvage_venom",
+        "v18_salvage_venom",
+        "salvage_jab",
+        "salvage_jab"
+      ]
+    },
+    {
+      "variant": "ギア・継電型",
+      "cid": "gearbox",
+      "style": "gearbox_link",
+      "trial": "long_attrition",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 21,
+      "deck": [
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v34_g_perfect",
+        "v34_g_perfect",
+        "v34_g_retaliate",
+        "v34_g_retaliate",
+        "v34_b_revenge",
+        "v34_b_revenge",
+        "salvage_wall",
+        "salvage_wall"
+      ]
+    },
+    {
+      "variant": "ギア・継電型",
+      "cid": "gearbox",
+      "style": "gearbox_link",
+      "trial": "cleansing_field",
+      "mode": "hybrid",
+      "wins": 2,
+      "runs": 3,
+      "rate": 0.6666666666666666,
+      "turns": 14,
+      "deck": [
+        "v18_salvage_venom",
+        "v18_salvage_venom",
+        "v34_s_detonate",
+        "v34_s_detonate",
+        "v34_s_plague",
+        "v34_s_plague",
+        "conversion_salvage",
+        "conversion_salvage",
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard"
+      ]
+    },
+    {
+      "variant": "ギア・継電型",
+      "cid": "gearbox",
+      "style": "gearbox_link",
+      "trial": "adaptive_matrix",
+      "mode": "trial",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 7.333333333333333,
+      "deck": [
+        "position_cycle",
+        "position_cycle",
+        "v35_p_wings",
+        "v35_p_wings",
+        "discarded_center",
+        "discarded_center",
+        "relay_blade",
+        "relay_blade",
+        "prompt_charter",
+        "prompt_charter"
+      ]
+    },
+    {
+      "variant": "ギア・継電型",
+      "cid": "gearbox",
+      "style": "gearbox_link",
+      "trial": "void_archive",
+      "mode": "trial",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 8,
+      "deck": [
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v26_water_cycle",
+        "v26_water_cycle",
+        "v18_salvage_venom",
+        "v18_salvage_venom",
+        "selection",
+        "selection",
+        "adversity_recovery",
+        "adversity_recovery"
+      ]
+    },
+    {
+      "variant": "ギア・継電型",
+      "cid": "gearbox",
+      "style": "gearbox_link",
+      "trial": "synthesis",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 7,
+      "deck": [
+        "conversion_salvage",
+        "conversion_salvage",
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "charter_recall",
+        "charter_recall",
+        "v26_water_cycle",
+        "v26_water_cycle",
+        "v18_salvage_venom",
+        "v18_salvage_venom"
+      ]
+    }
+  ]
+}

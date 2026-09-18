@@ -1,0 +1,309 @@
+{
+  "summary": {
+    "version": "0.65-multiseed-audit",
+    "generatedAt": "2026-09-15T16:39:48.997Z",
+    "variants": 1,
+    "trials": 8,
+    "battles": 40,
+    "wins": 2,
+    "coverage": {
+      "variantsWithAnyWin": 1,
+      "variantsWithConceptWin": 0,
+      "variantsAllTrials": 0
+    },
+    "byTrial": {
+      "opening_storm": {
+        "name": "先陣校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 0.6666666666666666
+      },
+      "late_awaken": {
+        "name": "覚醒校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "action_flood": {
+        "name": "群動校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "long_attrition": {
+        "name": "消耗校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "cleansing_field": {
+        "name": "浄化校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "adaptive_matrix": {
+        "name": "適応校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "void_archive": {
+        "name": "空隙校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "synthesis": {
+        "name": "統合校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      }
+    },
+    "statusWins": {
+      "poison": 0,
+      "burn": 0,
+      "bleed": 0,
+      "frost": 0
+    },
+    "zeroUseCards": 674,
+    "topCards": [
+      [
+        "v35_l_cycle",
+        1
+      ],
+      [
+        "v17_guard_barrage",
+        1
+      ],
+      [
+        "v35_p_wings",
+        1
+      ],
+      [
+        "reserve_link",
+        1
+      ],
+      [
+        "v34_c_wheel",
+        1
+      ]
+    ],
+    "topRelics": [
+      [
+        "expanded_multi",
+        1
+      ],
+      [
+        "multiblade",
+        1
+      ],
+      [
+        "chain_reactor",
+        1
+      ]
+    ],
+    "topProtocols": [
+      [
+        "assault_calibration",
+        1
+      ]
+    ],
+    "failedVariants": [],
+    "weakConceptVariants": [
+      {
+        "name": "ブレイド・輪転継電型",
+        "trials": 8,
+        "won": 1,
+        "conceptWon": 0
+      }
+    ]
+  },
+  "results": [
+    {
+      "variant": "ブレイド・輪転継電型",
+      "cid": "braid",
+      "style": "braid_cycle",
+      "trial": "opening_storm",
+      "mode": "trial",
+      "wins": 2,
+      "runs": 3,
+      "rate": 0.6666666666666666,
+      "turns": 5,
+      "deck": [
+        "v35_l_cycle",
+        "v35_l_cycle",
+        "v17_guard_barrage",
+        "v17_guard_barrage",
+        "v35_p_wings",
+        "v35_p_wings",
+        "reserve_link",
+        "reserve_link",
+        "v34_c_wheel",
+        "v34_c_wheel"
+      ]
+    },
+    {
+      "variant": "ブレイド・輪転継電型",
+      "cid": "braid",
+      "style": "braid_cycle",
+      "trial": "late_awaken",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 8.333333333333334,
+      "deck": [
+        "reserve_link",
+        "reserve_link",
+        "v32_branch_memory",
+        "v32_branch_memory",
+        "v35_l_cycle",
+        "v35_l_cycle",
+        "linked_cycle",
+        "linked_cycle",
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard"
+      ]
+    },
+    {
+      "variant": "ブレイド・輪転継電型",
+      "cid": "braid",
+      "style": "braid_cycle",
+      "trial": "action_flood",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 5.333333333333333,
+      "deck": [
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v35_l_cycle",
+        "v35_l_cycle",
+        "v18_salvage_venom",
+        "v18_salvage_venom",
+        "v34_c_wheel",
+        "v34_c_wheel",
+        "link_status_guard",
+        "link_status_guard"
+      ]
+    },
+    {
+      "variant": "ブレイド・輪転継電型",
+      "cid": "braid",
+      "style": "braid_cycle",
+      "trial": "long_attrition",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 21,
+      "deck": [
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v35_l_cycle",
+        "v35_l_cycle",
+        "v32_branch_memory",
+        "v32_branch_memory",
+        "salvage_wall",
+        "salvage_wall",
+        "charter_recall",
+        "charter_recall"
+      ]
+    },
+    {
+      "variant": "ブレイド・輪転継電型",
+      "cid": "braid",
+      "style": "braid_cycle",
+      "trial": "cleansing_field",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 6.333333333333333,
+      "deck": [
+        "v18_salvage_venom",
+        "v18_salvage_venom",
+        "v32_branch_memory",
+        "v32_branch_memory",
+        "v35_l_cycle",
+        "v35_l_cycle",
+        "conversion_salvage",
+        "conversion_salvage",
+        "linked_cycle",
+        "linked_cycle"
+      ]
+    },
+    {
+      "variant": "ブレイド・輪転継電型",
+      "cid": "braid",
+      "style": "braid_cycle",
+      "trial": "adaptive_matrix",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 10,
+      "deck": [
+        "reserve_link",
+        "reserve_link",
+        "v35_l_cycle",
+        "v35_l_cycle",
+        "position_cycle",
+        "position_cycle",
+        "center_salvage",
+        "center_salvage",
+        "conversion_salvage",
+        "conversion_salvage"
+      ]
+    },
+    {
+      "variant": "ブレイド・輪転継電型",
+      "cid": "braid",
+      "style": "braid_cycle",
+      "trial": "void_archive",
+      "mode": "trial",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 11.666666666666666,
+      "deck": [
+        "v35_l_cycle",
+        "v35_l_cycle",
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "reserve_link",
+        "reserve_link",
+        "v32_branch_memory",
+        "v32_branch_memory",
+        "v26_water_cycle",
+        "v26_water_cycle"
+      ]
+    },
+    {
+      "variant": "ブレイド・輪転継電型",
+      "cid": "braid",
+      "style": "braid_cycle",
+      "trial": "synthesis",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 7.333333333333333,
+      "deck": [
+        "v32_branch_memory",
+        "v32_branch_memory",
+        "v35_l_cycle",
+        "v35_l_cycle",
+        "conversion_salvage",
+        "conversion_salvage",
+        "linked_cycle",
+        "linked_cycle",
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard"
+      ]
+    }
+  ]
+}

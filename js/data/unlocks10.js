@@ -4,7 +4,7 @@
   const claimed=id=>s=>!!s.claimedUnlocks?.[id];
   const trait=id=>s=>!!s.unlockedTraits?.[id];
   const win=(id,kind,reward,title,condition,when,chapter=4)=>({id,kind,reward,title,condition,event:'win',when,check:claimed(id),chapter});
-  const hasTag=(s,tag,n)=>s.deck.filter(id=>(D.getCardTags?D.getCardTags(s,id):D.CARDS[id]?.tags||[]).includes(tag)).length>=n;
+  const hasTag=(s,tag,n)=>s.deck.filter(id=>D.CARDS[id]?.tags.includes(tag)).length>=n;
   const uniqueCount=s=>new Set(s.deck).size;
   const styleSelected=(s,id)=>s.characterStyles?.[s.character]===id;
   const styleUnlockedCount=s=>Object.values(s.unlockedCharacterStyles||{}).filter(Boolean).length;

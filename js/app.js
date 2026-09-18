@@ -17,8 +17,6 @@
   };
 
   function startBattle(mode=false){const r=BL.Battle.create(mode);if(r.error)return BL.UI.toast(r.error);document.getElementById('battlePanel')?.classList.remove('hidden');BL.UI.renderAll();document.getElementById('battlePanel')?.scrollIntoView({behavior:'smooth',block:'start'});}
-  // Mobile UI must not proxy through a hidden desktop button. Expose the actual action.
-  BL.UI.startBattle=startBattle;
   function bind(){
     BL.UI.bindTabs();
     const save=document.getElementById('saveBtn'),reset=document.getElementById('resetBtn'),buildResetHeader=document.getElementById('buildResetHeaderBtn'),buildReset=document.getElementById('buildResetBtn'),start=document.getElementById('startBattleBtn'),b1=document.getElementById('bossBattleBtn'),b2=document.getElementById('boss2BattleBtn'),b3=document.getElementById('boss3BattleBtn'),b4=document.getElementById('boss4BattleBtn'),retire=document.getElementById('retireBattleBtn'),close=document.getElementById('modalClose');

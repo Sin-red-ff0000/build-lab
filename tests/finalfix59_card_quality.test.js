@@ -1,0 +1,8 @@
+'use strict';const fs=require('fs'),path=require('path'),assert=require('assert');global.window=global;const mem={};global.localStorage={getItem:k=>mem[k]??null,setItem:(k,v)=>mem[k]=String(v),removeItem:k=>delete mem[k]};const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');for(const m of html.matchAll(/<script src="([^"?]+)/g)){const f=m[1];if(f.includes('/ui/')||f.endsWith('app.js'))continue;require(path.join(root,f));}const D=BuildLab.Data;
+assert(D.V59_FINALFIX1_CARD_IDS.length>=30);assert.equal(D.V59_SYNCED_DESC_IDS.length,24);
+for(const id of D.V59_SYNCED_DESC_IDS){const c=D.CARDS[id];assert(c&&c.desc,id);if(c.damage!=null)assert(c.desc.includes(String(c.damage)),id+' damage desc');if((c.block||0)>0)assert(c.desc.includes(String(c.block)),id+' block desc');if(c.hits>1)assert(c.desc.includes('×'+c.hits),id+' hits desc');}
+const pairs=[['hex_puncture','precise_barrage'],['armor_saw','v18_sevenfold_pierce'],['drill_guard','pulse_guard'],['v17_guard_barrage','v18_guard_volley'],['v34_m_guardstorm','v34_m_needlefort']];
+const signature=c=>JSON.stringify({tags:c.tags,prime:c.primeSingleHitBuff||0,nb:c.nextBlockFlat||0,ns:c.nextStatusFlat||0,res:c.reserveSelfOnPrevAttack||false,van:c.vanish||false,present:c.presentEffect||null,enemy:c.statusIfEnemyBehavior||null,stable:c.stableGuard||false});
+for(const [a,b] of pairs)assert.notEqual(signature(D.CARDS[a]),signature(D.CARDS[b]),a+' and '+b+' need different role exits');
+for(const id of ['sixfold_cut','v13_sixfold_cut','hyper_chain','hex_puncture','precise_barrage','armor_saw','v18_sevenfold_pierce','v34_m_drill'])assert((D.CARDS[id].damage||0)*(D.CARDS[id].hits||1)<=20,id+' raw inflation');
+console.log('PASS finalfix59_card_quality.test.js');

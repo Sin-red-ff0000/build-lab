@@ -1,0 +1,432 @@
+{
+  "summary": {
+    "version": "0.65-multiseed-audit",
+    "generatedAt": "2026-09-15T16:24:25.679Z",
+    "variants": 1,
+    "trials": 8,
+    "battles": 40,
+    "wins": 34,
+    "coverage": {
+      "variantsWithAnyWin": 1,
+      "variantsWithConceptWin": 1,
+      "variantsAllTrials": 1
+    },
+    "byTrial": {
+      "opening_storm": {
+        "name": "先陣校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 1
+      },
+      "late_awaken": {
+        "name": "覚醒校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 1
+      },
+      "action_flood": {
+        "name": "群動校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 1
+      },
+      "long_attrition": {
+        "name": "消耗校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 0.6666666666666666
+      },
+      "cleansing_field": {
+        "name": "浄化校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 1
+      },
+      "adaptive_matrix": {
+        "name": "適応校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 1
+      },
+      "void_archive": {
+        "name": "空隙校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 1
+      },
+      "synthesis": {
+        "name": "統合校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 0.6666666666666666
+      }
+    },
+    "statusWins": {
+      "poison": 3,
+      "burn": 2,
+      "bleed": 1,
+      "frost": 0
+    },
+    "zeroUseCards": 659,
+    "topCards": [
+      [
+        "center_lock",
+        5
+      ],
+      [
+        "reserve_guard",
+        5
+      ],
+      [
+        "v35_p_wings",
+        4
+      ],
+      [
+        "v35_p_center",
+        4
+      ],
+      [
+        "focal_lance",
+        4
+      ],
+      [
+        "v34_d_salvage_guard",
+        2
+      ],
+      [
+        "v34_s_plague",
+        2
+      ],
+      [
+        "v34_m_statusburst",
+        2
+      ],
+      [
+        "v34_b_terminal",
+        1
+      ],
+      [
+        "v26_water_cycle",
+        1
+      ],
+      [
+        "v17_blood_cannon",
+        1
+      ],
+      [
+        "v18_salvage_venom",
+        1
+      ],
+      [
+        "v34_m_guardstorm",
+        1
+      ],
+      [
+        "catastrophe_protocol",
+        1
+      ],
+      [
+        "v29_analyze_status",
+        1
+      ],
+      [
+        "v34_s_detonate",
+        1
+      ],
+      [
+        "conversion_brand",
+        1
+      ],
+      [
+        "v18_toxic_brand",
+        1
+      ],
+      [
+        "center_salvage",
+        1
+      ],
+      [
+        "selection",
+        1
+      ]
+    ],
+    "topRelics": [
+      [
+        "cracked_shield",
+        2
+      ],
+      [
+        "impact_mesh",
+        1
+      ],
+      [
+        "danger_sensor",
+        1
+      ],
+      [
+        "momentum_vessel",
+        1
+      ],
+      [
+        "wounded_engine",
+        1
+      ],
+      [
+        "long_drive_engine",
+        1
+      ],
+      [
+        "discard_memory",
+        1
+      ],
+      [
+        "tainted_needle",
+        1
+      ],
+      [
+        "venom_siphon",
+        1
+      ],
+      [
+        "cinder_shield",
+        1
+      ],
+      [
+        "cycle_bearing",
+        1
+      ],
+      [
+        "recovery_thread",
+        1
+      ],
+      [
+        "twin_needle",
+        1
+      ],
+      [
+        "link_status_core",
+        1
+      ],
+      [
+        "detonation_chamber",
+        1
+      ]
+    ],
+    "topProtocols": [
+      [
+        "counter_matrix",
+        2
+      ],
+      [
+        "cycle_prime",
+        2
+      ],
+      [
+        "scar_exchange",
+        1
+      ],
+      [
+        "v13_status_link",
+        1
+      ],
+      [
+        "wide_scan",
+        1
+      ],
+      [
+        "v23_p_fire_react",
+        1
+      ]
+    ],
+    "failedVariants": [],
+    "weakConceptVariants": [],
+    "auditRunner": "v0.66-resumable",
+    "globalVariantIndex": 73
+  },
+  "results": [
+    {
+      "variant": "アクシス・原型",
+      "cid": "axis",
+      "style": null,
+      "trial": "opening_storm",
+      "mode": "concept",
+      "wins": 3,
+      "runs": 3,
+      "rate": 1,
+      "turns": 4.333333333333333,
+      "deck": [
+        "v35_p_wings",
+        "v35_p_wings",
+        "v35_p_center",
+        "v35_p_center",
+        "focal_lance",
+        "focal_lance",
+        "center_lock",
+        "center_lock",
+        "reserve_guard",
+        "reserve_guard"
+      ]
+    },
+    {
+      "variant": "アクシス・原型",
+      "cid": "axis",
+      "style": null,
+      "trial": "late_awaken",
+      "mode": "trial",
+      "wins": 3,
+      "runs": 3,
+      "rate": 1,
+      "turns": 4.333333333333333,
+      "deck": [
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v34_b_terminal",
+        "v34_b_terminal",
+        "v26_water_cycle",
+        "v26_water_cycle",
+        "v17_blood_cannon",
+        "v17_blood_cannon",
+        "v18_salvage_venom",
+        "v18_salvage_venom"
+      ]
+    },
+    {
+      "variant": "アクシス・原型",
+      "cid": "axis",
+      "style": null,
+      "trial": "action_flood",
+      "mode": "trial",
+      "wins": 3,
+      "runs": 3,
+      "rate": 1,
+      "turns": 4.333333333333333,
+      "deck": [
+        "v34_s_plague",
+        "v34_s_plague",
+        "v34_m_guardstorm",
+        "v34_m_guardstorm",
+        "v34_m_statusburst",
+        "v34_m_statusburst",
+        "catastrophe_protocol",
+        "catastrophe_protocol",
+        "v29_analyze_status",
+        "v29_analyze_status"
+      ]
+    },
+    {
+      "variant": "アクシス・原型",
+      "cid": "axis",
+      "style": null,
+      "trial": "long_attrition",
+      "mode": "concept",
+      "wins": 2,
+      "runs": 3,
+      "rate": 0.6666666666666666,
+      "turns": 15.333333333333334,
+      "deck": [
+        "v35_p_wings",
+        "v35_p_wings",
+        "v35_p_center",
+        "v35_p_center",
+        "focal_lance",
+        "focal_lance",
+        "center_lock",
+        "center_lock",
+        "reserve_guard",
+        "reserve_guard"
+      ]
+    },
+    {
+      "variant": "アクシス・原型",
+      "cid": "axis",
+      "style": null,
+      "trial": "cleansing_field",
+      "mode": "trial",
+      "wins": 3,
+      "runs": 3,
+      "rate": 1,
+      "turns": 5,
+      "deck": [
+        "v34_s_detonate",
+        "v34_s_detonate",
+        "v34_s_plague",
+        "v34_s_plague",
+        "v34_m_statusburst",
+        "v34_m_statusburst",
+        "conversion_brand",
+        "conversion_brand",
+        "v18_toxic_brand",
+        "v18_toxic_brand"
+      ]
+    },
+    {
+      "variant": "アクシス・原型",
+      "cid": "axis",
+      "style": null,
+      "trial": "adaptive_matrix",
+      "mode": "concept",
+      "wins": 3,
+      "runs": 3,
+      "rate": 1,
+      "turns": 5.666666666666667,
+      "deck": [
+        "v35_p_wings",
+        "v35_p_wings",
+        "v35_p_center",
+        "v35_p_center",
+        "focal_lance",
+        "focal_lance",
+        "center_lock",
+        "center_lock",
+        "reserve_guard",
+        "reserve_guard"
+      ]
+    },
+    {
+      "variant": "アクシス・原型",
+      "cid": "axis",
+      "style": null,
+      "trial": "void_archive",
+      "mode": "hybrid",
+      "wins": 3,
+      "runs": 3,
+      "rate": 1,
+      "turns": 14.333333333333334,
+      "deck": [
+        "center_salvage",
+        "center_salvage",
+        "selection",
+        "selection",
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "center_lock",
+        "center_lock",
+        "reserve_guard",
+        "reserve_guard"
+      ]
+    },
+    {
+      "variant": "アクシス・原型",
+      "cid": "axis",
+      "style": null,
+      "trial": "synthesis",
+      "mode": "concept",
+      "wins": 2,
+      "runs": 3,
+      "rate": 0.6666666666666666,
+      "turns": 7,
+      "deck": [
+        "v35_p_wings",
+        "v35_p_wings",
+        "v35_p_center",
+        "v35_p_center",
+        "focal_lance",
+        "focal_lance",
+        "center_lock",
+        "center_lock",
+        "reserve_guard",
+        "reserve_guard"
+      ]
+    }
+  ]
+}

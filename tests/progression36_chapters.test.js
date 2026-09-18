@@ -11,7 +11,7 @@ const rewardSet=new Set(U.flatMap(u=>u.reward||[]));for(const id of P.lockedCard
 function validReward(id){return !!(D.CARDS[id]||D.RELICS[id]||D.TRAITS[id]||D.ENEMY_BEHAVIORS?.[id]||D.PROTOCOLS?.[id]||D.CHARACTERS?.[id]||D.CHARACTER_STYLES?.[id]||D.DOCTRINES?.[id]||D.TUNINGS?.[id]||D.CARD_CONVERSIONS?.[id]||D.LINK_MODES?.[id]||D.RUNES?.[id]||D.ARCANA?.[id]||D.SYSTEMS?.[id]);}
 for(const u of U)for(const id of u.reward||[])if(u.id!=='boss')assert(validReward(id),`${u.id}: 存在しない報酬 ${id}`);
 assert.equal(byId.calibration.chapter,10,'全域校正はエンドコンテンツ章へ置く');assert(/第4ボス撃破後/.test(byId.calibration.condition),'全域校正は第4ボス撃破後であること');
-for(const id of ['u_hp12','u_atk10','u_def10','u_spd4']){assert(byId[id].chapter>=4,`${id} が早期章に残っている`);assert(/第3ボス撃破後/.test(byId[id].condition),`${id} は第3ボス後であること`);}
+for(const id of ['u_hp12','u_atk10','u_def10','u_spd4']){assert(byId[id].chapter>=10,`${id} が通常章に残っている`);assert(/第4ボス撃破後/.test(byId[id].condition),`${id} は第4ボス後であること`);}
 for(const id of ['c_tyrant','c_mobile']){assert.equal(byId[id].chapter,2,`${id} は第2章`);assert(/第1ボス撃破後/.test(byId[id].condition),`${id} は第1ボス後`);}
 assert((byId.boss_clear.reward||[]).some(id=>P.promptCards.includes(id)||P.promptRelics.includes(id)),'第1ボス報酬に第2章提示操作の導入報酬がない');
 const impossible=/ルーン|アルカナ|構築規格|カード連結|連結コンボ|役割変換/;for(const u of U.filter(x=>x.chapter===1))assert(!impossible.test(u.condition||''),`第1章に後続章システムを要求する条件: ${u.id} ${u.condition}`);
@@ -22,6 +22,6 @@ for(const [name,tags,early,late] of axes){const starter=P.starterCards.filter(id
 // Boss gate is intentionally chapter-system gated rather than raw stat gated.
 const s=BL.Store.defaultState();['giant','berserk','armored','fast'].forEach(id=>s.defeatedTraits[id]=true);assert(BL.Unlock.bossAvailable(s),'第1ボス解放条件が壊れている');
 s.bossDefeated=true;s.defeatedTraits.regenerative=s.defeatedTraits.purifier=true;assert(!BL.Unlock.boss2Available(s),'第2章システム未習得で第2ボスへ進めてしまう');s.claimedUnlocks.v06_prompt_mastery=s.claimedUnlocks.v06_tuning_second=true;assert(BL.Unlock.boss2Available(s),'第2章システム習得後も第2ボスが開かない');
-s.boss2Defeated=true;s.defeatedTraits.apex=true;assert(!BL.Unlock.boss3Available(s),'第3章連結課題未達で第3ボスへ進めてしまう');s.claimedUnlocks.v07_link_six=s.claimedUnlocks.v07_link_tuned=s.claimedUnlocks.v08_link_cycle=true;assert(BL.Unlock.boss3Available(s),'連結課題後も第3ボスが開かない');
-s.boss3Defeated=true;s.defeatedTraits.v19_omega=true;assert(!BL.Unlock.boss4Available(s),'統合課題未達で第4ボスへ進めてしまう');s.claimedUnlocks.v20_integration_trial=true;assert(BL.Unlock.boss4Available(s),'統合課題後も第4ボスが開かない');
+s.boss2Defeated=true;assert(!BL.Unlock.boss3Available(s),'第3章連結課題未達で第3ボスへ進めてしまう');s.claimedUnlocks.v07_link_six=s.claimedUnlocks.v07_link_tuned=s.claimedUnlocks.v08_link_cycle=true;assert(BL.Unlock.boss3Available(s),'連結課題後も第3ボスが開かない');
+s.boss3Defeated=true;s.claimedUnlocks.v20_integration_trial=true;assert(!BL.Unlock.boss4Available(s),'構築規格未履修で第4ボスへ進めてしまう');s.claimedUnlocks.v09_doctrine_compact=s.claimedUnlocks.v09_doctrine_expanded=s.claimedUnlocks.v09_doctrine_singleton=true;assert(BL.Unlock.boss4Available(s),'規格履修＋統合課題後も第4ボスが開かない');
 console.log(`progression36: starter ${P.starterCards.length} cards / ${P.starterRelics.length} relics; relocked ${P.lockedCards.length}/${P.lockedRelics.length}`);console.log('PASS progression36_chapters.test.js');

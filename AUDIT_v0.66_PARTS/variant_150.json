@@ -1,0 +1,332 @@
+{
+  "summary": {
+    "version": "0.65-multiseed-audit",
+    "generatedAt": "2026-09-15T17:07:16.078Z",
+    "variants": 1,
+    "trials": 8,
+    "battles": 40,
+    "wins": 4,
+    "coverage": {
+      "variantsWithAnyWin": 1,
+      "variantsWithConceptWin": 1,
+      "variantsAllTrials": 0
+    },
+    "byTrial": {
+      "opening_storm": {
+        "name": "先陣校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "late_awaken": {
+        "name": "覚醒校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 0.3333333333333333
+      },
+      "action_flood": {
+        "name": "群動校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "long_attrition": {
+        "name": "消耗校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "cleansing_field": {
+        "name": "浄化校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 0.6666666666666666
+      },
+      "adaptive_matrix": {
+        "name": "適応校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "void_archive": {
+        "name": "空隙校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "synthesis": {
+        "name": "統合校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      }
+    },
+    "statusWins": {
+      "poison": 1,
+      "burn": 1,
+      "bleed": 0,
+      "frost": 0
+    },
+    "zeroUseCards": 671,
+    "topCards": [
+      [
+        "v34_g_ram",
+        2
+      ],
+      [
+        "v35_c_dual",
+        2
+      ],
+      [
+        "v34_d_salvage_guard",
+        1
+      ],
+      [
+        "v35_c_cycle",
+        1
+      ],
+      [
+        "v34_b_terminal",
+        1
+      ],
+      [
+        "v34_s_detonate",
+        1
+      ],
+      [
+        "v34_s_plague",
+        1
+      ],
+      [
+        "v18_conversion_lance",
+        1
+      ]
+    ],
+    "topRelics": [
+      [
+        "tyrant_crown",
+        1
+      ],
+      [
+        "brink_reactor",
+        1
+      ],
+      [
+        "crisis_prism",
+        1
+      ],
+      [
+        "twin_needle",
+        1
+      ],
+      [
+        "link_status_core",
+        1
+      ],
+      [
+        "detonation_chamber",
+        1
+      ]
+    ],
+    "topProtocols": [
+      [
+        "scar_exchange",
+        1
+      ],
+      [
+        "v13_status_link",
+        1
+      ]
+    ],
+    "failedVariants": [],
+    "weakConceptVariants": [],
+    "auditRunner": "v0.66-resumable",
+    "globalVariantIndex": 150
+  },
+  "results": [
+    {
+      "variant": "コンバータ・消費型",
+      "cid": "converter",
+      "style": "converter_spend",
+      "trial": "opening_storm",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 5,
+      "deck": [
+        "v34_g_ram",
+        "v34_g_ram",
+        "v35_p_wings",
+        "v35_p_wings",
+        "v35_c_convert",
+        "v35_c_convert",
+        "split_guard",
+        "split_guard",
+        "v34_m_guardstorm",
+        "v34_m_guardstorm"
+      ]
+    },
+    {
+      "variant": "コンバータ・消費型",
+      "cid": "converter",
+      "style": "converter_spend",
+      "trial": "late_awaken",
+      "mode": "trial",
+      "wins": 1,
+      "runs": 3,
+      "rate": 0.3333333333333333,
+      "turns": 4.666666666666667,
+      "deck": [
+        "v34_g_ram",
+        "v34_g_ram",
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v35_c_dual",
+        "v35_c_dual",
+        "v35_c_cycle",
+        "v35_c_cycle",
+        "v34_b_terminal",
+        "v34_b_terminal"
+      ]
+    },
+    {
+      "variant": "コンバータ・消費型",
+      "cid": "converter",
+      "style": "converter_spend",
+      "trial": "action_flood",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 6,
+      "deck": [
+        "v34_g_ram",
+        "v34_g_ram",
+        "v34_s_plague",
+        "v34_s_plague",
+        "v35_c_convert",
+        "v35_c_convert",
+        "split_guard",
+        "split_guard",
+        "v34_m_guardstorm",
+        "v34_m_guardstorm"
+      ]
+    },
+    {
+      "variant": "コンバータ・消費型",
+      "cid": "converter",
+      "style": "converter_spend",
+      "trial": "long_attrition",
+      "mode": "concept",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 14.333333333333334,
+      "deck": [
+        "v34_g_ram",
+        "v34_g_ram",
+        "v18_conversion_lance",
+        "v18_conversion_lance",
+        "v35_c_convert",
+        "v35_c_convert",
+        "split_guard",
+        "split_guard",
+        "conversion_wall",
+        "conversion_wall"
+      ]
+    },
+    {
+      "variant": "コンバータ・消費型",
+      "cid": "converter",
+      "style": "converter_spend",
+      "trial": "cleansing_field",
+      "mode": "hybrid",
+      "wins": 2,
+      "runs": 3,
+      "rate": 0.6666666666666666,
+      "turns": 9.666666666666666,
+      "deck": [
+        "v35_c_dual",
+        "v35_c_dual",
+        "v34_g_ram",
+        "v34_g_ram",
+        "v34_s_detonate",
+        "v34_s_detonate",
+        "v34_s_plague",
+        "v34_s_plague",
+        "v18_conversion_lance",
+        "v18_conversion_lance"
+      ]
+    },
+    {
+      "variant": "コンバータ・消費型",
+      "cid": "converter",
+      "style": "converter_spend",
+      "trial": "adaptive_matrix",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 8,
+      "deck": [
+        "v34_g_ram",
+        "v34_g_ram",
+        "v35_c_dual",
+        "v35_c_dual",
+        "v35_c_matrix",
+        "v35_c_matrix",
+        "v18_conversion_lance",
+        "v18_conversion_lance",
+        "v35_c_convert",
+        "v35_c_convert"
+      ]
+    },
+    {
+      "variant": "コンバータ・消費型",
+      "cid": "converter",
+      "style": "converter_spend",
+      "trial": "void_archive",
+      "mode": "trial",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 7,
+      "deck": [
+        "v34_g_ram",
+        "v34_g_ram",
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v35_c_dual",
+        "v35_c_dual",
+        "v35_c_cycle",
+        "v35_c_cycle",
+        "adversity_recovery",
+        "adversity_recovery"
+      ]
+    },
+    {
+      "variant": "コンバータ・消費型",
+      "cid": "converter",
+      "style": "converter_spend",
+      "trial": "synthesis",
+      "mode": "concept",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 6.666666666666667,
+      "deck": [
+        "v34_g_ram",
+        "v34_g_ram",
+        "v18_conversion_lance",
+        "v18_conversion_lance",
+        "v35_c_convert",
+        "v35_c_convert",
+        "split_guard",
+        "split_guard",
+        "conversion_wall",
+        "conversion_wall"
+      ]
+    }
+  ]
+}

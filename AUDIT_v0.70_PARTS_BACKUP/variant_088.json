@@ -1,0 +1,348 @@
+{
+  "summary": {
+    "version": "0.65-multiseed-audit",
+    "generatedAt": "2026-09-15T16:25:11.824Z",
+    "variants": 1,
+    "trials": 8,
+    "battles": 40,
+    "wins": 7,
+    "coverage": {
+      "variantsWithAnyWin": 1,
+      "variantsWithConceptWin": 1,
+      "variantsAllTrials": 0
+    },
+    "byTrial": {
+      "opening_storm": {
+        "name": "先陣校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 0.6666666666666666
+      },
+      "late_awaken": {
+        "name": "覚醒校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 0.6666666666666666
+      },
+      "action_flood": {
+        "name": "群動校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "long_attrition": {
+        "name": "消耗校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "cleansing_field": {
+        "name": "浄化校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "adaptive_matrix": {
+        "name": "適応校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "void_archive": {
+        "name": "空隙校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 0.6666666666666666
+      },
+      "synthesis": {
+        "name": "統合校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      }
+    },
+    "statusWins": {
+      "poison": 0,
+      "burn": 0,
+      "bleed": 0,
+      "frost": 0
+    },
+    "zeroUseCards": 671,
+    "topCards": [
+      [
+        "v35_p_wings",
+        3
+      ],
+      [
+        "v34_c_wheel",
+        3
+      ],
+      [
+        "focal_lance",
+        2
+      ],
+      [
+        "v34_m_accel",
+        2
+      ],
+      [
+        "v35_p_wide",
+        2
+      ],
+      [
+        "v34_d_salvage_guard",
+        1
+      ],
+      [
+        "position_cycle",
+        1
+      ],
+      [
+        "center_salvage",
+        1
+      ]
+    ],
+    "topRelics": [
+      [
+        "overrotation",
+        1
+      ],
+      [
+        "impact_mesh",
+        1
+      ],
+      [
+        "danger_sensor",
+        1
+      ],
+      [
+        "frenzy_gear",
+        1
+      ],
+      [
+        "discard_memory",
+        1
+      ],
+      [
+        "rush_prism",
+        1
+      ],
+      [
+        "mobile_gyro",
+        1
+      ],
+      [
+        "v17_multi_cycle",
+        1
+      ],
+      [
+        "echo_stone",
+        1
+      ]
+    ],
+    "topProtocols": [
+      [
+        "counter_matrix",
+        1
+      ],
+      [
+        "scar_exchange",
+        1
+      ],
+      [
+        "cycle_prime",
+        1
+      ]
+    ],
+    "failedVariants": [],
+    "weakConceptVariants": [],
+    "auditRunner": "v0.66-resumable",
+    "globalVariantIndex": 88
+  },
+  "results": [
+    {
+      "variant": "ゼファー・霧流型",
+      "cid": "zephyr",
+      "style": "zephyr_mist",
+      "trial": "opening_storm",
+      "mode": "concept",
+      "wins": 2,
+      "runs": 3,
+      "rate": 0.6666666666666666,
+      "turns": 5.666666666666667,
+      "deck": [
+        "v35_p_wings",
+        "v35_p_wings",
+        "focal_lance",
+        "focal_lance",
+        "v34_m_accel",
+        "v34_m_accel",
+        "v34_c_wheel",
+        "v34_c_wheel",
+        "v35_p_wide",
+        "v35_p_wide"
+      ]
+    },
+    {
+      "variant": "ゼファー・霧流型",
+      "cid": "zephyr",
+      "style": "zephyr_mist",
+      "trial": "late_awaken",
+      "mode": "hybrid",
+      "wins": 2,
+      "runs": 3,
+      "rate": 0.6666666666666666,
+      "turns": 14.333333333333334,
+      "deck": [
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v34_c_wheel",
+        "v34_c_wheel",
+        "position_cycle",
+        "position_cycle",
+        "center_salvage",
+        "center_salvage",
+        "v35_p_wings",
+        "v35_p_wings"
+      ]
+    },
+    {
+      "variant": "ゼファー・霧流型",
+      "cid": "zephyr",
+      "style": "zephyr_mist",
+      "trial": "action_flood",
+      "mode": "concept",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 4.333333333333333,
+      "deck": [
+        "v35_p_wings",
+        "v35_p_wings",
+        "focal_lance",
+        "focal_lance",
+        "v34_m_accel",
+        "v34_m_accel",
+        "v34_c_wheel",
+        "v34_c_wheel",
+        "v35_p_wide",
+        "v35_p_wide"
+      ]
+    },
+    {
+      "variant": "ゼファー・霧流型",
+      "cid": "zephyr",
+      "style": "zephyr_mist",
+      "trial": "long_attrition",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 21,
+      "deck": [
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v34_c_wheel",
+        "v34_c_wheel",
+        "v34_g_perfect",
+        "v34_g_perfect",
+        "v34_g_retaliate",
+        "v34_g_retaliate",
+        "v34_b_revenge",
+        "v34_b_revenge"
+      ]
+    },
+    {
+      "variant": "ゼファー・霧流型",
+      "cid": "zephyr",
+      "style": "zephyr_mist",
+      "trial": "cleansing_field",
+      "mode": "concept",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 7.666666666666667,
+      "deck": [
+        "v35_p_wings",
+        "v35_p_wings",
+        "focal_lance",
+        "focal_lance",
+        "v34_m_accel",
+        "v34_m_accel",
+        "v34_c_wheel",
+        "v34_c_wheel",
+        "v35_p_wide",
+        "v35_p_wide"
+      ]
+    },
+    {
+      "variant": "ゼファー・霧流型",
+      "cid": "zephyr",
+      "style": "zephyr_mist",
+      "trial": "adaptive_matrix",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 7.333333333333333,
+      "deck": [
+        "v35_p_wings",
+        "v35_p_wings",
+        "focal_lance",
+        "focal_lance",
+        "position_cycle",
+        "position_cycle",
+        "v34_m_accel",
+        "v34_m_accel",
+        "discarded_center",
+        "discarded_center"
+      ]
+    },
+    {
+      "variant": "ゼファー・霧流型",
+      "cid": "zephyr",
+      "style": "zephyr_mist",
+      "trial": "void_archive",
+      "mode": "concept",
+      "wins": 2,
+      "runs": 3,
+      "rate": 0.6666666666666666,
+      "turns": 10,
+      "deck": [
+        "v35_p_wings",
+        "v35_p_wings",
+        "focal_lance",
+        "focal_lance",
+        "v34_m_accel",
+        "v34_m_accel",
+        "v34_c_wheel",
+        "v34_c_wheel",
+        "v35_p_wide",
+        "v35_p_wide"
+      ]
+    },
+    {
+      "variant": "ゼファー・霧流型",
+      "cid": "zephyr",
+      "style": "zephyr_mist",
+      "trial": "synthesis",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 6,
+      "deck": [
+        "v35_p_wings",
+        "v35_p_wings",
+        "v34_m_accel",
+        "v34_m_accel",
+        "v27_rune_react",
+        "v27_rune_react",
+        "v35_c_dual",
+        "v35_c_dual",
+        "focal_lance",
+        "focal_lance"
+      ]
+    }
+  ]
+}

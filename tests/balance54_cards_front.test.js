@@ -1,0 +1,7 @@
+'use strict';const fs=require('fs'),path=require('path'),assert=require('assert');global.window=global;const mem={};global.localStorage={getItem:k=>mem[k]??null,setItem:(k,v)=>mem[k]=String(v),removeItem:k=>delete mem[k]};const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');for(const m of html.matchAll(/<script src="([^"?]+)/g)){const f=m[1];if(f.includes('/ui/')||f.endsWith('app.js'))continue;require(path.join(root,f));}const D=BuildLab.Data;
+assert.equal(D.V54_REDESIGNED_CARD_IDS.length,51,'front pass must redesign 51 cards');
+assert.equal(new Set(D.V54_REDESIGNED_CARD_IDS).size,51);
+for(const id of D.V54_REDESIGNED_CARD_IDS){const c=D.CARDS[id];assert(c,id);assert(c.desc&&c.desc.length>8,id+' desc');const base=(c.damage||0)*(c.hits||1);assert(base<40,id+' oversized unconditional damage '+base);assert((c.block||0)<30,id+' oversized unconditional block');}
+assert(D.V54_ROLE_BUCKETS.notChosen.length>=8);assert(D.V54_ROLE_BUCKETS.single.length>=8);assert(D.V54_ROLE_BUCKETS.cycle.length>=10);assert(D.V54_ROLE_BUCKETS.status.length>=8);assert(D.V54_ROLE_BUCKETS.enemyAction.length>=3);
+assert(D.CARDS.rebuild.buffNext<=.12);assert(D.CARDS.wheel_cut.damagePerReshuffle<=2);assert(D.CARDS.cycle_guard.blockPerReshuffle<=2);assert(D.CARDS.brink_blast.lowHpDamage<=15);assert(D.CARDS.puncture_chain.armorPierce<=.2);
+console.log('PASS balance54_cards_front.test.js');

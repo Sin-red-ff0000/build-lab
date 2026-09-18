@@ -7,7 +7,7 @@ function fail(x){throw new Error(x);}
 function canonical(c){const out={};for(const k of Object.keys(c).sort())if(!['name','tags','desc'].includes(k))out[k]=c[k];return JSON.stringify(out);}
 const groups={};for(const [id,c] of Object.entries(D.CARDS)){const key=canonical(c);(groups[key]??=[]).push(id);}
 const dup=Object.values(groups).filter(a=>a.length>1);if(dup.length)fail('完全同効果カードが残っています: '+dup.map(a=>a.join('/')).join(', '));
-if(D.BALANCE22?.audited?.cards!==455||D.BALANCE22?.audited?.relics!==305||D.BALANCE22?.audited?.protocols!==113)fail('監査対象数が不一致');
+if(D.BALANCE22?.audited?.cards!==473||D.BALANCE22?.audited?.relics!==305||D.BALANCE22?.audited?.protocols!==113)fail('監査対象数が不一致');
 if((D.BALANCE22.patchedCards||[]).length<50)fail('カード改修数が不足');
 if((D.BALANCE22.patchedRelics||[]).length<10)fail('遺物改修数が不足');
 if((D.BALANCE22.patchedProtocols||[]).length<15)fail('プロトコル改修数が不足');

@@ -1,0 +1,20 @@
+{
+  "version": "0.58",
+  "roadmap": "10/10",
+  "characters": 49,
+  "styles": 128,
+  "variants": 177,
+  "official_trials": 8,
+  "legacy_extreme_required": false,
+  "policy": "single HPx12 certification replaced by multi-trial concept-routed endgame",
+  "trials": [
+    "先陣校正",
+    "覚醒校正",
+    "群動校正",
+    "消耗校正",
+    "浄化校正",
+    "適応校正",
+    "空隙校正",
+    "統合校正"
+  ]
+}

@@ -1,0 +1,339 @@
+{
+  "summary": {
+    "version": "0.65-multiseed-audit",
+    "generatedAt": "2026-09-15T16:33:39.349Z",
+    "variants": 1,
+    "trials": 8,
+    "battles": 40,
+    "wins": 5,
+    "coverage": {
+      "variantsWithAnyWin": 1,
+      "variantsWithConceptWin": 0,
+      "variantsAllTrials": 0
+    },
+    "byTrial": {
+      "opening_storm": {
+        "name": "先陣校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 0.6666666666666666
+      },
+      "late_awaken": {
+        "name": "覚醒校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "action_flood": {
+        "name": "群動校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 1
+      },
+      "long_attrition": {
+        "name": "消耗校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "cleansing_field": {
+        "name": "浄化校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "adaptive_matrix": {
+        "name": "適応校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "void_archive": {
+        "name": "空隙校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "synthesis": {
+        "name": "統合校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      }
+    },
+    "statusWins": {
+      "poison": 1,
+      "burn": 1,
+      "bleed": 2,
+      "frost": 0
+    },
+    "zeroUseCards": 670,
+    "topCards": [
+      [
+        "v34_m_guardstorm",
+        2
+      ],
+      [
+        "v35_p_wings",
+        1
+      ],
+      [
+        "center_counter",
+        1
+      ],
+      [
+        "v35_p_wide",
+        1
+      ],
+      [
+        "reserved_counter",
+        1
+      ],
+      [
+        "v34_s_plague",
+        1
+      ],
+      [
+        "v34_m_statusburst",
+        1
+      ],
+      [
+        "catastrophe_protocol",
+        1
+      ],
+      [
+        "v29_analyze_status",
+        1
+      ]
+    ],
+    "topRelics": [
+      [
+        "impact_mesh",
+        1
+      ],
+      [
+        "danger_sensor",
+        1
+      ],
+      [
+        "momentum_vessel",
+        1
+      ],
+      [
+        "tainted_needle",
+        1
+      ],
+      [
+        "venom_siphon",
+        1
+      ],
+      [
+        "cinder_shield",
+        1
+      ]
+    ],
+    "topProtocols": [
+      [
+        "conversion_guard",
+        2
+      ]
+    ],
+    "failedVariants": [],
+    "weakConceptVariants": [
+      {
+        "name": "リバーサー・反転消費型",
+        "trials": 8,
+        "won": 2,
+        "conceptWon": 0
+      }
+    ],
+    "auditRunner": "v0.66-resumable",
+    "globalVariantIndex": 172
+  },
+  "results": [
+    {
+      "variant": "リバーサー・反転消費型",
+      "cid": "reverser",
+      "style": "reverser_spend",
+      "trial": "opening_storm",
+      "mode": "trial",
+      "wins": 2,
+      "runs": 3,
+      "rate": 0.6666666666666666,
+      "turns": 7.333333333333333,
+      "deck": [
+        "v35_p_wings",
+        "v35_p_wings",
+        "v34_m_guardstorm",
+        "v34_m_guardstorm",
+        "center_counter",
+        "center_counter",
+        "v35_p_wide",
+        "v35_p_wide",
+        "reserved_counter",
+        "reserved_counter"
+      ]
+    },
+    {
+      "variant": "リバーサー・反転消費型",
+      "cid": "reverser",
+      "style": "reverser_spend",
+      "trial": "late_awaken",
+      "mode": "concept",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 4,
+      "deck": [
+        "conversion_crisis",
+        "conversion_crisis",
+        "v34_b_terminal",
+        "v34_b_terminal",
+        "v17_blood_cannon",
+        "v17_blood_cannon",
+        "crimson_peak",
+        "crimson_peak",
+        "triad_rush",
+        "triad_rush"
+      ]
+    },
+    {
+      "variant": "リバーサー・反転消費型",
+      "cid": "reverser",
+      "style": "reverser_spend",
+      "trial": "action_flood",
+      "mode": "trial",
+      "wins": 3,
+      "runs": 3,
+      "rate": 1,
+      "turns": 6.666666666666667,
+      "deck": [
+        "v34_s_plague",
+        "v34_s_plague",
+        "v34_m_guardstorm",
+        "v34_m_guardstorm",
+        "v34_m_statusburst",
+        "v34_m_statusburst",
+        "catastrophe_protocol",
+        "catastrophe_protocol",
+        "v29_analyze_status",
+        "v29_analyze_status"
+      ]
+    },
+    {
+      "variant": "リバーサー・反転消費型",
+      "cid": "reverser",
+      "style": "reverser_spend",
+      "trial": "long_attrition",
+      "mode": "concept",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 5.666666666666667,
+      "deck": [
+        "conversion_crisis",
+        "conversion_crisis",
+        "v34_b_terminal",
+        "v34_b_terminal",
+        "v17_blood_cannon",
+        "v17_blood_cannon",
+        "crimson_peak",
+        "crimson_peak",
+        "triad_rush",
+        "triad_rush"
+      ]
+    },
+    {
+      "variant": "リバーサー・反転消費型",
+      "cid": "reverser",
+      "style": "reverser_spend",
+      "trial": "cleansing_field",
+      "mode": "concept",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 4.666666666666667,
+      "deck": [
+        "conversion_crisis",
+        "conversion_crisis",
+        "v34_b_terminal",
+        "v34_b_terminal",
+        "v17_blood_cannon",
+        "v17_blood_cannon",
+        "crimson_peak",
+        "crimson_peak",
+        "triad_rush",
+        "triad_rush"
+      ]
+    },
+    {
+      "variant": "リバーサー・反転消費型",
+      "cid": "reverser",
+      "style": "reverser_spend",
+      "trial": "adaptive_matrix",
+      "mode": "concept",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 5.333333333333333,
+      "deck": [
+        "conversion_crisis",
+        "conversion_crisis",
+        "v34_b_terminal",
+        "v34_b_terminal",
+        "v17_blood_cannon",
+        "v17_blood_cannon",
+        "crimson_peak",
+        "crimson_peak",
+        "triad_rush",
+        "triad_rush"
+      ]
+    },
+    {
+      "variant": "リバーサー・反転消費型",
+      "cid": "reverser",
+      "style": "reverser_spend",
+      "trial": "void_archive",
+      "mode": "concept",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 5,
+      "deck": [
+        "conversion_crisis",
+        "conversion_crisis",
+        "v34_b_terminal",
+        "v34_b_terminal",
+        "v17_blood_cannon",
+        "v17_blood_cannon",
+        "crimson_peak",
+        "crimson_peak",
+        "triad_rush",
+        "triad_rush"
+      ]
+    },
+    {
+      "variant": "リバーサー・反転消費型",
+      "cid": "reverser",
+      "style": "reverser_spend",
+      "trial": "synthesis",
+      "mode": "concept",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 4,
+      "deck": [
+        "conversion_crisis",
+        "conversion_crisis",
+        "v34_b_terminal",
+        "v34_b_terminal",
+        "v17_blood_cannon",
+        "v17_blood_cannon",
+        "crimson_peak",
+        "crimson_peak",
+        "triad_rush",
+        "triad_rush"
+      ]
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 const fs=require('fs'),path=require('path'),assert=require('assert');global.window=global;const mem={};global.localStorage={getItem:k=>mem[k]??null,setItem:(k,v)=>mem[k]=String(v),removeItem:k=>delete mem[k]};
 const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');for(const m of html.matchAll(/<script src="([^"?]+)/g)){const f=m[1];if(f.includes('/ui/')||f.endsWith('app.js'))continue;require(path.join(root,f));}
 const BL=global.BuildLab,D=BL.Data;
-assert.equal(D.V29_CARD_IDS.length,12);assert.equal(D.V29_ADAPTIVE_CARD_IDS.length,8);assert.equal(D.V29_DUAL_CARD_IDS.length,4);assert.equal(D.V29_RELIC_IDS.length,6);assert.equal(D.V29_PROTOCOL_IDS.length,4);assert.equal(D.V29_TUNING_IDS.length,4);assert.equal(Object.keys(D.DUAL_FACE_CARDS).length,16);
+assert.equal(D.V29_CARD_IDS.length,12);assert.equal(D.V29_ADAPTIVE_CARD_IDS.length,8);assert.equal(D.V29_DUAL_CARD_IDS.length,4);assert.equal(D.V29_RELIC_IDS.length,6);assert.equal(D.V29_PROTOCOL_IDS.length,4);assert.equal(D.V29_TUNING_IDS.length,4);assert.equal(Object.keys(D.DUAL_FACE_CARDS).length,28);
 function battle(traits=[],behaviors=[]){return {turn:2,enemy:{traits,behaviors,status:{poison:0,burn:0,vulnerable:0,weak:0}},player:{hp:40,maxHp:80,block:0},discardedEver:{},linkComboCount:0,alchemy:{reactions:{}}};}
 let inst={uid:'x1',cardId:'v29_analyze_edge'};
 let c=D.resolveAdaptiveCard(D.CARDS[inst.cardId],inst,battle(['armored']));assert.equal(c.adaptiveMode,'armor');assert.equal(c.damage,15);assert.equal(c.armorPierce,.65);

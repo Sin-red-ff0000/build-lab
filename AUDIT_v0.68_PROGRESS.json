@@ -1,0 +1,10 @@
+{
+  "version": "0.68-audit-progress",
+  "generatedAt": "2026-09-15T16:21:41.015296+00:00",
+  "partsPresent": 81,
+  "total": 177,
+  "remaining": 96,
+  "complete": false,
+  "finalMergeAllowed": false,
+  "note": "Partial results must not be used for balance changes."
+}

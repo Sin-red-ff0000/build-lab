@@ -1,0 +1,440 @@
+{
+  "summary": {
+    "version": "0.65-multiseed-audit",
+    "generatedAt": "2026-09-15T17:02:47.411Z",
+    "variants": 1,
+    "trials": 8,
+    "battles": 40,
+    "wins": 18,
+    "coverage": {
+      "variantsWithAnyWin": 1,
+      "variantsWithConceptWin": 1,
+      "variantsAllTrials": 0
+    },
+    "byTrial": {
+      "opening_storm": {
+        "name": "先陣校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 1
+      },
+      "late_awaken": {
+        "name": "覚醒校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "action_flood": {
+        "name": "群動校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 1
+      },
+      "long_attrition": {
+        "name": "消耗校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "cleansing_field": {
+        "name": "浄化校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 1
+      },
+      "adaptive_matrix": {
+        "name": "適応校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 0.6666666666666666
+      },
+      "void_archive": {
+        "name": "空隙校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 0.3333333333333333
+      },
+      "synthesis": {
+        "name": "統合校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 1
+      }
+    },
+    "statusWins": {
+      "poison": 3,
+      "burn": 2,
+      "bleed": 2,
+      "frost": 0
+    },
+    "zeroUseCards": 653,
+    "topCards": [
+      [
+        "v35_p_wings",
+        2
+      ],
+      [
+        "v34_m_guardstorm",
+        2
+      ],
+      [
+        "v34_s_plague",
+        2
+      ],
+      [
+        "v34_m_statusburst",
+        2
+      ],
+      [
+        "v34_b_revenge",
+        1
+      ],
+      [
+        "center_counter",
+        1
+      ],
+      [
+        "triad_ironblood",
+        1
+      ],
+      [
+        "catastrophe_protocol",
+        1
+      ],
+      [
+        "v29_analyze_status",
+        1
+      ],
+      [
+        "v34_s_detonate",
+        1
+      ],
+      [
+        "conversion_brand",
+        1
+      ],
+      [
+        "v18_toxic_brand",
+        1
+      ],
+      [
+        "position_cycle",
+        1
+      ],
+      [
+        "discarded_center",
+        1
+      ],
+      [
+        "relay_blade",
+        1
+      ],
+      [
+        "prompt_charter",
+        1
+      ],
+      [
+        "v34_d_salvage_guard",
+        1
+      ],
+      [
+        "v26_water_cycle",
+        1
+      ],
+      [
+        "v18_salvage_venom",
+        1
+      ],
+      [
+        "selection",
+        1
+      ],
+      [
+        "adversity_recovery",
+        1
+      ],
+      [
+        "v35_c_dual",
+        1
+      ],
+      [
+        "v26_opus_vector",
+        1
+      ],
+      [
+        "v34_g_ram",
+        1
+      ],
+      [
+        "tuned_conversion_edge",
+        1
+      ]
+    ],
+    "topRelics": [
+      [
+        "danger_sensor",
+        3
+      ],
+      [
+        "impact_mesh",
+        2
+      ],
+      [
+        "momentum_vessel",
+        2
+      ],
+      [
+        "venom_siphon",
+        1
+      ],
+      [
+        "cinder_shield",
+        1
+      ],
+      [
+        "pressure_plate",
+        1
+      ],
+      [
+        "salvage_mesh",
+        1
+      ],
+      [
+        "wounded_engine",
+        1
+      ],
+      [
+        "cracked_shield",
+        1
+      ],
+      [
+        "cycle_bearing",
+        1
+      ],
+      [
+        "recovery_thread",
+        1
+      ],
+      [
+        "v23_fire_lava",
+        1
+      ],
+      [
+        "v23_fire_ash",
+        1
+      ],
+      [
+        "v23_air_sand",
+        1
+      ]
+    ],
+    "topProtocols": [
+      [
+        "counter_matrix",
+        3
+      ],
+      [
+        "v13_status_link",
+        1
+      ],
+      [
+        "conversion_guard",
+        1
+      ],
+      [
+        "v23_p_fire_react",
+        1
+      ]
+    ],
+    "failedVariants": [],
+    "weakConceptVariants": [],
+    "auditRunner": "v0.66-resumable",
+    "globalVariantIndex": 48
+  },
+  "results": [
+    {
+      "variant": "バルワーク・背水城塞型",
+      "cid": "bulwark",
+      "style": "bulwark_crisis",
+      "trial": "opening_storm",
+      "mode": "hybrid",
+      "wins": 3,
+      "runs": 3,
+      "rate": 1,
+      "turns": 6.666666666666667,
+      "deck": [
+        "v35_p_wings",
+        "v35_p_wings",
+        "v34_m_guardstorm",
+        "v34_m_guardstorm",
+        "v34_b_revenge",
+        "v34_b_revenge",
+        "center_counter",
+        "center_counter",
+        "triad_ironblood",
+        "triad_ironblood"
+      ]
+    },
+    {
+      "variant": "バルワーク・背水城塞型",
+      "cid": "bulwark",
+      "style": "bulwark_crisis",
+      "trial": "late_awaken",
+      "mode": "trial",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 6.666666666666667,
+      "deck": [
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v34_b_terminal",
+        "v34_b_terminal",
+        "v26_water_cycle",
+        "v26_water_cycle",
+        "v17_blood_cannon",
+        "v17_blood_cannon",
+        "v18_salvage_venom",
+        "v18_salvage_venom"
+      ]
+    },
+    {
+      "variant": "バルワーク・背水城塞型",
+      "cid": "bulwark",
+      "style": "bulwark_crisis",
+      "trial": "action_flood",
+      "mode": "trial",
+      "wins": 3,
+      "runs": 3,
+      "rate": 1,
+      "turns": 6.333333333333333,
+      "deck": [
+        "v34_s_plague",
+        "v34_s_plague",
+        "v34_m_guardstorm",
+        "v34_m_guardstorm",
+        "v34_m_statusburst",
+        "v34_m_statusburst",
+        "catastrophe_protocol",
+        "catastrophe_protocol",
+        "v29_analyze_status",
+        "v29_analyze_status"
+      ]
+    },
+    {
+      "variant": "バルワーク・背水城塞型",
+      "cid": "bulwark",
+      "style": "bulwark_crisis",
+      "trial": "long_attrition",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 16,
+      "deck": [
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v34_b_revenge",
+        "v34_b_revenge",
+        "triad_ironblood",
+        "triad_ironblood",
+        "tyrant_decree",
+        "tyrant_decree",
+        "adversity_recovery",
+        "adversity_recovery"
+      ]
+    },
+    {
+      "variant": "バルワーク・背水城塞型",
+      "cid": "bulwark",
+      "style": "bulwark_crisis",
+      "trial": "cleansing_field",
+      "mode": "trial",
+      "wins": 3,
+      "runs": 3,
+      "rate": 1,
+      "turns": 10.666666666666666,
+      "deck": [
+        "v34_s_detonate",
+        "v34_s_detonate",
+        "v34_s_plague",
+        "v34_s_plague",
+        "v34_m_statusburst",
+        "v34_m_statusburst",
+        "conversion_brand",
+        "conversion_brand",
+        "v18_toxic_brand",
+        "v18_toxic_brand"
+      ]
+    },
+    {
+      "variant": "バルワーク・背水城塞型",
+      "cid": "bulwark",
+      "style": "bulwark_crisis",
+      "trial": "adaptive_matrix",
+      "mode": "trial",
+      "wins": 2,
+      "runs": 3,
+      "rate": 0.6666666666666666,
+      "turns": 10,
+      "deck": [
+        "position_cycle",
+        "position_cycle",
+        "v35_p_wings",
+        "v35_p_wings",
+        "discarded_center",
+        "discarded_center",
+        "relay_blade",
+        "relay_blade",
+        "prompt_charter",
+        "prompt_charter"
+      ]
+    },
+    {
+      "variant": "バルワーク・背水城塞型",
+      "cid": "bulwark",
+      "style": "bulwark_crisis",
+      "trial": "void_archive",
+      "mode": "trial",
+      "wins": 1,
+      "runs": 3,
+      "rate": 0.3333333333333333,
+      "turns": 16.333333333333332,
+      "deck": [
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v26_water_cycle",
+        "v26_water_cycle",
+        "v18_salvage_venom",
+        "v18_salvage_venom",
+        "selection",
+        "selection",
+        "adversity_recovery",
+        "adversity_recovery"
+      ]
+    },
+    {
+      "variant": "バルワーク・背水城塞型",
+      "cid": "bulwark",
+      "style": "bulwark_crisis",
+      "trial": "synthesis",
+      "mode": "trial",
+      "wins": 3,
+      "runs": 3,
+      "rate": 1,
+      "turns": 11.333333333333334,
+      "deck": [
+        "v35_c_dual",
+        "v35_c_dual",
+        "v26_opus_vector",
+        "v26_opus_vector",
+        "v34_g_ram",
+        "v34_g_ram",
+        "tuned_conversion_edge",
+        "tuned_conversion_edge",
+        "v26_aether_tune",
+        "v26_aether_tune"
+      ]
+    }
+  ]
+}

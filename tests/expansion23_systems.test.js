@@ -5,7 +5,7 @@ const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'ind
 for(const m of html.matchAll(/<script src="([^"?]+)/g)){const f=m[1];if(f.includes('/ui/')||f.endsWith('app.js'))continue;require(path.join(root,f));}
 const BL=global.BuildLab,D=BL.Data;
 assert.equal(D.V23_CHARACTER_IDS.length,5);assert.equal(D.V23_STYLE_IDS.length,15);assert.equal(D.V23_RELIC_IDS.length,30);assert.equal(D.V23_PROTOCOL_IDS.length,15);assert.equal(D.V23_TUNING_IDS.length,10);assert.equal(D.V23_TRAIT_IDS.length,10);assert.equal(D.V23_BEHAVIOR_IDS.length,20);assert.equal(D.V23_RUNE_IDS.length,5);
-assert.deepEqual({chars:Object.keys(D.CHARACTERS).length,styles:Object.keys(D.CHARACTER_STYLES).length,relics:Object.keys(D.RELICS).length,protocols:Object.keys(D.PROTOCOLS).length,tunings:Object.keys(D.TUNINGS).length,traits:Object.keys(D.TRAITS).length,behaviors:Object.keys(D.ENEMY_BEHAVIORS).length,runes:Object.keys(D.RUNES).length},{chars:40,styles:101,relics:507,protocols:175,tunings:82,traits:97,behaviors:120,runes:17});
+assert.deepEqual({chars:Object.keys(D.CHARACTERS).length,styles:Object.keys(D.CHARACTER_STYLES).length,relics:Object.keys(D.RELICS).length,protocols:Object.keys(D.PROTOCOLS).length,tunings:Object.keys(D.TUNINGS).length,traits:Object.keys(D.TRAITS).length,behaviors:Object.keys(D.ENEMY_BEHAVIORS).length,runes:Object.keys(D.RUNES).length},{chars:49,styles:128,relics:507,protocols:175,tunings:82,traits:97,behaviors:120,runes:17});
 assert(D.SYSTEM_GUIDES.some(g=>g.id==='element_builds'),'element guide missing');
 assert(D.GUIDE_REFERENCE_GROUPS.runes.some(x=>x.id==='v23_rune_fire'),'element rune guide missing');
 

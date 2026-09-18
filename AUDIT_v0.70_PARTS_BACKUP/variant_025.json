@@ -1,0 +1,408 @@
+{
+  "summary": {
+    "version": "0.65-multiseed-audit",
+    "generatedAt": "2026-09-15T16:20:13.943Z",
+    "variants": 1,
+    "trials": 8,
+    "battles": 40,
+    "wins": 15,
+    "coverage": {
+      "variantsWithAnyWin": 1,
+      "variantsWithConceptWin": 1,
+      "variantsAllTrials": 0
+    },
+    "byTrial": {
+      "opening_storm": {
+        "name": "先陣校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 1
+      },
+      "late_awaken": {
+        "name": "覚醒校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "action_flood": {
+        "name": "群動校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 1
+      },
+      "long_attrition": {
+        "name": "消耗校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      },
+      "cleansing_field": {
+        "name": "浄化校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 1
+      },
+      "adaptive_matrix": {
+        "name": "適応校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 0.3333333333333333
+      },
+      "void_archive": {
+        "name": "空隙校正",
+        "total": 1,
+        "won": 1,
+        "avgRate": 0.6666666666666666
+      },
+      "synthesis": {
+        "name": "統合校正",
+        "total": 1,
+        "won": 0,
+        "avgRate": 0
+      }
+    },
+    "statusWins": {
+      "poison": 2,
+      "burn": 2,
+      "bleed": 2,
+      "frost": 0
+    },
+    "zeroUseCards": 663,
+    "topCards": [
+      [
+        "v35_c_dual",
+        3
+      ],
+      [
+        "v34_m_guardstorm",
+        2
+      ],
+      [
+        "v34_s_plague",
+        2
+      ],
+      [
+        "v34_m_statusburst",
+        2
+      ],
+      [
+        "tuned_conversion_edge",
+        2
+      ],
+      [
+        "v34_g_ram",
+        2
+      ],
+      [
+        "v35_c_matrix",
+        2
+      ],
+      [
+        "v18_conversion_lance",
+        2
+      ],
+      [
+        "v35_p_wings",
+        1
+      ],
+      [
+        "center_counter",
+        1
+      ],
+      [
+        "v35_p_wide",
+        1
+      ],
+      [
+        "reserved_counter",
+        1
+      ],
+      [
+        "catastrophe_protocol",
+        1
+      ],
+      [
+        "v29_analyze_status",
+        1
+      ],
+      [
+        "v34_s_detonate",
+        1
+      ],
+      [
+        "conversion_brand",
+        1
+      ]
+    ],
+    "topRelics": [
+      [
+        "impact_mesh",
+        1
+      ],
+      [
+        "danger_sensor",
+        1
+      ],
+      [
+        "momentum_vessel",
+        1
+      ],
+      [
+        "tainted_needle",
+        1
+      ],
+      [
+        "venom_siphon",
+        1
+      ],
+      [
+        "cinder_shield",
+        1
+      ],
+      [
+        "twin_needle",
+        1
+      ],
+      [
+        "link_status_core",
+        1
+      ],
+      [
+        "detonation_chamber",
+        1
+      ],
+      [
+        "residue_receiver",
+        1
+      ],
+      [
+        "second_observer",
+        1
+      ],
+      [
+        "relay_prism",
+        1
+      ],
+      [
+        "recycle_rotor",
+        1
+      ],
+      [
+        "tuned_cycle_core",
+        1
+      ],
+      [
+        "cycle_ribbon",
+        1
+      ]
+    ],
+    "topProtocols": [
+      [
+        "conversion_guard",
+        2
+      ],
+      [
+        "v13_status_link",
+        1
+      ],
+      [
+        "wide_scan",
+        1
+      ],
+      [
+        "behavior_bridge_protocol",
+        1
+      ]
+    ],
+    "failedVariants": [],
+    "weakConceptVariants": [],
+    "auditRunner": "v0.66-resumable",
+    "globalVariantIndex": 25
+  },
+  "results": [
+    {
+      "variant": "ノード・原型",
+      "cid": "node",
+      "style": null,
+      "trial": "opening_storm",
+      "mode": "hybrid",
+      "wins": 3,
+      "runs": 3,
+      "rate": 1,
+      "turns": 5.666666666666667,
+      "deck": [
+        "v35_p_wings",
+        "v35_p_wings",
+        "v34_m_guardstorm",
+        "v34_m_guardstorm",
+        "center_counter",
+        "center_counter",
+        "v35_p_wide",
+        "v35_p_wide",
+        "reserved_counter",
+        "reserved_counter"
+      ]
+    },
+    {
+      "variant": "ノード・原型",
+      "cid": "node",
+      "style": null,
+      "trial": "late_awaken",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 5.333333333333333,
+      "deck": [
+        "conversion_salvage",
+        "conversion_salvage",
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "conversion_crisis",
+        "conversion_crisis",
+        "v34_b_terminal",
+        "v34_b_terminal",
+        "v26_water_cycle",
+        "v26_water_cycle"
+      ]
+    },
+    {
+      "variant": "ノード・原型",
+      "cid": "node",
+      "style": null,
+      "trial": "action_flood",
+      "mode": "hybrid",
+      "wins": 3,
+      "runs": 3,
+      "rate": 1,
+      "turns": 6,
+      "deck": [
+        "v34_s_plague",
+        "v34_s_plague",
+        "v34_m_guardstorm",
+        "v34_m_guardstorm",
+        "v34_m_statusburst",
+        "v34_m_statusburst",
+        "catastrophe_protocol",
+        "catastrophe_protocol",
+        "v29_analyze_status",
+        "v29_analyze_status"
+      ]
+    },
+    {
+      "variant": "ノード・原型",
+      "cid": "node",
+      "style": null,
+      "trial": "long_attrition",
+      "mode": "hybrid",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 21,
+      "deck": [
+        "v34_d_salvage_guard",
+        "v34_d_salvage_guard",
+        "v34_g_perfect",
+        "v34_g_perfect",
+        "v34_g_retaliate",
+        "v34_g_retaliate",
+        "v34_b_revenge",
+        "v34_b_revenge",
+        "salvage_wall",
+        "salvage_wall"
+      ]
+    },
+    {
+      "variant": "ノード・原型",
+      "cid": "node",
+      "style": null,
+      "trial": "cleansing_field",
+      "mode": "hybrid",
+      "wins": 3,
+      "runs": 3,
+      "rate": 1,
+      "turns": 11,
+      "deck": [
+        "v34_s_detonate",
+        "v34_s_detonate",
+        "v34_s_plague",
+        "v34_s_plague",
+        "v35_c_dual",
+        "v35_c_dual",
+        "v34_m_statusburst",
+        "v34_m_statusburst",
+        "conversion_brand",
+        "conversion_brand"
+      ]
+    },
+    {
+      "variant": "ノード・原型",
+      "cid": "node",
+      "style": null,
+      "trial": "adaptive_matrix",
+      "mode": "concept",
+      "wins": 1,
+      "runs": 3,
+      "rate": 0.3333333333333333,
+      "turns": 11.666666666666666,
+      "deck": [
+        "tuned_conversion_edge",
+        "tuned_conversion_edge",
+        "v34_g_ram",
+        "v34_g_ram",
+        "v35_c_dual",
+        "v35_c_dual",
+        "v35_c_matrix",
+        "v35_c_matrix",
+        "v18_conversion_lance",
+        "v18_conversion_lance"
+      ]
+    },
+    {
+      "variant": "ノード・原型",
+      "cid": "node",
+      "style": null,
+      "trial": "void_archive",
+      "mode": "concept",
+      "wins": 2,
+      "runs": 3,
+      "rate": 0.6666666666666666,
+      "turns": 13.666666666666666,
+      "deck": [
+        "tuned_conversion_edge",
+        "tuned_conversion_edge",
+        "v34_g_ram",
+        "v34_g_ram",
+        "v35_c_dual",
+        "v35_c_dual",
+        "v35_c_matrix",
+        "v35_c_matrix",
+        "v18_conversion_lance",
+        "v18_conversion_lance"
+      ]
+    },
+    {
+      "variant": "ノード・原型",
+      "cid": "node",
+      "style": null,
+      "trial": "synthesis",
+      "mode": "concept",
+      "wins": 0,
+      "runs": 3,
+      "rate": 0,
+      "turns": 9,
+      "deck": [
+        "tuned_conversion_edge",
+        "tuned_conversion_edge",
+        "v34_g_ram",
+        "v34_g_ram",
+        "v35_c_dual",
+        "v35_c_dual",
+        "v35_c_matrix",
+        "v35_c_matrix",
+        "v18_conversion_lance",
+        "v18_conversion_lance"
+      ]
+    }
+  ]
+}

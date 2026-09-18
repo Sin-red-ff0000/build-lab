@@ -3,7 +3,7 @@ const fs=require('fs'),path=require('path'),assert=require('assert');global.wind
 const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');for(const m of html.matchAll(/<script src="([^"?]+)/g)){const f=m[1];if(f.includes('/ui/')||f.endsWith('app.js'))continue;require(path.join(root,f));}
 const BL=global.BuildLab,D=BL.Data;
 assert.equal(D.V27_CARD_IDS.length,24);assert.equal(D.V27_CHARACTER_IDS.length,2);assert.equal(D.V27_STYLE_IDS.length,6);assert.equal(D.V27_RELIC_IDS.length,16);assert.equal(D.V27_PROTOCOL_IDS.length,8);assert.equal(D.V27_TUNING_IDS.length,8);assert.equal(D.V27_TRAIT_IDS.length,6);assert.equal(D.V27_BEHAVIOR_IDS.length,12);
-assert.equal(Object.keys(D.DUAL_FACE_CARDS).length,16,'dual-face total should be 16');
+assert.equal(Object.keys(D.DUAL_FACE_CARDS).length,28,'dual-face total should be 28');
 for(const id of D.V27_CARD_IDS)assert(D.CARDS[id]?.requiresUnlock,'v27 card missing unlock flag '+id);
 const rewarded=new Set(D.UNLOCKS.flatMap(u=>u.reward||[]));for(const id of [...D.V27_CARD_IDS,...D.V27_CHARACTER_IDS,...D.V27_STYLE_IDS,...D.V27_RELIC_IDS,...D.V27_PROTOCOL_IDS,...D.V27_TUNING_IDS,...D.V27_TRAIT_IDS,...D.V27_BEHAVIOR_IDS])assert(rewarded.has(id),'v27 item has no unlock route '+id);
 for(const id of D.V27_TRAIT_IDS)assert.notEqual(D.traitConditionText(id),'発見条件未登録','trait condition missing '+id);

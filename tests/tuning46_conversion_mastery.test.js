@@ -1,0 +1,18 @@
+'use strict';
+const fs=require('fs'),path=require('path'),assert=require('assert');
+const root=path.resolve(__dirname,'..');
+const battle=fs.readFileSync(path.join(root,'js/core/battle.js'),'utf8');
+const chapter=fs.readFileSync(path.join(root,'js/data/chapter3.js'),'utf8');
+const conv=fs.readFileSync(path.join(root,'js/data/conversions.js'),'utf8');
+assert(battle.includes("tuningHistory:{focus:0,reserve:0,relay:0}"));
+assert(battle.includes("conversionHistory:{uses:0,switches:0,last:null}"));
+assert(battle.includes("if(tune==='focus')m*=pos==='center'?1.12:.92"));
+assert(battle.includes("if(tune==='reserve')m*=instance.wasReserved?1.12:.94"));
+assert(battle.includes("if(tune==='relay')m*=linkActive?1.12:.92"));
+assert(!chapter.includes('基本効果+30%。左右'));
+assert(!chapter.includes('基本効果+35%。通常提示'));
+assert(conv.includes('1ヒットは元の36%（合計108%）'));
+assert(conv.includes('ダメージ-30%。使用時に防御6'));
+assert(battle.includes("dmg*=.36"));
+assert(battle.includes("dmg*=.70"));
+console.log('PASS tuning46_conversion_mastery.test.js');

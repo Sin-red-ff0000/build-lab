@@ -1,0 +1,234 @@
+{
+  "version": "0.57-roadmap-9of10",
+  "unlockTotal": 719,
+  "chapterCounts": {
+    "1": 48,
+    "2": 54,
+    "3": 50,
+    "4": 201,
+    "5": 42,
+    "6": 60,
+    "7": 60,
+    "8": 80,
+    "9": 91,
+    "10": 19,
+    "11": 7,
+    "12": 7
+  },
+  "chapterCurriculum": {
+    "1": {
+      "learn": [
+        "六基礎軸",
+        "基本特殊個体"
+      ],
+      "exam": "第1ボス 観測体",
+      "reward": "提示操作・高度敵パラメータ"
+    },
+    "2": {
+      "learn": [
+        "提示操作",
+        "カード調律",
+        "再生/耐性対策"
+      ],
+      "exam": "第2ボス 適応体",
+      "reward": "カード連結・役割変換"
+    },
+    "3": {
+      "learn": [
+        "カード連結",
+        "役割変換",
+        "連結循環"
+      ],
+      "exam": "第3ボス 構築体",
+      "reward": "構築規格"
+    },
+    "4": {
+      "learn": [
+        "圧縮規格",
+        "展開規格",
+        "単独規格",
+        "規格横断"
+      ],
+      "exam": "統合実験",
+      "reward": "第4ボス挑戦資格"
+    },
+    "5": {
+      "learn": [
+        "既存システム統合運用"
+      ],
+      "exam": "第4ボス 統合体",
+      "reward": "ルーン・アルカナ研究"
+    },
+    "9": {
+      "learn": [
+        "高難度特殊個体",
+        "複合挙動"
+      ],
+      "exam": "任意高難度研究",
+      "reward": "横方向ビルド拡張"
+    },
+    "10": {
+      "learn": [
+        "極端倍率研究",
+        "公式エンドコンテンツ"
+      ],
+      "exam": "全域校正（10/10で再構築）",
+      "reward": "なし"
+    }
+  },
+  "policy": {
+    "bossGate": "ボス挑戦条件は当該章で学ぶシステムの実運用を要求し、HP×N等の極端な数値個体を必須条件にしない。",
+    "reward": "ボス報酬は次章の新しい操作体系を開く。前章装備の単純な上位数値を報酬にしない。",
+    "endgame": "HP×12等とv20複合個体は第4ボス後へ隔離し、通常章の導線を塞がない。"
+  },
+  "keyUnlocks": {
+    "boss_clear": {
+      "chapter": 1,
+      "title": "第2章導入：提示操作・高度敵パラメータ",
+      "condition": "第1ボス「観測体」を撃破。第2章の提示操作と再生・耐性対策を解放",
+      "reward": [
+        "prompt_control",
+        "advanced_enemy_parameters",
+        "character_style",
+        "center_lock",
+        "hold",
+        "reorder",
+        "redraw",
+        "phase_exchanger",
+        "holding_tank",
+        "reroll_terminal",
+        "center_drive",
+        "wide_scan",
+        "narrow_scan",
+        "narrow_shot",
+        "spread_shot",
+        "empty_crown",
+        "center_amplifier",
+        "crowded_table",
+        "narrow_focus",
+        "wounded_engine"
+      ]
+    },
+    "boss2_clear": {
+      "chapter": 3,
+      "title": "第3章導入：カード連結・役割変換",
+      "condition": "第2ボス「適応体」を撃破。第3章の連結・役割変換を解放",
+      "reward": [
+        "card_link",
+        "card_conversion",
+        "link_strike",
+        "link_guard",
+        "link_barrage",
+        "link_poison",
+        "link_core",
+        "relay_buffer",
+        "link_amplifier"
+      ]
+    },
+    "boss3_clear": {
+      "chapter": 4,
+      "title": "第4章導入：構築規格",
+      "condition": "第3ボス「構築体」を撃破。圧縮・展開・単独規格と基礎規格装備を解放",
+      "reward": [
+        "deck_doctrine",
+        "compact",
+        "expanded",
+        "singleton",
+        "compact_edge",
+        "compact_guard",
+        "expanded_edge",
+        "expanded_guard",
+        "singleton_edge",
+        "singleton_guard",
+        "doctrine_core"
+      ]
+    },
+    "boss4_clear": {
+      "chapter": 5,
+      "title": "クリア後研究：ルーン / アルカナ",
+      "condition": "第4ボス「統合体」を撃破。クリア後の横方向研究としてルーンとアルカナを解放",
+      "reward": [
+        "rune",
+        "arcana",
+        "rune_force",
+        "rune_ward",
+        "rune_venom",
+        "rune_barrage",
+        "rune_echo",
+        "rune_rebirth",
+        "arcana_magician",
+        "arcana_chariot",
+        "arcana_strength",
+        "arcana_wheel",
+        "arcana_justice",
+        "arcana_temperance"
+      ]
+    },
+    "boss2": {
+      "chapter": 2,
+      "title": "第2ボス「適応体」",
+      "condition": "再生個体・浄化個体を撃破し、「位置実験 II」「調律実験 II」を達成",
+      "reward": []
+    },
+    "boss3": {
+      "chapter": 3,
+      "title": "第3ボス「構築体」",
+      "condition": "第2ボス撃破後、「連結ビルド II」「調律連結」「連結循環実験」を達成。極相個体は第3章の任意高難度課題",
+      "reward": []
+    },
+    "boss4": {
+      "chapter": 5,
+      "title": "第4ボス「統合体」",
+      "condition": "第3ボス撃破後、圧縮・展開・単独の3構築規格を実戦で運用し、「統合実験」を達成",
+      "reward": []
+    },
+    "u_hp12": {
+      "chapter": 10,
+      "title": "極高耐久試験",
+      "condition": "第4ボス撃破後、HP倍率×12以上の敵を撃破",
+      "reward": [
+        "patient_execution",
+        "deep_cycle_guard",
+        "endurance_clock"
+      ]
+    },
+    "u_atk10": {
+      "chapter": 10,
+      "title": "極高火力試験",
+      "condition": "第4ボス撃破後、攻撃力倍率×10以上の敵を撃破",
+      "reward": [
+        "retaliation_engine",
+        "redline_cut",
+        "danger_sensor"
+      ]
+    },
+    "u_def10": {
+      "chapter": 10,
+      "title": "極高防御試験",
+      "condition": "第4ボス撃破後、防御力倍率×10以上の敵を撃破",
+      "reward": [
+        "absolute_corrosion",
+        "armor_saw",
+        "fracture_scope"
+      ]
+    },
+    "u_spd4": {
+      "chapter": 10,
+      "title": "極高速試験",
+      "condition": "第4ボス撃破後、速度倍率×4以上の敵を撃破",
+      "reward": [
+        "hyper_chain",
+        "rapid_guard",
+        "highspeed_core"
+      ]
+    },
+    "calibration": {
+      "chapter": 10,
+      "title": "全域校正",
+      "condition": "第4ボス撃破後、エンドコンテンツ研究としてHP×12・攻撃×10・防御×10・速度×4以上を同時に満たした敵を撃破",
+      "reward": [
+        "calibration_core"
+      ]
+    }
+  }
+}
