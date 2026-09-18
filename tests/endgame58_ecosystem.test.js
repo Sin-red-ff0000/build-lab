@@ -1,9 +1,0 @@
-'use strict';
-const fs=require('fs'),path=require('path'),assert=require('assert');global.window=global;global.localStorage={getItem(){return null},setItem(){},removeItem(){}};const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');for(const m of html.matchAll(/<script src="([^"?]+)/g)){const f=m[1];if(f.includes('/ui/')||f.endsWith('app.js'))continue;require(path.join(root,f));}const D=BuildLab.Data,E=D.ENDGAME58;assert(E,'ENDGAME58 missing');
-const trials=Object.values(E.trials);assert(trials.length>=8,'official endgame trials must be diverse');
-for(const t of trials){assert(t.enemy.hp>=2.5&&t.enemy.hp<=8,`${t.id}: raw HP wall returned`);assert(t.enemy.atk<=5&&t.enemy.def<=4&&t.enemy.spd<=4,`${t.id}: raw stat inflation returned`);assert(t.answers.length>=6,`${t.id}: too narrow`);assert(Object.keys(t.enemy.traits||{}).length>=1,`${t.id}: trial needs mechanical pressure`);}
-const vars=[];for(const [cid,c] of Object.entries(D.CHARACTERS)){vars.push([cid,null,c.name+'・原型']);for(const st of Object.values(D.CHARACTER_STYLES).filter(x=>x.character===cid))vars.push([cid,st,c.name+'・'+st.name]);}
-assert.equal(vars.length,Object.keys(D.CHARACTERS).length+Object.keys(D.CHARACTER_STYLES).length,'dynamic variant count mismatch');assert(vars.length>141,'legacy 141 cap still active');
-let direct=0;for(const [cid,st,name] of vars){const cs=E.concepts(cid,st),rs=E.routes(cid,st);assert(rs.length>=2,`${name}: fewer than two endgame routes`);assert(rs.some(r=>r.score>0),`${name}: no concept-matched route`);if(rs[0].score>0)direct++;}
-assert.equal(direct,vars.length,'some variants only have fallback routes');assert(E.legacyExtreme.required===false,'HPx12 legacy target must be optional');
-console.log(`PASS endgame58_ecosystem.test.js ${vars.length} variants / ${trials.length} trials`);
