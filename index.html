@@ -9,8 +9,8 @@
   <title>BUILD LAB - ビルド実験場</title>
   <link rel="stylesheet" href="styles/base.css?v=0.30.0" />
   <link rel="stylesheet" href="styles/layout.css?v=0.30.0" />
-  <link rel="stylesheet" href="styles/components.css?v=0.76.0" />
-  <link rel="stylesheet" href="styles/mobile.css?v=0.76.0" />
+  <link rel="stylesheet" href="styles/components.css?v=0.77.0" />
+  <link rel="stylesheet" href="styles/mobile.css?v=0.77.0" />
 </head>
 <body>
   <div class="app-shell">
@@ -44,6 +44,11 @@
     <main>
       <section id="tab-character" class="tab-panel active">
         <div class="section-head"><div><div class="kicker">01 / CHARACTER</div><h2>キャラクター</h2></div><div class="section-actions"><div class="meta" id="characterSummary"></div><button id="characterResetBtn" class="ghost compact-reset" type="button">初期キャラへ</button></div></div>
+        <div id="characterQuickPicker" class="character-quick-picker" aria-label="キャラクターとスタイルのクイック変更">
+          <label><span>キャラクター</span><select id="quickCharacterSelect"></select></label>
+          <label><span>スタイル</span><select id="quickStyleSelect"></select></label>
+          <button id="jumpStyleListBtn" class="ghost" type="button">スタイル一覧</button>
+        </div>
         <div id="characterList" class="character-grid"></div>
         <article class="panel mt14"><div class="panel-head"><div><h3>キャラクタースタイル</h3><p>固有能力を別スタイルへ切り替える横方向強化。いつでも原型へ戻せます。</p></div><div class="panel-head-actions"><div class="counter" id="characterStyleSummary"></div><button id="styleResetBtn" class="ghost compact-reset" type="button">原型へ戻す</button></div></div><div id="characterStyleList" class="character-grid"></div></article>
       </section>
@@ -393,7 +398,7 @@
   <script src="js/core/battle.js?v=0.30.0"></script>
   <script src="js/ui/tabs.js?v=0.30.0"></script>
   <script src="js/ui/deckView.js?v=0.30.0"></script>
-  <script src="js/ui/styleView.js?v=0.30.0"></script>
+  <script src="js/ui/styleView.js?v=0.77.0"></script>
   <script src="js/ui/tuningView.js?v=0.30.0"></script>
   <script src="js/ui/conversionView.js?v=0.30.0"></script>
   <script src="js/ui/runeView.js?v=0.30.0"></script>
@@ -405,7 +410,7 @@
   <script src="js/ui/battleView.js?v=0.30.0"></script>
   <script src="js/ui/metaView.js?v=0.30.0"></script>
   <script src="js/ui/guideView.js?v=0.30.0"></script>
-  <script src="js/ui/mobile.js?v=0.76.0"></script>
+  <script src="js/ui/mobile.js?v=0.77.0"></script>
   <script src="js/app.js?v=0.75.1"></script>
 </body>
 </html>
