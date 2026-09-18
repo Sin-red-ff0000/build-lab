@@ -50,5 +50,20 @@
 
 @media(max-width:760px){.section-actions{width:100%;justify-content:space-between}.panel-head-actions{justify-content:flex-end}.panel-head-actions .counter{order:0}.compact-reset{min-height:38px;padding:7px 9px}.reset-toolbar{align-items:stretch;flex-direction:column}.reset-toolbar button{width:100%;min-height:42px}.enemy-editor-panel .panel-head{align-items:flex-start}}
 
-/* v0.75.1 mobile experiment start hotfix */
-@media(max-width:760px){.mobile-experiment-dock{z-index:110;pointer-events:auto}.mobile-experiment-dock button{pointer-events:auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.mobile-dock-open #tab-experiment{padding-bottom:82px}}
+/* v0.76 mobile usability pass */
+@media(max-width:760px){
+  html{scroll-behavior:smooth;scroll-padding-top:58px;scroll-padding-bottom:150px}
+  .app-shell{padding-left:8px;padding-right:8px}.panel{padding:12px;border-radius:12px}.grid-2,.collection-columns{gap:9px}
+  .section-head{align-items:flex-start}.section-head>.meta{width:100%;line-height:1.45}.panel-head{align-items:flex-start}.panel-head>div:first-child{min-width:0}
+  .subtabs{top:0;box-shadow:0 6px 14px rgba(0,0,0,.18)}.subtab{min-height:44px;padding:9px 14px}
+  .filter-bar{padding:7px;border:1px solid rgba(72,90,116,.45);border-radius:11px;background:#0d131c}.filter-bar input[type="search"]{position:static!important;min-height:46px;font-size:16px}.filter-bar select{font-size:16px}.filter-bar .mobile-filter-toggle{min-height:44px}
+  .card-grid,.relic-grid,.unlock-grid,.trait-grid{grid-template-columns:1fr!important;gap:8px}.pool-card,.relic-card,.unlock-card,.trait-toggle{padding:12px;min-height:0}.pool-card .tags,.relic-card .tags{margin-top:6px}
+  .deck-strip{margin:0 -2px}.deck-chip{min-height:42px;padding:8px 11px}
+  .slider-row{padding:9px 0}.slider-row label strong{font-size:15px}.slider-row input[type="range"]{height:40px}
+  .trait-toggle{min-height:52px;align-items:center}.trait-toggle input{flex:0 0 22px;width:22px;height:22px;margin:0}.trait-toggle small{line-height:1.55}
+  .mobile-bottom-nav{z-index:90}.mobile-nav-btn{min-height:52px}.mobile-nav-btn strong{font-size:10px}
+  .mobile-experiment-dock{z-index:89;pointer-events:auto}.mobile-experiment-dock button{touch-action:manipulation;pointer-events:auto}
+  .modal-card{max-height:92dvh}.modal-body{padding-bottom:20px}.modal-footer button{min-height:52px;font-size:15px}
+  .ui-scroll-top{right:10px;bottom:calc(78px + env(safe-area-inset-bottom));z-index:88}.mobile-dock-open .ui-scroll-top{bottom:calc(142px + env(safe-area-inset-bottom))}
+  #tab-unlock .progress-box{top:0}.progress-box{line-height:1.6}.collection-stats{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;scrollbar-width:none}.stat-pill{flex:0 0 auto}
+}
